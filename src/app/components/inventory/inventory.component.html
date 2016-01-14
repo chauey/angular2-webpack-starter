@@ -1,0 +1,22 @@
+<div class="Inventory">
+    INVENTORY
+
+    <nav>
+
+        <ul>
+            <!--order-->
+            <li router-active="active">
+                <a [routerLink]=" ['InventoryImport'] ">Import Inventory</a>
+            </li>
+            <li router-active="active">
+                <a [routerLink]=" ['InventoryList'] ">Inventory List</a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+
+</div>

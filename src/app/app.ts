@@ -8,6 +8,13 @@ import {FORM_PROVIDERS} from 'angular2/common';
 import {RouterActive} from './directives/router-active';
 import {Home} from './home/home';
 
+// SNS
+import {AdminComponent} from './components/admin/admin.component';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {InventoryComponent} from './components/inventory/inventory.component';
+import {OrderComponent} from './components/order/order.component';
+import {SettingsComponent} from './components/settings/settings.component';
+import {WeekCompare} from './components/order/weekcompare/weekcompare';
 
 /*
  * App Component
@@ -36,14 +43,38 @@ import {Home} from './home/home';
   template: `
     <header>
       <nav>
-        <h1>Hello {{ name }}</h1>
+        <h1><!--Hello--> {{ name }}</h1>
         <ul>
-          <li router-active="active">
+          <!--li router-active="active">
             <a [routerLink]=" ['Index'] ">Index</a>
           </li>
           <li router-active="active">
             <a [routerLink]=" ['Home'] ">Home</a>
+          </li-->
+          
+          <!--SNS-->
+          <!--dashboard-->
+          <li router-active="active">
+            <a [routerLink]=" ['Dashboard'] ">Dashboard</a>
           </li>
+          <!--admin-->
+          <li router-active="active">
+            <a [routerLink]=" ['Admin'] ">Admin</a>
+          </li>
+          <!--(Companies, Suppliers, Products, ...)-->
+          <!--settings-->
+          <li router-active="active">
+            <a [routerLink]=" ['Settings'] ">Settings</a>
+          </li>
+          <!--inventory-->
+          <li router-active="active">
+            <a [routerLink]=" ['Inventory'] ">Inventory (Import, List, edit)</a>
+          </li>
+          <!--order-->
+          <li router-active="active">
+            <a [routerLink]=" ['Order'] ">Order (Bid, Orders, etc.)</a>
+          </li>
+       
         </ul>
       </nav>
     </header>
@@ -53,17 +84,28 @@ import {Home} from './home/home';
     </main>
 
     <footer>
-      WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a>
+      Copyright StalkNSave
+      <!--WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a>-->
     </footer>
   `
 })
+
 @RouteConfig([
   { path: '/', component: Home, name: 'Index' },
   { path: '/home', component: Home, name: 'Home' },
+
+  { path: '/dashboard', component: DashboardComponent, name: 'Dashboard' },
+  { path: '/admin', component: AdminComponent, name: 'Admin' },
+  { path: '/company', component: SettingsComponent, name: 'Settings' },
+  { path: '/inventory/...', component: InventoryComponent, name: 'Inventory' },
+  { path: '/order', component: OrderComponent, name: 'Order' },
+  { path: '/WeekCompare', component: WeekCompare, name: 'WeekCompare' },
+
   { path: '/**', redirectTo: ['Index'] }
 ])
+
 export class App {
-  name = 'Angular 2 Webpack Starter';
+  name = 'StalkNSave'; //'Angular 2 Webpack Starter';
   url = 'https://twitter.com/AngularClass';
   constructor() {
 

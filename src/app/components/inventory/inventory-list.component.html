@@ -1,0 +1,37 @@
+<div class="inventory-list">
+    INVENTORY LIST
+    
+    
+      <a [routerLink]=" ['InventoryItem', {id: 2}] ">Item 2</a>
+      
+    <div>items:</div>
+    <pre>
+        {{items | json}}
+    </pre>
+    
+    <div>suppliers:</div>
+    <pre>
+        {{suppliers | json}}
+    </pre>
+
+
+    <div>inventoryItems:</div>
+    <pre>
+        {{inventoryItems | json}}
+    </pre>
+
+
+    <div>flattenedPriceCompareData:</div>
+    <pre>
+        {{flattenedPriceCompareData | json}}
+    </pre>
+
+    <!--<h2>Inventory</h2> {{testProperty}} ll
+    <pre>
+        {{vendorCompareData | json}}
+    </pre> pp
+
+    <input [value]="searchValue" />
+    <button (click)="search()">Search</button>
+    <button (click)="addItem()">Add Item</button>-->
+</div>
