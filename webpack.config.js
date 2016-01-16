@@ -19,6 +19,12 @@ var metadata = {
   port: 3000,
   ENV: ENV
 };
+
+var bootstrapPath = path.join(
+    __dirname,
+    'node_modules/bootstrap/dist/css'
+);
+
 /*
  * Config
  */

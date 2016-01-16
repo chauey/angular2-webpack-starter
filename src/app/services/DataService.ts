@@ -38,6 +38,28 @@ export class DataService {
     ];
 
 
+    inventoryItemsView: any =
+    [
+        {
+            productId: 0,
+            count: 1,
+            par: 10,
+            name: 'product name 1',
+        },
+        {
+            productId: 1,
+            count: 4,
+            par: 10,
+            name: 'product name 1',
+        },
+        {
+            productId: 2,
+            count: 2,
+            par: 10,
+            name: 'product name 1',
+        },
+    ];
+
     inventoryItems: any =
     [
         {
@@ -67,6 +89,7 @@ export class DataService {
             ]
         }
     ];
+
 
 
     flattenedPriceCompareData: any = [
@@ -129,6 +152,10 @@ export class DataService {
             price2: 2
         }
     ];
+
+    getInventoryItem(id: number) {
+        return this.inventoryItemsView[id];
+    }
 
 }
 

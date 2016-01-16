@@ -1,36 +1,57 @@
-<div class="Inventory">
-    INVENTORY Item
-    
-    {{id}}dsa
-    
-    <div>items:</div>
-    <pre>
-        {{items | json}}
-    </pre>
-    
-    <div>suppliers:</div>
-    <pre>
-        {{suppliers | json}}
-    </pre>
+<div>
+    <h1>Inventory Form</h1>
+    <form (ngSubmit)="onSubmit()" #inventoryItemForm="ngForm">
+        
+        filter: <input [(ngModel)]="searchValue" (keyup)="filter()" /> <button (click)="filter()">filter</button>
 
 
-    <div>inventoryItems:</div>
-    <pre>
-        {{inventoryItems | json}}
-    </pre>
+        <!--name-->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" required [(ngModel)]="model.name" ngControl="name" #name="ngForm">
+            <div [hidden]="name.valid" class="alert alert-danger">
+                Name is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="count">Count</label>
+            <input type="text" class="form-control" required [(ngModel)]="model.count" ngControl="count" #count="ngForm">
+            <div [hidden]="count.valid" class="alert alert-danger">
+                Count is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="par">Par</label>
+            <input type="text" class="form-control" required [(ngModel)]="model.par" ngControl="par" #par="ngForm">
+            <div [hidden]="par.valid" class="alert alert-danger">
+                Par is required
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-default" [disabled]="!inventoryItemForm.form.valid">Submit</button>
 
 
-    <div>flattenedPriceCompareData:</div>
-    <pre>
-        {{flattenedPriceCompareData | json}}
-    </pre>
+        <!--<div class="form-group">
+        <label for="alterEgo">Alter Ego</label>
+        <input type="text" class="form-control"
+          [(ngModel)]="model.alterEgo"
+            ngControl="alterEgo" >
+      </div>
+      <div class="form-group">
+        <label for="power">Hero Power</label>
+        <select class="form-control" required
+          [(ngModel)]="model.power"
+            ngControl="power" #power="ngForm" >
+          <option *ngFor="#p of powers" [value]="p">{{p}}</option>
+        </select>
+        <div [hidden]="power.valid" class="alert alert-danger">
+          Power is required
+        </div>
+      </div>-->
+        <!--<button type="submit" class="btn btn-default" 
+          [disabled]="!#inventoryItemForm.form.valid">Submit</button>-->
+    </form>
 
-    <!--<h2>Inventory</h2> {{testProperty}} ll
-    <pre>
-        {{vendorCompareData | json}}
-    </pre> pp
-
-    <input [value]="searchValue" />
-    <button (click)="search()">Search</button>
-    <button (click)="addItem()">Add Item</button>-->
 </div>

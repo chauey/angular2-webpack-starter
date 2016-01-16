@@ -1,37 +1,55 @@
 <div class="inventory-list">
     INVENTORY LIST
-    
-    
-      <a [routerLink]=" ['InventoryItem', {id: 2}] ">Item 2</a>
-      
-    <div>items:</div>
-    <pre>
-        {{items | json}}
-    </pre>
-    
-    <div>suppliers:</div>
-    <pre>
-        {{suppliers | json}}
-    </pre>
 
 
-    <div>inventoryItems:</div>
+filter: <input [(ngModel)]="searchValue" (keyup)="filter()" /> <button (click)="filter()">filter</button>
+
+    pager here
+    
+    <!--table-->
+    <table class="table-striped">
+        <thead class="thead-default">
+            <tr>
+                <th>actions</th>
+                <th>id</th>
+                <th>name</th>
+                <th>count</th>
+                <th>par</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="#inventoryItemsViewItem of inventoryItemsView">
+                <td>
+                    <button (click)="edit(inventoryItemsViewItem.productId)">edit</button>
+                    <button (click)="delete(inventoryItemsViewItem.productId)">delete</button>
+                    <a [routerLink]=" ['InventoryItem', {id: inventoryItemsViewItem.productId}] ">Edit</a></td>
+                <td>{{inventoryItemsViewItem.productId}}</td>
+                <td>{{inventoryItemsViewItem.name}}</td>
+                <td>{{inventoryItemsViewItem.count}}</td>
+                <td>{{inventoryItemsViewItem.par}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>actions</th>
+                <th>id</th>
+                <th>name</th>
+                <th>count</th>
+                <th>par</th>
+            </tr>
+        </tfoot>
+    </table>
+    
+    pager here
+
+    <!--<div>inventoryItems:</div>
     <pre>
         {{inventoryItems | json}}
     </pre>
 
-
-    <div>flattenedPriceCompareData:</div>
+    <div>inventoryItems:</div>
     <pre>
-        {{flattenedPriceCompareData | json}}
-    </pre>
+        {{inventoryItems | json}}
+    </pre>-->
 
-    <!--<h2>Inventory</h2> {{testProperty}} ll
-    <pre>
-        {{vendorCompareData | json}}
-    </pre> pp
-
-    <input [value]="searchValue" />
-    <button (click)="search()">Search</button>
-    <button (click)="addItem()">Add Item</button>-->
 </div>

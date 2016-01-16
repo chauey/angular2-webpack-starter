@@ -70,7 +70,7 @@ import {WeekCompare} from './components/order/weekcompare/weekcompare';
           <li router-active="active">
             <a [routerLink]=" ['Inventory'] ">Inventory (Import, List, edit)</a>
           </li>
-          <!--order-->
+          <!--order/purchasing?-->
           <li router-active="active">
             <a [routerLink]=" ['Order'] ">Order (Bid, Orders, etc.)</a>
           </li>

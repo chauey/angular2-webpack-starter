@@ -11,7 +11,9 @@
             <li router-active="active">
                 <a [routerLink]=" ['InventoryList'] ">Inventory List</a>
             </li>
-
+            <li router-active="active">
+                <a [routerLink]=" ['InventoryItem', { id: 'new' }] ">Add</a>
+            </li>
         </ul>
     </nav>
 
