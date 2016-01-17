@@ -1,26 +1,27 @@
-<div class="inventory-list">
+<div class="container">
     INVENTORY LIST filter:
-    <input [(ngModel)]="searchValue" (keyup)="filter()" />
-    <button (click)="filter()">filter</button>
+    <input [(ngModel)]="searchValue" (keyup)="filter()" placeholder="search value"/>
+    <button (click)="filter()" class="btn btn-primary">filter</button>
 
-    pager here
+    <!--pager here-->
 
     <!--table-->
-    <table class="table-striped">
+       <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered table-sm">
         <thead class="thead-default">
             <tr>
-                <th>actions</th>
-                <th>id</th>
-                <th>name</th>
-                <th>count</th>
-                <th>par</th>
+                <th>Actions</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Count</th>
+                <th>Par</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="#inventoryItemsViewItem of inventoryItemsView">
                 <td>
-                    <button (click)="edit(inventoryItemsViewItem.productId)">edit</button>
-                    <button (click)="delete(inventoryItemsViewItem.productId)">delete</button>
+                    <button (click)="edit(inventoryItemsViewItem.productId)" class="btn btn-primary">edit</button>
+                    <button (click)="delete(inventoryItemsViewItem.productId)" class="btn btn-primary">delete</button>
                     <a [routerLink]=" ['InventoryItem', {id: inventoryItemsViewItem.productId}] ">Edit</a></td>
                 <td>{{inventoryItemsViewItem.productId}}</td>
                 <td>{{inventoryItemsViewItem.name}}</td>
@@ -28,7 +29,7 @@
                 <td>{{inventoryItemsViewItem.par}}</td>
             </tr>
         </tbody>
-        <tfoot>
+        <tfoot class="thead-default">
             <tr>
                 <th>actions</th>
                 <th>id</th>
@@ -38,6 +39,7 @@
             </tr>
         </tfoot>
     </table>
+    </div>
 
-    pager here
+    <!--pager here-->
 </div>

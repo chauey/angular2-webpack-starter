@@ -5,7 +5,7 @@ import {Component} from 'angular2/core';
   directives: [],
   providers: [],
   pipes: [ ],
-  styles: [ require('./company-profile.component.css') ],
+  styles: [ require('bootstrap/dist/css/bootstrap.min.css'), require('./company-profile.component.css') ],
   template: require('./company-profile.component.html')
 })
 export class CompanyProfileComponent {

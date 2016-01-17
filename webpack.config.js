@@ -50,7 +50,9 @@ module.exports = {
 
   resolve: {
     // ensure loader extensions match
-    extensions: ['','.ts','.js','.json','.css','.html']
+    extensions: ['','.ts','.js','.json','.css','.html'],
+     modulesDirectories: ['node_modules', bootstrapPath]
+
   },
 
   module: {

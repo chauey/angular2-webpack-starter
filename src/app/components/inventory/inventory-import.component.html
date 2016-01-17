@@ -1,7 +1,7 @@
-<div class="Inventory">
+<div class="container">
     IMPORT INVENTORY
     
-    <button (click)="import()">Import</button>
+    <button (click)="import()" class="btn btn-primary">Import</button>
     
     
     
@@ -36,7 +36,7 @@
             </div>
 
             Multiple
-            <input type="file" ng2-file-select [uploader]="uploader" multiple  /><br/>
+            <input type="file" ng2-file-select [uploader]="uploader" multiple /><br/>
 
             Single
             <input type="file" ng2-file-select [uploader]="uploader" />
@@ -47,7 +47,7 @@
             <h3>Upload queue</h3>
             <p>Queue length: </p>
 
-            <table class="table">
+            <table class="table table-striped">
                 <thead>
                 <tr>
                     <th width="50%">Name</th>

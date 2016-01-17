@@ -1,84 +1,87 @@
-<div class="BidGenerator">
+<div class="container">
     <h2>Bid Generator</h2>
+
+
+    <button (click)="createOrders()" class="btn btn-primary">Create Orders</button>
+
+    <!--table-->
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered table-sm">
+            <thead class="thead-default">
+                <tr>
+                    <th>Product</th>
+                    <th>Week 1</th>
+                    <th>Week 2</th>
+                    <th>Week compare</th>
+
+                    <th>Product</th>
+                    <th>Week 1</th>
+                    <th>Week 2</th>
+                    <th>Week compare</th>
+
+                    <th>Product</th>
+                    <th>Week 1</th>
+                    <th>Week 2</th>
+                    <th>Week compare</th>
+
+                    <th>Vendor</th>
+                    <th>Price</th>
+
+                    <th>Final Vendor?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="#flattenedPriceCompareDataItem of flattenedPriceCompareData">
+
+                    <td>{{flattenedPriceCompareDataItem.supplier1_itemName}}</td>
+                    <td>{{flattenedPriceCompareDataItem.supplier1_price1}}</td>
+                    <td>{{flattenedPriceCompareDataItem.supplier1_price2}}</td>
+                    <td>{{flattenedPriceCompareDataItem.supplier1_weekCompare}}</td>
+
+                    <td>{{flattenedPriceCompareDataItem.supplier2_itemName}}</td>
+                    <td>{{flattenedPriceCompareDataItem.supplier2_price1}}</td>
+                    <td>{{flattenedPriceCompareDataItem.supplier2_price2}}</td>
+                    <td>{{flattenedPriceCompareDataItem.supplier2_weekCompare}}</td>
+
+                    <td>{{flattenedPriceCompareDataItem.supplier3_itemName}}</td>
+                    <td>{{flattenedPriceCompareDataItem.supplier3_price1}}</td>
+                    <td>{{flattenedPriceCompareDataItem.supplier3_price2}}</td>
+                    <td>{{flattenedPriceCompareDataItem.supplier3_weekCompare}}</td>
+
+                    <td>{{flattenedPriceCompareDataItem.vendor}}</td>
+                    <td>{{flattenedPriceCompareDataItem.price}}</td>
+
+                    <td>{{flattenedPriceCompareDataItem.preferredVendor}}</td>
+
+                </tr>
+            </tbody>
+            <tfoot class="thead-default">
+                <tr>
+                    <th>Product</th>
+                    <th>Week 1</th>
+                    <th>Week 2</th>
+                    <th>Week compare</th>
+
+                    <th>Product</th>
+                    <th>Week 1</th>
+                    <th>Week 2</th>
+                    <th>Week compare</th>
+
+                    <th>Product</th>
+                    <th>Week 1</th>
+                    <th>Week 2</th>
+                    <th>Week compare</th>
+
+                    <th>Vendor</th>
+                    <th>Price</th>
+
+                    <th>Final Vendor?</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
 </div>
-
-<button (click)="createOrders()">Create Orders</button>
-
-<!--table-->
-<table class="table-striped">
-    <thead class="thead-default">
-        <tr>
-            <th>Product</th>
-            <th>Week 1</th>
-            <th>Week 2</th>
-            <th>Week compare</th>
-
-            <th>Product</th>
-            <th>Week 1</th>
-            <th>Week 2</th>
-            <th>Week compare</th>
-
-            <th>Product</th>
-            <th>Week 1</th>
-            <th>Week 2</th>
-            <th>Week compare</th>
-
-            <th>Vendor</th>
-            <th>Price</th>
-
-            <th>Final Vendor?</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="#flattenedPriceCompareDataItem of flattenedPriceCompareData">
-
-            <td>{{flattenedPriceCompareDataItem.supplier1_itemName}}</td>
-            <td>{{flattenedPriceCompareDataItem.supplier1_price1}}</td>
-            <td>{{flattenedPriceCompareDataItem.supplier1_price2}}</td>
-            <td>{{flattenedPriceCompareDataItem.supplier1_weekCompare}}</td>
-            
-            <td>{{flattenedPriceCompareDataItem.supplier2_itemName}}</td>
-            <td>{{flattenedPriceCompareDataItem.supplier2_price1}}</td>
-            <td>{{flattenedPriceCompareDataItem.supplier2_price2}}</td>
-            <td>{{flattenedPriceCompareDataItem.supplier2_weekCompare}}</td>
-            
-            <td>{{flattenedPriceCompareDataItem.supplier3_itemName}}</td>
-            <td>{{flattenedPriceCompareDataItem.supplier3_price1}}</td>
-            <td>{{flattenedPriceCompareDataItem.supplier3_price2}}</td>
-            <td>{{flattenedPriceCompareDataItem.supplier3_weekCompare}}</td>
-            
-            <td>{{flattenedPriceCompareDataItem.vendor}}</td>
-            <td>{{flattenedPriceCompareDataItem.price}}</td>
-
-            <td>{{flattenedPriceCompareDataItem.preferredVendor}}</td>
-            
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>Product</th>
-            <th>Week 1</th>
-            <th>Week 2</th>
-            <th>Week compare</th>
-
-            <th>Product</th>
-            <th>Week 1</th>
-            <th>Week 2</th>
-            <th>Week compare</th>
-
-            <th>Product</th>
-            <th>Week 1</th>
-            <th>Week 2</th>
-            <th>Week compare</th>
-
-            <th>Vendor</th>
-            <th>Price</th>
-
-            <th>Final Vendor?</th>
-        </tr>
-    </tfoot>
-</table>
-
 <!--<pre>
   {{flattenedPriceCompareData | json}}
 </pre>-->

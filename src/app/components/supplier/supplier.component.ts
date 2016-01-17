@@ -5,8 +5,8 @@ import {Component} from 'angular2/core';
   directives: [],
   providers: [],
   pipes: [ ],
-  styles: [ require('./dashboard.css') ],
-  template: require('./dashboard.html')
+  styles: [ require('bootstrap/dist/css/bootstrap.min.css'), require('./supplier.component.css') ],
+  template: require('./supplier.component.html')
 })
 export class Dashboard {
   // TypeScript public modifiers

@@ -1,14 +1,15 @@
-<div>
+<div class="container">
     <h1>Purchasing</h1>
+    <br/>
+
+    <!--order-->
+    <li router-active="active">
+        <a [routerLink]=" ['BidGenerator'] ">Generate Bid</a>
+    </li>
+    <li router-active="active">
+        <a [routerLink]=" ['OrderList'] ">Orders</a>
+    </li>
+
+    <router-outlet></router-outlet>
+
 </div>
-<br/>
-
-<!--order-->
-<li router-active="active">
-    <a [routerLink]=" ['BidGenerator'] ">Generate Bid</a>
-</li>
-<li router-active="active">
-    <a [routerLink]=" ['OrderList'] ">Orders</a>
-</li>
-
-<router-outlet></router-outlet>

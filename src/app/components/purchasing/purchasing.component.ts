@@ -12,7 +12,7 @@ import { OrderListComponent } from '../order/order-list.component';
     directives: [...ROUTER_DIRECTIVES],
     providers: [DataService],
   pipes: [ ],
-  styles: [ require('./purchasing.component.css') ],
+  styles: [ require('bootstrap/dist/css/bootstrap.min.css'), require('./purchasing.component.css') ],
   template: require('./purchasing.component.html')
 })
 

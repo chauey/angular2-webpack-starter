@@ -8,12 +8,12 @@ import { DataService } from '../../services/DataService';
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
   providers: [],
-  styles: [ require('./inventory-list.component.css') ],
+  styles: [ require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory-list.component.css') ],
   template: require('./inventory-list.component.html')
 })
 export class InventoryList {
 
-    searchValue: string = 'search string test';
+    searchValue: string = '';
     items: any = this._dataService.items;
     suppliers: any = this._dataService.suppliers;
     inventoryItemsView : any = this._dataService.inventoryItemsView;

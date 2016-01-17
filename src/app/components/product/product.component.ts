@@ -5,7 +5,7 @@ import {Component} from 'angular2/core';
   directives: [],
   providers: [],
   pipes: [ ],
-  styles: [ require('./dashboard.css') ],
+  styles: [ require('bootstrap/dist/css/bootstrap.min.css'), require('./dashboard.css') ],
   template: require('./dashboard.html')
 })
 export class Dashboard {

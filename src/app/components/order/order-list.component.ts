@@ -8,12 +8,12 @@ import { DataService } from '../../services/DataService';
   directives: [...ROUTER_DIRECTIVES],
   pipes: [ ],
   providers: [DataService],
-  styles: [ require('./order-list.component.css') ],
+  styles: [require('./order-list.component.css') ],
   template: require('./order-list.component.html')
 })
 export class OrderListComponent {
 
-    searchValue: string = 'search string test';
+    searchValue: string = '';
     orders: any = this._dataService.orders;
 
   constructor(private _router: Router, private _dataService: DataService) {

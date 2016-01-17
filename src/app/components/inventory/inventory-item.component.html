@@ -1,8 +1,9 @@
-<div>
+<div class="container">
+
     <h1>Inventory Form</h1>
     <form (ngSubmit)="onSubmit()" #inventoryItemForm="ngForm">
         
-        filter: <input [(ngModel)]="searchValue" (keyup)="filter()" /> <button (click)="filter()">filter</button>
+        filter: <input [(ngModel)]="searchValue" (keyup)="filter()" placeholder="search value"/> <button (click)="filter()" class="btn btn-primary">filter</button>
 
 
         <!--name-->
@@ -30,7 +31,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-default" [disabled]="!inventoryItemForm.form.valid">Submit</button>
+        <button type="submit" [disabled]="!inventoryItemForm.form.valid" class="btn btn-primary">Submit</button>
 
 
         <!--<div class="form-group">

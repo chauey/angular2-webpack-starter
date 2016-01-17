@@ -8,12 +8,12 @@ import { DataService } from '../../services/DataService';
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
   providers: [],
-  styles: [ require('./bid-generator.component.css') ],
+  styles: [ require('bootstrap/dist/css/bootstrap.min.css'), require('./bid-generator.component.css') ],
   template: require('./bid-generator.component.html')
 })
 export class BidGeneratorComponent {
 
-    searchValue: string = 'search string test';
+    searchValue: string = '';
     flattenedPriceCompareData: any = this._dataService.flattenedPriceCompareData;
 
   constructor(private _router: Router, private _dataService: DataService) {

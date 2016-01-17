@@ -9,7 +9,7 @@ import { DataService } from '../../services/DataService';
   directives: [],
   pipes: [],
   providers: [],
-  styles: [ require('./inventory-item.component.css') ],
+  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory-item.component.css') ],
   template: require('./inventory-item.component.html')
 })
 export class InventoryItem implements OnInit {
@@ -19,7 +19,7 @@ export class InventoryItem implements OnInit {
     private _service: DataService) {
 
   }
-      searchValue: string = 'search string test';
+      searchValue: string = '';
 
   id: number = null;
   model: any = null;

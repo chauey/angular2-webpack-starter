@@ -1,4 +1,5 @@
-<div>
+<div class="container">
+
     <h1>Order</h1>
     <form (ngSubmit)="onSubmit()" #orderItemForm="ngForm">
 
@@ -29,6 +30,14 @@
                 Supplier is required
             </div>
         </div>
+        
+        <div class="form-group">
+            <label for="status">Status</label>
+            <input type="text" class="form-control" required [(ngModel)]="model.statusName" ngControl="status" #status="ngForm">
+            <!--<div [hidden]="status.valid" class="alert alert-danger">
+                Supplier is required
+            </div>-->
+        </div>
 
 
 
@@ -36,29 +45,31 @@
 
         Items:
         <!--table-->
-        <table class="table-striped">
-            <thead class="thead-default">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="#orderLineItem of model.orderItems">
-                    <td>{{orderLineItem.itemId}}</td>
-                    <td>{{orderLineItem.itemName}}</td>
-                    <td>{{orderLineItem.price}}</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered table-sm">
+                <thead class="thead-default">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="#orderLineItem of model.orderItems">
+                        <td>{{orderLineItem.itemId}}</td>
+                        <td>{{orderLineItem.itemName}}</td>
+                        <td>{{orderLineItem.price}}</td>
+                    </tr>
+                </tbody>
+                <tfoot class="thead-default">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
 
         <div class="form-group">
             <label for="totalPrice">Total</label>
@@ -68,12 +79,9 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-default" [disabled]="!orderItemForm.form.valid">Submit</button>
-
+        <button type="submit" [disabled]="!orderItemForm.form.valid" class="btn btn-primary">Submit</button>
 
     </form>
-
-
 
 </div>
 

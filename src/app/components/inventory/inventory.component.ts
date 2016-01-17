@@ -11,7 +11,7 @@ import { InventoryItem } from './inventory-item.component';
     selector: 'inventory',
     directives: [...ROUTER_DIRECTIVES],
     providers: [DataService],
-    styles: [require('./inventory.component.css')],
+    styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory.component.css')],
     template: require('./inventory.component.html')
 })
 
@@ -26,7 +26,7 @@ export class InventoryComponent {
 
     }
 
-    searchValue: string = 'search string test';
+    searchValue: string = '';
 
     items: any = this._dataService.items;
 

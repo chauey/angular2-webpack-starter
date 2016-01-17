@@ -5,7 +5,7 @@ import {Component} from 'angular2/core';
   directives: [],
   providers: [],
   pipes: [ ],
-  styles: [ require('./admin.component.css') ],
+  styles: [ require('bootstrap/dist/css/bootstrap.min.css'), require('./admin.component.css') ],
   template: require('./admin.component.html')
 })
 export class AdminComponent {

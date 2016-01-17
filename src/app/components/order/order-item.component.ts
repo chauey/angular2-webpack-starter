@@ -9,7 +9,7 @@ import { DataService } from '../../services/DataService';
   directives: [],
   pipes: [],
   providers: [],
-  styles: [ require('./order-item.component.css') ],
+  styles: [ require('bootstrap/dist/css/bootstrap.min.css'), require('./order-item.component.css') ],
   template: require('./order-item.component.html')
 })
 export class OrderItemComponent implements OnInit {
@@ -19,7 +19,7 @@ export class OrderItemComponent implements OnInit {
     private _service: DataService) {
 
   }
-      searchValue: string = 'search string test';
+      searchValue: string = '';
 
   id: number = null;
   model: any = null;
