@@ -94,22 +94,28 @@ export class DataService {
 
     flattenedPriceCompareData: any = [
         {
-            supplier1_itemName: 'Alligator bites 3 4 lbs', supplier1_price1: 119.87, supplier1_price2: 119.87,
-            supplier2_itemName: 'Alligator bites 3 4 lbs', supplier2_price1: null, supplier3_price2: null,
-            supplier3_itemName: 'Alligator bites 3 4 lbs', supplier3_price1: null, supplier4_price2: null
-            , weekCon: 0.00, vendor: 'SYSCO', price: 119.87
+            inventoryId: 0,
+            supplier1_itemName: 'Alligator bites 3 4 lbs', supplier1_price1: 119.87, supplier1_price2: 119.87, supplier1_weekCompare: 0.00,
+            supplier2_itemName: 'Alligator bites 3 4 lbs', supplier2_price1: null, supplier2_price2: null, supplier2_weekCompare: 0.00,
+            supplier3_itemName: 'Alligator bites 3 4 lbs', supplier3_price1: null, supplier3_price2: null, supplier3_weekCompare: 0.00,
+            vendor: 'SYSCO', price: 119.87,
+            preferredVendor: null, preferredVendorId: null
         },
         {
-            supplier1_itemName: 'Alligator Mean Tenderloin 4/5 ...', supplier1_price1: 10.6, supplier1_price2: 10.24,
-            supplier2_itemName: 'Alligator Mean Tenderloin 12/1 ...', supplier2_price1: 11.04, supplier3_price2: 11.04,
-            supplier3_itemName: 'Alligator Mean Tenderloin 12/1 ...', supplier3_price1: 11.03, supplier4_price2: 11.03
-            , weekCon: 0.00, vendor: 'GORDON food Service', price: 10.03
+            inventoryId: 1,
+            supplier1_itemName: 'Alligator Mean Tenderloin 4/5 ...', supplier1_price1: 10.6, supplier1_price2: 10.24, supplier1_weekCompare: 0.36,
+            supplier2_itemName: 'Alligator Mean Tenderloin 12/1 ...', supplier2_price1: 11.04, supplier2_price2: 11.04, supplier2_weekCompare: 0.00,
+            supplier3_itemName: 'Alligator Mean Tenderloin 12/1 ...', supplier3_price1: 11.03, supplier3_price2: 11.03, supplier3_weekCompare: 0.00,
+            vendor: 'GORDON food Service', price: 10.03,
+            preferredVendor: null, preferredVendorId: null
         },
         {
-            supplier1_itemName: 'Anchovy Flat Consul 1-13oz', supplier1_price1: 7.64, supplier1_price2: 7.64,
-            supplier2_itemName: 'ANCHOVY, FILLET FLAT IN OLIVE OIL ...', supplier2_price1: 6.8, supplier3_price2: 6.8,
-            supplier3_itemName: 'Anchovy Flat in oil 28oz Bel Aria', supplier3_price1: 10.77, supplier4_price2: 10.77
-            , weekCon: 0.00, vendor: 'US FOOD Service', price: 6.8
+            inventoryId: 2,
+            supplier1_itemName: 'Anchovy Flat Consul 1-13oz', supplier1_price1: 7.64, supplier1_price2: 7.64, supplier1_weekCompare: 0.00,
+            supplier2_itemName: 'ANCHOVY, FILLET FLAT IN OLIVE OIL ...', supplier2_price1: 6.8, supplier2_price2: 6.83, supplier2_weekCompare: 0.03,
+            supplier3_itemName: 'Anchovy Flat in oil 28oz Bel Aria', supplier3_price1: 10.77, supplier3_price2: 10.77, supplier3_weekCompare: 0.00,
+            vendor: 'US FOOD Service', price: 6.8,
+            preferredVendor: 'SYSCO', preferredVendorId: 0 
         },
     ];
 
@@ -156,6 +162,59 @@ export class DataService {
     getInventoryItem(id: number) {
         return this.inventoryItemsView[id];
     }
+    
+        getOrderItem(id: number) {
+        return this.orders[id];
+    }
+    
+    orders: any = 
+    [
+      {
+          orderId: 0,
+          date: '1/5/2016',
+          supplierId:0,
+          supplierName:'SYSCO',
+          totalPrice: 199.10,
+          tax: 7.5,
+          statusId: 1,
+          statusName: 'fulfilled',
+          orderItems: 
+          [ 
+              { itemId: 0, itemName: 'Item1', price: 1.99 },
+              { itemId: 1, itemName: 'Item2', price: 2.99 },
+              { itemId: 2, itemName: 'Item3', price: 3.99 },
+          ]
+        },
+        {
+          orderId: 1,
+          date: '1/14/2016',
+          supplierId:2,
+          supplierName:'GFS',
+          totalPrice: 54.15,
+          tax: 7.5,
+          statusId: 2,
+          statusName: 'ordered',
+          orderItems: 
+          [ 
+              { itemId: 0, itemName: 'Item4', price: 109.50 },
+          ]
+        },
+             {
+          orderId: 2,
+          date: null,
+          supplierId:2,
+          supplierName:'GFS',
+          totalPrice: 54.15,
+          tax: 7.5,
+          statusId: 2,
+          statusName: 'pending',
+          orderItems: 
+          [ 
+              { itemId: 0, itemName: 'Item4', price: 109.50 },
+          ]
+        }  
+
+    ];
 
 }
 

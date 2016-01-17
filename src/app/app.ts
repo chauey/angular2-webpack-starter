@@ -12,9 +12,9 @@ import {Home} from './home/home';
 import {AdminComponent} from './components/admin/admin.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {InventoryComponent} from './components/inventory/inventory.component';
-import {OrderComponent} from './components/order/order.component';
+//import {OrderComponent} from './components/order/order.component';
+import {PurchasingComponent } from './components/purchasing/purchasing.component';
 import {SettingsComponent} from './components/settings/settings.component';
-import {WeekCompare} from './components/order/weekcompare/weekcompare';
 
 /*
  * App Component
@@ -68,13 +68,13 @@ import {WeekCompare} from './components/order/weekcompare/weekcompare';
           </li>
           <!--inventory-->
           <li router-active="active">
-            <a [routerLink]=" ['Inventory'] ">Inventory (Import, List, edit)</a>
+            <a [routerLink]=" ['Inventory'] ">Inventory</a>
           </li>
-          <!--order/purchasing?-->
+          <!--purchasing-->
           <li router-active="active">
-            <a [routerLink]=" ['Order'] ">Order (Bid, Orders, etc.)</a>
+            <a [routerLink]=" ['Purchasing'] ">Purchasing</a>
           </li>
-       
+
         </ul>
       </nav>
     </header>
@@ -84,6 +84,11 @@ import {WeekCompare} from './components/order/weekcompare/weekcompare';
     </main>
 
     <footer>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
       Copyright StalkNSave
       <!--WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a>-->
     </footer>
@@ -98,8 +103,8 @@ import {WeekCompare} from './components/order/weekcompare/weekcompare';
   { path: '/admin', component: AdminComponent, name: 'Admin' },
   { path: '/company', component: SettingsComponent, name: 'Settings' },
   { path: '/inventory/...', component: InventoryComponent, name: 'Inventory' },
-  { path: '/order', component: OrderComponent, name: 'Order' },
-  { path: '/WeekCompare', component: WeekCompare, name: 'WeekCompare' },
+//  { path: '/order', component: OrderComponent, name: 'Order' },
+  { path: '/purchasing/...', component: PurchasingComponent, name: 'Purchasing' },
 
   { path: '/**', redirectTo: ['Index'] }
 ])

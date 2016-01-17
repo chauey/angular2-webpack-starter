@@ -1,0 +1,80 @@
+<div>
+    <h1>Order</h1>
+    <form (ngSubmit)="onSubmit()" #orderItemForm="ngForm">
+
+
+
+
+        <!--id-->
+        <div class="form-group">
+            <label for="id">Order ID</label>
+            <input type="text" class="form-control" required [(ngModel)]="model.orderId" ngControl="id" #id="ngForm">
+            <div [hidden]="id.valid" class="alert alert-danger">
+                ID is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="text" class="form-control" required [(ngModel)]="model.date" ngControl="date" #date="ngForm">
+            <div [hidden]="date.valid" class="alert alert-danger">
+                Date is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="supplierName">Supplier</label>
+            <input type="text" class="form-control" required [(ngModel)]="model.supplierName" ngControl="supplierName" #supplierName="ngForm">
+            <div [hidden]="supplierName.valid" class="alert alert-danger">
+                Supplier is required
+            </div>
+        </div>
+
+
+
+
+
+        Items:
+        <!--table-->
+        <table class="table-striped">
+            <thead class="thead-default">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="#orderLineItem of model.orderItems">
+                    <td>{{orderLineItem.itemId}}</td>
+                    <td>{{orderLineItem.itemName}}</td>
+                    <td>{{orderLineItem.price}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="form-group">
+            <label for="totalPrice">Total</label>
+            <input type="text" class="form-control" required [(ngModel)]="model.totalPrice" ngControl="totalPrice" #totalPrice="ngForm">
+            <div [hidden]="totalPrice.valid" class="alert alert-danger">
+                Total is required
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-default" [disabled]="!orderItemForm.form.valid">Submit</button>
+
+
+    </form>
+
+
+
+</div>
+
+<!--<pre>{{model | json}}</pre>-->

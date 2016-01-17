@@ -1,0 +1,39 @@
+<div>
+    <h1>Order List</h1>
+</div>
+
+<!--table-->
+<table class="table-striped">
+    <thead class="thead-default">
+        <tr>
+            <th>Actions</th>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Supplier</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="#order of orders">
+            <td>
+                <a [routerLink]=" ['OrderItem', {id: order.orderId}] ">View</a>
+            </td>
+            <td>{{order.orderId}}</td>
+            <td>{{order.date}}</td>
+            <td>{{order.supplierName}}</td>
+            <td>{{order.totalPrice}}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Supplier</th>
+            <th>Total</th>
+        </tr>
+    </tfoot>
+</table>
+
+<pre>
+    {{orders | json}}
+</pre>

@@ -1,11 +1,10 @@
 <div class="inventory-list">
-    INVENTORY LIST
-
-
-filter: <input [(ngModel)]="searchValue" (keyup)="filter()" /> <button (click)="filter()">filter</button>
+    INVENTORY LIST filter:
+    <input [(ngModel)]="searchValue" (keyup)="filter()" />
+    <button (click)="filter()">filter</button>
 
     pager here
-    
+
     <!--table-->
     <table class="table-striped">
         <thead class="thead-default">
@@ -39,17 +38,6 @@ filter: <input [(ngModel)]="searchValue" (keyup)="filter()" /> <button (click)="
             </tr>
         </tfoot>
     </table>
-    
+
     pager here
-
-    <!--<div>inventoryItems:</div>
-    <pre>
-        {{inventoryItems | json}}
-    </pre>
-
-    <div>inventoryItems:</div>
-    <pre>
-        {{inventoryItems | json}}
-    </pre>-->
-
 </div>

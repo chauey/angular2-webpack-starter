@@ -5,14 +5,14 @@ import {NgForm}    from 'angular2/common';
 import { DataService } from '../../services/DataService';
 
 @Component({
-  selector: 'inventory-item',
+  selector: 'order-item',
   directives: [],
   pipes: [],
   providers: [],
-  styles: [ require('./inventory-item.component.css') ],
-  template: require('./inventory-item.component.html')
+  styles: [ require('./order-item.component.css') ],
+  template: require('./order-item.component.html')
 })
-export class InventoryItem implements OnInit {
+export class OrderItemComponent implements OnInit {
   // TypeScript public modifiers
   constructor(private _router: Router,
     private _routeParams: RouteParams,
@@ -26,16 +26,16 @@ export class InventoryItem implements OnInit {
   submitted = false;
 
   ngOnInit() {
-    console.log('ngOnInit inventory-item component');
+    console.log('ngOnInit order-item component');
 
     this.id = this._routeParams.get('id') === 'new' ? null : +this._routeParams.get('id');
-    console.log('ngOnInit inventory-item component id is: ' + this.id);
+    console.log('ngOnInit order-item component id is: ' + this.id);
     
     if(this.id === null || this.id === undefined) {
         this.model = {};
     }
     else {
-        this.model = this._service.getInventoryItem(this.id); //.then(inventoryItem => this.model = inventoryItem);
+        this.model = this._service.getOrderItem(this.id);
     }
     
   }
@@ -56,7 +56,7 @@ export class InventoryItem implements OnInit {
         }
         else {
             // add to data repo
-            this._service.inventoryItemsView.push(this.model);
+            this._service.orders.push(this.model);
         }
       
           this.gotoList();
@@ -76,6 +76,6 @@ export class InventoryItem implements OnInit {
   }
     
      gotoList() {
-        this._router.navigate(['InventoryList',  {id: this.id, foo: 'foo'} ]);
+        this._router.navigate(['OrderList',  {id: this.id} ]);
      }
 }
