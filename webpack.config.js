@@ -13,7 +13,7 @@ var HtmlWebpackPlugin  = require('html-webpack-plugin');
 var ENV = process.env.ENV = process.env.NODE_ENV = 'development';
 
 var metadata = {
-  title: 'StalkNSave',//'Angular2 Webpack Starter by @gdi2990 from @AngularClass',
+  title: 'AA MVP CodeGen',//'Angular2 Webpack Starter by @gdi2990 from @AngularClass',
   baseUrl: '/',
   host: 'localhost',
   port: 3000,
@@ -110,6 +110,7 @@ module.exports = {
   devServer: {
     port: metadata.port,
     host: metadata.host,
+    contentBase: 'src/', // https://github.com/AngularClass/angular2-webpack-starter/commit/c6f50c8af6c236903ab094674f595252dbb20bff
     historyApiFallback: true,
     watchOptions: { aggregateTimeout: 300, poll: 1000 }
   },

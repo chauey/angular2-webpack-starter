@@ -6,215 +6,323 @@ import { Injectable } from 'angular2/core';
 @Injectable()
 export class DataService {
 
-    searchValue: string = '';
-
-    items: any = [
-        {
-            id: 0,
-            name: 'Alligator bites 3 4 lbs'
-        },
-        {
-            id: 1,
-            name: 'Alligator Meat Tenderloin ...'
-        },
-        {
-            id: 2,
-            name: 'Achovy Flat Consul 1-13oz'
-        }];
-
-    suppliers: any = [
-        {
-            id: 0,
-            name: 'Sysco'
-        },
-        {
-            id: 1,
-            name: 'US FOOD Service'
-        },
-        {
-            id: 2,
-            name: 'GORDON food Service'
-        }
-    ];
+  searchValue: string = '';
 
 
-    inventoryItemsView: any =
-    [
-        {
-            productId: 0,
-            count: 1,
-            par: 10,
-            name: 'product name 1',
-        },
-        {
-            productId: 1,
-            count: 4,
-            par: 10,
-            name: 'product name 1',
-        },
-        {
-            productId: 2,
-            count: 2,
-            par: 10,
-            name: 'product name 1',
-        },
-    ];
-
-    inventoryItems: any =
-    [
-        {
-            itemId: 0,
-            supplierPrices: [
-                {
-                    supplierId: 0,
-                    prices: [
-                        { date: '1/1/2016', price: 119.87 },
-                        { date: '1/8/2016', price: 119.87 }
-                    ]
-                },
-                {
-                    supplierId: 1,
-                    prices: [
-                        { date: '1/1/2016', price: null },
-                        { date: '1/8/2016', price: null }
-                    ]
-                },
-                {
-                    supplierId: 2,
-                    prices: [
-                        { date: '1/1/2016', price: null },
-                        { date: '1/8/2016', price: null }
-                    ]
-                }
-            ]
-        }
-    ];
-
-
-
-    flattenedPriceCompareData: any = [
-        {
-            inventoryId: 0,
-            supplier1_itemName: 'Alligator bites 3 4 lbs', supplier1_price1: 119.87, supplier1_price2: 119.87, supplier1_weekCompare: 0.00,
-            supplier2_itemName: 'Alligator bites 3 4 lbs', supplier2_price1: null, supplier2_price2: null, supplier2_weekCompare: 0.00,
-            supplier3_itemName: 'Alligator bites 3 4 lbs', supplier3_price1: null, supplier3_price2: null, supplier3_weekCompare: 0.00,
-            vendor: 'SYSCO', price: 119.87,
-            preferredVendor: null, preferredVendorId: null
-        },
-        {
-            inventoryId: 1,
-            supplier1_itemName: 'Alligator Mean Tenderloin 4/5 ...', supplier1_price1: 10.6, supplier1_price2: 10.24, supplier1_weekCompare: 0.36,
-            supplier2_itemName: 'Alligator Mean Tenderloin 12/1 ...', supplier2_price1: 11.04, supplier2_price2: 11.04, supplier2_weekCompare: 0.00,
-            supplier3_itemName: 'Alligator Mean Tenderloin 12/1 ...', supplier3_price1: 11.03, supplier3_price2: 11.03, supplier3_weekCompare: 0.00,
-            vendor: 'GORDON food Service', price: 10.03,
-            preferredVendor: null, preferredVendorId: null
-        },
-        {
-            inventoryId: 2,
-            supplier1_itemName: 'Anchovy Flat Consul 1-13oz', supplier1_price1: 7.64, supplier1_price2: 7.64, supplier1_weekCompare: 0.00,
-            supplier2_itemName: 'ANCHOVY, FILLET FLAT IN OLIVE OIL ...', supplier2_price1: 6.8, supplier2_price2: 6.83, supplier2_weekCompare: 0.03,
-            supplier3_itemName: 'Anchovy Flat in oil 28oz Bel Aria', supplier3_price1: 10.77, supplier3_price2: 10.77, supplier3_weekCompare: 0.00,
-            vendor: 'US FOOD Service', price: 6.8,
-            preferredVendor: 'SYSCO', preferredVendorId: 0 
-        },
-    ];
-
-
-    vendorCompareData: any =
+  productList: any =
+  [
      {
-        baseTime: 'Jun-1',
-        compareTime: 'Jun-8',
-        itemComparisons:
-        [
-            {
-                item: 'item1',
-                vendorItemComparison:
-                [
-                    {
-                        vendor: 'Sysco',
-                        base: 1.00, compare: 1.01
-                    },
-                    {
-                        vendor: 'US Food Service',
-                        base: 1.00, compare: .99
-                    }
-                ]
-            }
-        ]
-    };
+      productId: 0,
+      supplierId: 0,
+      supplierName: 'SYSCO',
+      name: 'Alligator bites 3 4 lbs',
+      description: 'Alligator bites 3 4 lbs',
+      code: '0001',
+    },
+    {
+      productId: 1,
+      supplierId: 1,
+      supplierName: 'US FOOD Service',
+      name: 'Alligator Bites 3 4 lbs',
+      description: 'Alligator bites 3 4 lbs',
+      code: '0001',
+    },
+    {
+      productId: 2,
+      supplierId: 2,
+      supplierName: 'GORDON Food Service',
+      name: 'Alligator Meat Tenderloin ...',
+      description: 'Alligator Meat Tenderloin ...',
+      code: '0002',
+    },
+  ];
 
-    vendorCompareData2: any =
-    [
-        { itemId: 1,
-            price: 1,
-            price2: 2
+  productList2: any =
+  {
+    '0': {
+      productId: '0',
+      supplierId: 0,
+      supplierName: 'SYSCO',
+      name: 'Alligator bites 3 4 lbs',
+      description: 'Alligator bites 3 4 lbs',
+      code: '0001',
+    },
+    '1': {
+      productId: '1',
+      supplierId: 1,
+      supplierName: 'US FOOD Service',
+      name: 'Alligator Bites 3 4 lbs',
+      description: 'Alligator bites 3 4 lbs',
+      code: '0001',
+    },
+    '2': {
+      productId: '2',
+      supplierId: 2,
+      supplierName: 'GORDON Food Service',
+      name: 'Alligator Meat Tenderloin ...',
+      description: 'Alligator Meat Tenderloin ...',
+      code: '0002',
+    },
+  };
+
+
+  supplierList: any = [
+    { id: 0, name: 'Sysco', description: 'Sysco ...', code: '123', },
+    { id: 1, name: 'US FOOD Service', description: 'US FOOD Service ...', code: '456', },
+    { id: 2, name: 'GORDON Food Service', description: 'GORDON Food Service ...', code: '789', }
+  ];
+
+  cache: any = [
+    {
+      type: 'supplier',
+      version: '20160210t',
+      check: 'always|daily|hourly|timeSpan|date|never',
+      items: [
+        { id: 0, name: 'Sysco', description: 'Sysco ...', code: '123', },
+        { id: 1, name: 'US FOOD Service', description: 'US FOOD Service ...', code: '456', },
+        { id: 2, name: 'GORDON Food Service', description: 'GORDON Food Service ...', code: '789', }
+      ]
+    }
+  ];
+
+
+  clientList: any = [
+    {
+      id: 0,
+      name: 'Applebee\'s Neighborhood Grill & Bar',
+      description: '123 street NYC, NY',
+      code: '123',
+    },
+    {
+      id: 1,
+      name: 'Olive Garden',
+      description: `456 avenue Chicago, Illinoi`,
+      code: '456',
+    },
+    {
+      id: 2,
+      name: 'Chili\'s Grill & Bar',
+      description: '789 Road NYC, NY',
+      code: '789',
+    }
+  ];
+  // 	Red Lobster, 	Outback Steakhouse, Buffalo Wild Wings Grill & Bar, T.G.I. Friday's, The Cheesecake Factory,	Ruby Tuesday, Texas Roadhouse
+
+
+  orderList: any =
+  [
+    {
+      orderId: 0,
+      date: '1/5/2016',
+      supplierId: 0,
+      supplierName: 'SYSCO',
+      totalPrice: 199.10,
+      tax: 7.5,
+      statusId: 1,
+      statusName: 'fulfilled',
+      orderItems:
+      [
+        { itemId: 0, itemName: 'Item1', price: 1.99 },
+        { itemId: 1, itemName: 'Item2', price: 2.99 },
+        { itemId: 2, itemName: 'Item3', price: 3.99 }
+      ]
+    },
+    {
+      orderId: 1,
+      date: '1/14/2016',
+      supplierId: 2,
+      supplierName: 'GFS',
+      totalPrice: 54.15,
+      tax: 7.5,
+      statusId: 2,
+      statusName: 'ordered',
+      orderItems:
+      [
+        { itemId: 0, itemName: 'Item4', price: 109.50 },
+      ]
+    },
+    {
+      orderId: 2,
+      date: null,
+      supplierId: 2,
+      supplierName: 'GFS',
+      totalPrice: 109.5,
+      tax: 7.5,
+      statusId: 2,
+      statusName: 'pending',
+      orderItems:
+      [
+        { itemId: 0, itemName: 'Item 4', price: 100.00, code: 'USDGHKJD' },
+        { itemId: 1, itemName: 'Item 5', price: 9.50, code: 'FLJKFGFKNJ' },
+      ]
+    }
+  ];
+
+  orderStatusList: any =
+  [
+    {id: 0, name: 'Deleted', description: 'Deleted'},
+    {id: 1, name: 'Pending', description: 'Pending (New Order)'},
+    {id: 2, name: 'Processing', description: 'Processing (See order notes)'},
+    {id: 3, name: 'Order Complete', description: 'Order Complete & Dispatched'},
+    {id: 4, name: 'Declined', description: 'Declined (See notes)'},
+    {id: 5, name: 'Fraud', description: 'Failed Fraud Review'},
+    {id: 6, name: 'Cancelled', description: 'Cancelled'},
+  ];
+
+
+
+  inventoryItemsView: any =
+  [
+    {
+      productId: 0,
+      count: 1,
+      par: 10,
+      name: 'product name 1',
+    },
+    {
+      productId: 1,
+      count: 4,
+      par: 10,
+      name: 'product name 1',
+    },
+    {
+      productId: 2,
+      count: 20,
+      par: 10,
+      name: 'product name 1',
+    },
+  ];
+
+  inventoryItems: any =
+  [
+    {
+      itemId: 0,
+      supplierPrices: [
+        {
+          supplierId: 0,
+          prices: [
+            { date: '1/1/2016', price: 119.87 },
+            { date: '1/8/2016', price: 119.87 }
+          ]
         },
-        { itemId: 2,
-            price: 1,
-            price2: 2
+        {
+          supplierId: 1,
+          prices: [
+            { date: '1/1/2016', price: null },
+            { date: '1/8/2016', price: null }
+          ]
         },
-        { itemId: 3,
-            price1: 1,
-            price2: 2
+        {
+          supplierId: 2,
+          prices: [
+            { date: '1/1/2016', price: null },
+            { date: '1/8/2016', price: null }
+          ]
         }
-    ];
+      ]
+    }
+  ];
 
-    getInventoryItem(id: number) {
-        return this.inventoryItemsView[id];
+
+
+  flattenedPriceCompareData: any = [
+    {
+      inventoryId: 0,
+      supplier1_itemName: 'Alligator bites 3 4 lbs', supplier1_price1: 119.87, supplier1_price2: 119.87, supplier1_weekCompare: 0.00, isBestPrice1: true,
+      supplier2_itemName: 'Alligator bites 3 4 lbs', supplier2_price1: null, supplier2_price2: null, supplier2_weekCompare: 0.00, isBestPrice2: false,
+      supplier3_itemName: 'Alligator bites 3 4 lbs', supplier3_price1: null, supplier3_price2: null, supplier3_weekCompare: 0.00, isBestPrice3: false,
+      vendor: 'SYSCO', price: 119.87, savings: .32,
+      preferredVendor: null, preferredVendorId: null,
+      varyPercentToReport: 25
+    },
+    {
+      inventoryId: 1,
+      supplier1_itemName: 'Alligator Mean Tenderloin 4/5 ...', supplier1_price1: 10.6, supplier1_price2: 10.24, supplier1_weekCompare: 0.36, isBestPrice1: false,
+      supplier2_itemName: 'Alligator Mean Tenderloin 12/1 ...', supplier2_price1: 11.04, supplier2_price2: 11.04, supplier2_weekCompare: 0.00, isBestPrice2: true,
+      supplier3_itemName: 'Alligator Mean Tenderloin 12/1 ...', supplier3_price1: 11.03, supplier3_price2: 11.03, supplier3_weekCompare: 0.00, isBestPrice3: true,
+      vendor: 'GORDON food Service', price: 10.03,
+      preferredVendor: null, preferredVendorId: null,
+      varyPercentToReport: -25
+    },
+    {
+      inventoryId: 2,
+      supplier1_itemName: 'Anchovy Flat Consul 1-13oz', supplier1_price1: 7.64, supplier1_price2: 7.64, supplier1_weekCompare: 0.00, isBestPrice1: true,
+      supplier2_itemName: 'ANCHOVY, FILLET FLAT IN OLIVE OIL ...', supplier2_price1: 6.8, supplier2_price2: 6.83, supplier2_weekCompare: 0.03, isBestPrice2: true,
+      supplier3_itemName: 'Anchovy Flat in oil 28oz Bel Aria', supplier3_price1: 10.77, supplier3_price2: 10.77, supplier3_weekCompare: 0.00, isBestPrice3: true,
+      vendor: 'US FOOD Service', price: 6.8,
+      preferredVendor: null, preferredVendorId: 0,
     }
-    
-        getOrderItem(id: number) {
-        return this.orders[id];
-    }
-    
-    orders: any = 
+  ];
+
+
+  vendorCompareData: any =
+  {
+    baseTime: 'Jun-1',
+    compareTime: 'Jun-8',
+    itemComparisons:
     [
       {
-          orderId: 0,
-          date: '1/5/2016',
-          supplierId:0,
-          supplierName:'SYSCO',
-          totalPrice: 199.10,
-          tax: 7.5,
-          statusId: 1,
-          statusName: 'fulfilled',
-          orderItems: 
-          [ 
-              { itemId: 0, itemName: 'Item1', price: 1.99 },
-              { itemId: 1, itemName: 'Item2', price: 2.99 },
-              { itemId: 2, itemName: 'Item3', price: 3.99 },
-          ]
-        },
-        {
-          orderId: 1,
-          date: '1/14/2016',
-          supplierId:2,
-          supplierName:'GFS',
-          totalPrice: 54.15,
-          tax: 7.5,
-          statusId: 2,
-          statusName: 'ordered',
-          orderItems: 
-          [ 
-              { itemId: 0, itemName: 'Item4', price: 109.50 },
-          ]
-        },
-             {
-          orderId: 2,
-          date: null,
-          supplierId:2,
-          supplierName:'GFS',
-          totalPrice: 54.15,
-          tax: 7.5,
-          statusId: 2,
-          statusName: 'pending',
-          orderItems: 
-          [ 
-              { itemId: 0, itemName: 'Item4', price: 109.50 },
-          ]
-        }  
+        item: 'item1',
+        vendorItemComparison:
+        [
+          {
+            vendor: 'Sysco',
+            base: 1.00, compare: 1.01
+          },
+          {
+            vendor: 'US Food Service',
+            base: 1.00, compare: .99
+          }
+        ]
+      }
+    ]
+  };
 
-    ];
+
+
+  vendorCompareData2: any =
+  [
+      { itemId: 1,
+          price: 1,
+          price2: 2
+      },
+      { itemId: 2,
+          price: 1,
+          price2: 2
+      },
+      { itemId: 3,
+          price1: 1,
+          price2: 2
+      }
+  ];
+
+
+  getClient(id: number) {
+    return this.clientList[id];
+  }
+
+  getProduct(id: number) {
+    return this.productList[id];
+  }
+
+  getSupplier(id: number) {
+    return this.supplierList[id];
+  }
+
+
+  getInventoryItem(id: number) {
+    return this.inventoryItemsView[id];
+  }
+
+  getOrderItem(id: number) {
+    return this.orderList[id];
+  }
+
+
+
+
+
+
 
 }
 
@@ -286,50 +394,50 @@ export class DataService {
     //     { name: 'organic', colors: ['#9c88d9', '#a3d767', '#8ec3c0', '#e9c3a9', '#91ab36', '#d4ccc0', '#61bbd8', '#e2d76f', '#80715a'] },
     //     { name: 'slate', colors: ['#7493cd', '#f99820', '#71b486', '#e4a491', '#cb883b', '#ae83a4', '#bacc5c', '#e5746a', '#505d65'] }
 //     // ];
-// 
+//
 //   getSomeCountries(): string[] {
 //         return this._someCountries;
 //     }
-// 
+//
 //     getAllCountries(): string[] {
 //         return this._allCountries;
 //     }
-// 
+//
 //     getProducts(): string[] {
 //         return this._products;
 //     }
-// 
+//
 //     getColors(): string[] {
 //         return this._colors;
 //     }
-// 
+//
 //     getMusicians(): string[] {
 //         return this._musicians;
 //     }
-// 
+//
 //     getPalettes(): { name: string, colors: string[] }[] {
 //         return this._palettes;
 //     }
-// 
+//
 //     // get matches for a search term
 //     getData(count: number, unique: boolean = false): any[] {
 //         var data = [];
 //         var dt = new Date();
-// 
+//
 //         // if unique items, limit to number of countries
 //         if (unique === true) {
 //             count = this._someCountries.length;
 //         }
-// 
+//
 //         // add count items
 //         for (var i = 0; i < count; i++) {
-// 
+//
 //             // constants used to create data items
 //             var date = new Date(dt.getFullYear(), i % 12, 25, i % 24, i % 60, i % 60),
 //                 countryId = unique === true ? i : Math.floor(Math.random() * this._someCountries.length),
 //                 productId = Math.floor(Math.random() * this._products.length),
 //                 colorId = Math.floor(Math.random() * this._colors.length);
-// 
+//
 //             // create the item
 //             var item = {
 //                 id: i,
@@ -346,14 +454,14 @@ export class DataService {
 //                 discount: Math.random() / 4,
 //                 active: i % 4 === 0,
 //                 sales: [],
-// 
+//
 //             };
-// 
+//
 //             // add an array (should not auto-bind)
 //             for (var j = 0; j < 12; j++) {
 //                 item.sales.push(50 + 20 * (Math.random() - .5) + j);
 //             }
-// 
+//
 //             // add the item to the list
 //             data.push(item);
 //         }

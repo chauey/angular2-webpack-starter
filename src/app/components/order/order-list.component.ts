@@ -6,15 +6,16 @@ import { DataService } from '../../services/DataService';
 @Component({
   selector: 'order-list',
   directives: [...ROUTER_DIRECTIVES],
-  pipes: [ ],
-  providers: [DataService],
-  styles: [require('./order-list.component.css') ],
+  pipes: [],
+  providers: [],
+  styles: [require('./order-list.component.css')],
   template: require('./order-list.component.html')
 })
+
 export class OrderListComponent {
 
-    searchValue: string = '';
-    orders: any = this._dataService.orders;
+  searchValue: string = '';
+  orderList: any = this._dataService.orderList;
 
   constructor(private _router: Router, private _dataService: DataService) {
   }

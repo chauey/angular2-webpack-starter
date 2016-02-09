@@ -36,7 +36,7 @@ module.exports = {
             2375  // 2375 -> Duplicate string index signature
           ]
         },
-        exclude: [ /\.e2e\.ts$/, /node_modules/ ]
+        exclude: [ /\.e2e\.ts$/, /node_modules\/(?!(ng2-.+))/ ] // AA: added the ?! ng2 part, like in webpack.config, because ng2-file-upload is needed
       },
       { test: /\.json$/, loader: 'json-loader' },
       { test: /\.html$/, loader: 'raw-loader' },

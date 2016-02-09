@@ -35,14 +35,24 @@
   },
   "dependencies": {
     "angular2": "2.0.0-beta.1",
+    "angular2-jwt": "^0.1.6",
     "bootstrap": "^4.0.0-alpha.2",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.33.3",
     "es7-reflect-metadata": "^1.4.0",
+    "ng2-bootstrap": "1.0.1-beta.0",
+    "ng2-charts": "^1.0.0-beta.0",
     "ng2-file-upload": "1.0.0-beta.0",
     "rxjs": "5.0.0-beta.0",
     "zone.js": "0.5.10"
   },
+  "_dnaNotesByChau": [
+    "angular2 | 2.0.0-beta.1 | https://github.com/angular/angular",
+    "bootstrap| ^4.0.0-alpha.2 | https://github.com/twbs/bootstrap/tree/v4-dev",
+    "ng2-bootstrap | 1.0.1-beta.0, // https://github.com/valor-software/ng2-bootstrap",
+    "ng2-charts | ^0.46.0, @1.0.0-beta.0 // https://github.com/valor-software/ng2-charts",
+    "ng2-file-upload | 1.0.0-beta.0, // https://github.com/valor-software/ng2-file-upload"
+  ],
   "devDependencies": {
     "copy-webpack-plugin": "^0.3.3",
     "css-loader": "^0.23.0",

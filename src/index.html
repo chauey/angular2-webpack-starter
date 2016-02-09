@@ -32,10 +32,13 @@
   <!-- base url -->
   <base href="{%= o.webpackConfig.metadata.baseUrl %}">
 
+  <!-- Auth0 Lock script and AngularJS module, did npm install auth0-lock instead -->
+  <script src="//cdn.auth0.com/js/lock-8.2.min.js"></script>
+
   {% for (var css in o.htmlWebpackPlugin.files.css) { %}
   <link href="{%=o.htmlWebpackPlugin.files.css[css] %}" rel="stylesheet">
   {% } %}
-  
+
   <!--TODO: find out how to best include bootstrap. also added in packages and required into many components at the moment.-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 </head>
@@ -66,10 +69,12 @@
   {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
   <script src="{%= o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
   {% } %}
-  
+
     <!-- jQuery first, then Bootstrap JS.   http://v4-alpha.getbootstrap.com/getting-started/introduction/ -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
 
+    <!--http://valor-software.github.io/ng2-charts/-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 </body>
 </html>

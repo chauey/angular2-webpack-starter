@@ -1,5 +1,4 @@
 <div class="container">
-    <h1>Order List</h1>
 
     <!--table-->
     <div class="table-responsive">
@@ -15,16 +14,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="#order of orders">
+                <tr *ngFor="#order of orderList">
                     <td>
-                        <button [routerLink]=" ['OrderItem', {id: order.orderId}] " class="btn btn-primary">View</button>
-                        <!--<a [routerLink]=" ['OrderItem', {id: order.orderId}] ">View</a>-->
+                        <button [routerLink]=" ['Item', {id: order.orderId}] " class="btn btn-primary">View</button>
+                        <!--<a [routerLink]=" ['Item', {id: order.orderId}] ">View</a>-->
                     </td>
                     <td>{{order.orderId}}</td>
                     <td>{{order.date}}</td>
                     <td>{{order.supplierName}}</td>
                     <td>{{order.statusName}}</td>
-                    <td>{{order.totalPrice}}</td>
+                    <td>{{order.totalPrice | currency:'USD':true:'1.2-2'}} </td>
                 </tr>
             </tbody>
             <tfoot class="thead-default">
@@ -41,6 +40,6 @@
     </div>
 
     <!--<pre>
-    {{orders | json}}
+    {{orderList | json}}
     </pre>-->
 </div>

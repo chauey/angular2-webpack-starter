@@ -1,25 +1,27 @@
 <div class="container">
 
-    <h1>INVENTORY</h1>
+  <!--<h1>Inventory</h1>-->
 
-    <nav>
-
-        <ul>
-            <!--order-->
-            <li router-active="active">
-                <a [routerLink]=" ['InventoryImport'] ">Import Inventory</a>
-            </li>
-            <li router-active="active">
-                <a [routerLink]=" ['InventoryList'] ">Inventory List</a>
-            </li>
-            <li router-active="active">
-                <a [routerLink]=" ['InventoryItem', { id: 'new' }] ">Add</a>
-            </li>
-        </ul>
-    </nav>
-
-    <main>
-        <router-outlet></router-outlet>
-    </main>
-
+  <nav class="navbar navbar-light bg-faded">
+    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+      &#9776;
+    </button>
+    <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]=" ['List'] ">List</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]=" ['Item', { id: 'new' }] ">Add</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]=" ['Import'] ">Import</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </div>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

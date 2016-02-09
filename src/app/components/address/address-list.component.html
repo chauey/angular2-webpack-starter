@@ -1,0 +1,70 @@
+<div class="container">
+
+  <input [(ngModel)]="odata.expand" placeholder="expand" />
+  <input [(ngModel)]="odata.filter" placeholder="filter" />
+  <input [(ngModel)]="odata.select" placeholder="select" />
+  <input [(ngModel)]="odata.orderby" placeholder="orderby" />
+  <input [(ngModel)]="odata.top" placeholder="top" type="number" />
+  <input [(ngModel)]="odata.skip" placeholder="skip" type="number" />
+  <input [(ngModel)]="odata.count" placeholder="count" type="checkbox" />
+  <button (click)="getAddressList()">Get</button>
+  <pre>{{odata|json}}</pre>
+
+  <!--table-->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-baddressed table-sm">
+      <thead class="thead-default">
+        <tr>
+          <th>Actions</th>
+          <th>Address ID</th>
+          <th>Address Line 1</th>
+          <th>Address Line 2</th>
+          <th>City</th>
+          <th>StateProvinceId</th>
+          <th>Postal Code</th>
+          <th>Row guid</th>
+          <th>Modified Date</th>
+          <th>Spatial Location</th>
+          <th>Debug</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="#address of addressList">
+          <td>
+            <button [routerLink]=" ['Item', {id: address.AddressId}] " class="btn btn-primary">View</button>
+            <!--<a [routerLink]=" ['Item', {id: address.addressId}] ">View</a>-->
+          </td>
+          <td>{{address.AddressId}}</td>
+          <td>{{address.AddressLine1}}</td>
+          <td>{{address.AddressLine2}}</td>
+          <td>{{address.City}}</td>
+          <td>{{address.StateProvinceId}}</td>
+          <td>{{address.PostalCode}}</td>
+          <td>{{address.Rowguid}}</td>
+          <td>{{address.ModifiedDate}}</td>
+          <td>{{address.SpatialLocation}}</td>
+          <td>{{address}}</td>
+        </tr>
+      </tbody>
+      <tfoot class="thead-default">
+        <tr>
+          <th>Actions</th>
+          <th>Address ID</th>
+          <th>Address Line 1</th>
+          <th>Address Line 2</th>
+          <th>City</th>
+          <th>StateProvinceId</th>
+          <th>Postal Code</th>
+          <th>Row guid</th>
+          <th>Modified Date</th>
+          <th>Spatial Location</th>
+          <th>Debug</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!--<pre>
+    {{addressList | json}}
+    </pre>-->
+</div>

@@ -1,34 +1,37 @@
- /*
-  * TODO: ES5 for now until I make a webpack plugin for protractor
-  */
-describe('App', function() {
+/*
+ * TODO: ES5 for now until I make a webpack plugin for protractor
+ */
+describe('App', function () {
 
-  beforeEach(function() {
+  beforeEach(function () {
     browser.get('/');
   });
 
 
-  it('should have a title', function() {
+  it('should have a title', function () {
     var subject = browser.getTitle();
-    var result  = 'Angular2 Webpack Starter by @gdi2990 from @AngularClass';
+    var result = 'StalkNSave'; // 'Angular2 Webpack Starter by @gdi2990 from @AngularClass';
     expect(subject).toEqual(result);
   });
 
-  it('should have <header>', function() {
+  it('should have <header>', function () {
     var subject = element(by.deepCss('app /deep/ header')).isPresent();
-    var result  = true;
+    var result = true;
     expect(subject).toEqual(result);
   });
 
-  it('should have <main>', function() {
+  it('should have <main>', function () {
     var subject = element(by.deepCss('app /deep/ main')).isPresent();
-    var result  = true;
+    var result = true;
     expect(subject).toEqual(result);
   });
 
-  it('should have <footer>', function() {
-    var subject = element(by.deepCss('app /deep/ footer')).getText();
-    var result  = 'WebPack Angular 2 Starter by @AngularClass';
+  it('should have <footer>', function () {
+    // var subject = element(by.deepCss('app /deep/ footer')).getText();
+    // var result  = 'WebPack Angular 2 Starter by @AngularClass';
+    var subject = element(by.id('mainFooter')).getText();
+    var result = 'Copyright (c) 2016 StalkNSave';
+
     expect(subject).toEqual(result);
   });
 

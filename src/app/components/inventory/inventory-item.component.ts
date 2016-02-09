@@ -1,81 +1,79 @@
 import {Component, OnInit} from 'angular2/core';
 import {RouteParams, Router} from 'angular2/router';
-import {NgForm}    from 'angular2/common';
+
+import { ValuesPipe } from '../../pipes/values.pipe';
 
 import { DataService } from '../../services/DataService';
 
 @Component({
   selector: 'inventory-item',
   directives: [],
-  pipes: [],
+  pipes: [ValuesPipe],
   providers: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory-item.component.css') ],
+  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory-item.component.css')],
   template: require('./inventory-item.component.html')
 })
-export class InventoryItem implements OnInit {
-  // TypeScript public modifiers
+export class InventoryItemComponent implements OnInit {
   constructor(private _router: Router,
     private _routeParams: RouteParams,
-    private _service: DataService) {
-
+    private _dataService: DataService) {
   }
-      searchValue: string = '';
+
+  searchValue: string = '';
 
   id: number = null;
   model: any = null;
   submitted = false;
+
 
   ngOnInit() {
     console.log('ngOnInit inventory-item component');
 
     this.id = this._routeParams.get('id') === 'new' ? null : +this._routeParams.get('id');
     console.log('ngOnInit inventory-item component id is: ' + this.id);
-    
-    if(this.id === null || this.id === undefined) {
-        this.model = {};
+
+    if (this.id === null || this.id === undefined) {
+      this.model = {};
+    } else {
+      this.model = this._dataService.getInventoryItem(this.id); //.then(inventoryItem => this.model = inventoryItem);
     }
-    else {
-        this.model = this._service.getInventoryItem(this.id); //.then(inventoryItem => this.model = inventoryItem);
-    }
-    
+
   }
 
-    customValidate(){
-        console.log('customValidate');    
-    }
+  customValidate() {
+    console.log('customValidate');
+  }
 
-  onSubmit() { 
-      // checkValidations
-      this.customValidate();
-      
-      // if form valid, add.
-      if(true) { // this.inventoryItemForm.form.isValid) {
-          // if is edit, else if new
-        if(this.id !== null) {
-            // TODO: update from cloned WIP
-        }
-        else {
-            // add to data repo
-            this._service.inventoryItemsView.push(this.model);
-        }
-      
-          this.gotoList();
+
+
+  onSubmit() {
+    // checkValidations
+    this.customValidate();
+
+    // if form valid, add.
+    if (true) { // this.inventoryItemForm.form.isValid) {
+      // if is edit, else if new
+      if (this.id !== null) {
+        // TODO: update from cloned WIP
       } else {
-            // show not valid message
-          
+        // add to data repo
+        this._dataService.inventoryItemsView.push(this.model);
       }
-      
-      this.submitted = true;
-      
-      console.log('onSubmit called');
+
+      this.gotoList();
+    } else {
+      // show not valid message
     }
-    
-      
+    this.submitted = true;
+
+    console.log('onSubmit called');
+  }
+
   filter() {
     console.log('filter with value: ' + this.searchValue);
   }
-    
-     gotoList() {
-        this._router.navigate(['InventoryList',  {id: this.id, foo: 'foo'} ]);
-     }
+
+  gotoList() {
+    this._router.navigate(['List', { id: this.id, foo: 'foo' }]);
+  }
 }

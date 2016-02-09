@@ -1,0 +1,82 @@
+<div class="container">
+  filter:
+  <input [(ngModel)]="searchValue" (keyup)="filter()" placeholder="search value" />
+  <button (click)="filter()" class="btn btn-primary">filter</button>
+
+<br/><button>Merge</button>
+  <!--pager here-->
+
+  <!--table-->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered table-sm">
+      <thead class="thead-default">
+        <tr>
+          <th>Actions</th>
+          <!--th>ID</th-->
+          <th>Name</th>
+          <th>Supplier</th>
+          <th>Description</th>
+          <th>UPC</th>
+          <th>Related Products</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="#product of productList">
+          <td>
+            <input type='checkbox' />
+            <button (click)="edit(product.productId)" class="btn btn-primary">edit</button>
+            <button (click)="delete(product.productId)" class="btn btn-primary">delete</button>
+            <a [routerLink]=" ['Item', {id: product.productId}] "><!--Edit--></a></td>
+          <!--td>{{product.productId}}</td-->
+          <td>{{product.name}}</td>
+          <td>{{product.supplierName}}</td>
+          <td>{{product.description}}</td>
+          <td>{{product.code}}</td>
+          <td>{{product.relatedProductList}}
+            <select multiple class="form-control" [(ngModel)]="product.relatedProductList">
+
+            </select>
+
+            <button>Add Related Product</button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="thead-default">
+        <tr>
+          <th>Actions</th>
+          <!--th>ID</th-->
+          <th>Name</th>
+          <th>Supplier</th>
+          <th>Description</th>
+          <th>UPC</th>
+          <th>Related Products</th>
+        </tr>
+      </tfoot>
+    </table>
+    <nav>
+      <ul class="pagination pagination-sm">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!--<pre>
+    {{productList | json}}
+  </pre>-->
+
+  <!--pager here-->
+</div>

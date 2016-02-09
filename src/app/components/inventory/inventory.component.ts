@@ -3,42 +3,40 @@ import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { DataService } from '../../services/DataService';
 
-import { InventoryImport } from './inventory-import.component';
-import { InventoryList } from './inventory-list.component';
-import { InventoryItem } from './inventory-item.component';
+import { InventoryImportComponent } from './inventory-import.component';
+import { InventoryListComponent } from './inventory-list.component';
+import { InventoryItemComponent } from './inventory-item.component';
 
 @Component({
-    selector: 'inventory',
-    directives: [...ROUTER_DIRECTIVES],
-    providers: [DataService],
-    styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory.component.css')],
-    template: require('./inventory.component.html')
+  selector: 'inventory',
+  directives: [...ROUTER_DIRECTIVES],
+  providers: [DataService],
+  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory.component.css')],
+  template: require('./inventory.component.html')
 })
 
 @RouteConfig([
-  { path: '/import', component: InventoryImport, name: 'InventoryImport', useAsDefault: false },
-  { path: '/', component: InventoryList, name: 'InventoryList', useAsDefault: true },
-  { path: '/:id', component: InventoryItem, name: 'InventoryItem', useAsDefault: false },
+  { path: '/import', component: InventoryImportComponent, name: 'Import', useAsDefault: false },
+  { path: '/', component: InventoryListComponent, name: 'List', useAsDefault: true },
+  { path: '/:id', component: InventoryItemComponent, name: 'Item', useAsDefault: false },
 ])
 
 export class InventoryComponent {
-    constructor(private _dataService: DataService) {
+  constructor(private _dataService: DataService) {
 
-    }
+  }
 
-    searchValue: string = '';
+  searchValue: string = '';
 
-    items: any = this._dataService.items;
+  suppliers: any = this._dataService.supplierList;
 
-    suppliers: any = this._dataService.suppliers;
-
-    inventoryItems: any = this._dataService.inventoryItems;
+  inventoryItems: any = this._dataService.inventoryItems;
 
 
-    flattenedPriceCompareData: any = this._dataService.flattenedPriceCompareData;
+  flattenedPriceCompareData: any = this._dataService.flattenedPriceCompareData;
 
 
-    vendorCompareData: any = this._dataService.vendorCompareData;
+  vendorCompareData: any = this._dataService.vendorCompareData;
 
-    vendorCompareData2: any = this._dataService.vendorCompareData2;
+  vendorCompareData2: any = this._dataService.vendorCompareData2;
 }

@@ -1,0 +1,64 @@
+<div class="container">
+
+    <!--<h1>Item</h1>-->
+    <form (ngSubmit)="onSubmit()" #addressItemForm="ngForm">
+
+
+
+
+        <!--id-->
+        <div class="form-group">
+            <label for="id">Address ID</label>
+            <input type="text" class="form-control" required [(ngModel)]="model.AddressId" ngControl="id" #id="ngForm">
+            <div [hidden]="id.valid" class="alert alert-danger">
+                ID is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="adressLine1">Address Line 1</label>
+            <input type="text" class="form-control" required [(ngModel)]="model.AddressLine1" ngControl="adressLine1" #adressLine1="ngForm">
+            <div [hidden]="adressLine1.valid" class="alert alert-danger">
+                Address Line 1 is required
+            </div>
+        </div>
+
+
+
+
+
+        Items:
+        <!--table-->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-baddressed table-sm">
+                <thead class="thead-default">
+                    <tr>
+                        <!--th>ID</th-->
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="#addressLineItem of model.addressItems">
+                        <!--td>{{addressLineItem.itemId}}</td-->
+                        <td>{{addressLineItem.itemName}}</td>
+                        <td>{{addressLineItem.price}}</td>
+                    </tr>
+                </tbody>
+                <tfoot class="thead-default">
+                    <tr>
+                        <!--th>ID</th-->
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <button type="submit" [disabled]="!addressItemForm.form.valid" class="btn btn-primary">Submit</button>
+
+    </form>
+
+</div>
+
+<!--<pre>{{model | json}}</pre>-->

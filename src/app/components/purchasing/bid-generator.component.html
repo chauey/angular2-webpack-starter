@@ -1,85 +1,117 @@
 <div class="container">
-    <h2>Bid Generator</h2>
+  <!--<h2>Bid Generator</h2>-->
 
 
-    <button (click)="createOrders()" class="btn btn-primary">Create Orders</button>
+  <button (click)="createOrders()" class="btn btn-primary">Create Orders</button>
 
-    <!--table-->
-    <div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered table-sm">
-            <thead class="thead-default">
-                <tr>
-                    <th>Product</th>
-                    <th>Week 1</th>
-                    <th>Week 2</th>
-                    <th>Week compare</th>
+  <label class="">Total Savings:</label>
+  $14.75
 
-                    <th>Product</th>
-                    <th>Week 1</th>
-                    <th>Week 2</th>
-                    <th>Week compare</th>
+  <!--table-->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered table-sm">
+      <thead class="thead-default">
+        <tr>
+          <th colspan="4" style="background-color: #dff0d8;" class="alert-success">Best Savings Summary</th>
+          <th *ngIf="isShowDetails" colspan="4" style="background-color: #d9edf7;" class="alert alert-info">SYSCO</th>
+          <th *ngIf="isShowDetails" colspan="4" style="background-color: #f5f5f5;" class="alert-active">Vendor2</th>
+          <th *ngIf="isShowDetails" colspan="4" style="background-color: #dff0d8;">Vendor3</th>
+        </tr>
+        <tr>
+          <th>Vendor</th>
+          <th>Price</th>
+          <th></th>
+          <th>Savings</th>
+          <th>Alerts</th>
 
-                    <th>Product</th>
-                    <th>Week 1</th>
-                    <th>Week 2</th>
-                    <th>Week compare</th>
+          <th>Top Options</th>
 
-                    <th>Vendor</th>
-                    <th>Price</th>
+          <th *ngIf="isShowDetails">Product</th>
+          <th *ngIf="isShowDetails">Week 1</th>
+          <th *ngIf="isShowDetails">Week 2</th>
+          <th *ngIf="isShowDetails">Week compare</th>
 
-                    <th>Final Vendor?</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="#flattenedPriceCompareDataItem of flattenedPriceCompareData">
+          <th *ngIf="isShowDetails">Product</th>
+          <th *ngIf="isShowDetails">Week 1</th>
+          <th *ngIf="isShowDetails">Week 2</th>
+          <th *ngIf="isShowDetails">Week compare</th>
 
-                    <td>{{flattenedPriceCompareDataItem.supplier1_itemName}}</td>
-                    <td>{{flattenedPriceCompareDataItem.supplier1_price1}}</td>
-                    <td>{{flattenedPriceCompareDataItem.supplier1_price2}}</td>
-                    <td>{{flattenedPriceCompareDataItem.supplier1_weekCompare}}</td>
+          <th *ngIf="isShowDetails">Product</th>
+          <th *ngIf="isShowDetails">Week 1</th>
+          <th *ngIf="isShowDetails">Week 2</th>
+          <th *ngIf="isShowDetails">Week compare</th>
 
-                    <td>{{flattenedPriceCompareDataItem.supplier2_itemName}}</td>
-                    <td>{{flattenedPriceCompareDataItem.supplier2_price1}}</td>
-                    <td>{{flattenedPriceCompareDataItem.supplier2_price2}}</td>
-                    <td>{{flattenedPriceCompareDataItem.supplier2_weekCompare}}</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="#flattenedPriceCompareDataItem of flattenedPriceCompareData">
 
-                    <td>{{flattenedPriceCompareDataItem.supplier3_itemName}}</td>
-                    <td>{{flattenedPriceCompareDataItem.supplier3_price1}}</td>
-                    <td>{{flattenedPriceCompareDataItem.supplier3_price2}}</td>
-                    <td>{{flattenedPriceCompareDataItem.supplier3_weekCompare}}</td>
+          <td>{{flattenedPriceCompareDataItem.vendor}}</td>
+          <td>{{flattenedPriceCompareDataItem.price}}</td>
+          <td>{{flattenedPriceCompareDataItem.preferredVendor}}</td>
+          <td>{{flattenedPriceCompareDataItem.savings}}</td>
 
-                    <td>{{flattenedPriceCompareDataItem.vendor}}</td>
-                    <td>{{flattenedPriceCompareDataItem.price}}</td>
+          <td>{{flattenedPriceCompareDataItem.varyPercentToReport ? flattenedPriceCompareDataItem.varyPercentToReport + "% variance" : ""}}</td>
 
-                    <td>{{flattenedPriceCompareDataItem.preferredVendor}}</td>
+          <th>
+            <button># | vendor | price | size | qty </button><br/>
+            <button># | vendor | price | size | qty </button><br/>
+            <button># | vendor | price | size | qty </button><br/>
+          </th>
 
-                </tr>
-            </tbody>
-            <tfoot class="thead-default">
-                <tr>
-                    <th>Product</th>
-                    <th>Week 1</th>
-                    <th>Week 2</th>
-                    <th>Week compare</th>
+          <td *ngIf="isShowDetails">{{flattenedPriceCompareDataItem.supplier1_itemName}}</td>
+          <td *ngIf="isShowDetails">{{flattenedPriceCompareDataItem.supplier1_price1}}</td>
+          <td *ngIf="isShowDetails">{{flattenedPriceCompareDataItem.supplier1_price2}}</td>
+          <td *ngIf="isShowDetails" [ngClass]="{bestPrice: flattenedPriceCompareDataItem.isBestPrice1}">{{flattenedPriceCompareDataItem.supplier1_weekCompare}}</td>
 
-                    <th>Product</th>
-                    <th>Week 1</th>
-                    <th>Week 2</th>
-                    <th>Week compare</th>
+          <td *ngIf="isShowDetails">{{flattenedPriceCompareDataItem.supplier2_itemName}}</td>
+          <td *ngIf="isShowDetails">{{flattenedPriceCompareDataItem.supplier2_price1}}</td>
+          <td *ngIf="isShowDetails">{{flattenedPriceCompareDataItem.supplier2_price2}}</td>
+          <td *ngIf="isShowDetails" [ngClass]="{bestPrice: flattenedPriceCompareDataItem.isBestPrice2}">{{flattenedPriceCompareDataItem.supplier2_weekCompare}}</td>
 
-                    <th>Product</th>
-                    <th>Week 1</th>
-                    <th>Week 2</th>
-                    <th>Week compare</th>
+          <td *ngIf="isShowDetails">{{flattenedPriceCompareDataItem.supplier3_itemName}}</td>
+          <td *ngIf="isShowDetails">{{flattenedPriceCompareDataItem.supplier3_price1}}</td>
+          <td *ngIf="isShowDetails">{{flattenedPriceCompareDataItem.supplier3_price2}}</td>
+          <td *ngIf="isShowDetails" [ngClass]="{bestPrice: flattenedPriceCompareDataItem.isBestPrice3}">{{flattenedPriceCompareDataItem.supplier3_weekCompare}}</td>
 
-                    <th>Vendor</th>
-                    <th>Price</th>
+        </tr>
+        <tr>
+          <th colspan="4" style="background-color: #dff0d8;" class="alert-success">Best Savings Summary</th>
+          <th *ngIf="isShowDetails" colspan="4" style="background-color: #d9edf7;" class="alert alert-info">SYSCO</th>
+          <th *ngIf="isShowDetails" colspan="4" style="background-color: #f5f5f5;" class="alert-active">Vendor2</th>
+          <th *ngIf="isShowDetails" colspan="4" style="background-color: #dff0d8;">Vendor3</th>
+        </tr>
+      </tbody>
+      <tfoot class="thead-default">
+        <tr>
+          <th>Vendor</th>
+          <th>Price</th>
+          <th></th>
+          <th>Savings</th>
+          <th>Alerts</th>
 
-                    <th>Final Vendor?</th>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+          <th>Top Options</th>
+
+
+          <th *ngIf="isShowDetails">Product</th>
+          <th [style.display]="isShowDetails?'inherit':'none'">Week 1</th>
+          <th *ngIf="isShowDetails">Week 2</th>
+          <th *ngIf="isShowDetails">Week compare</th>
+
+          <th *ngIf="isShowDetails">Product</th>
+          <th *ngIf="isShowDetails">Week 1</th>
+          <th *ngIf="isShowDetails">Week 2</th>
+          <th *ngIf="isShowDetails">Week compare</th>
+
+          <th *ngIf="isShowDetails" >Product</th>
+          <th *ngIf="isShowDetails">Week 1</th>
+          <th *ngIf="isShowDetails">Week 2</th>
+          <th *ngIf="isShowDetails">Week compare</th>
+
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
 </div>
 <!--<pre>
