@@ -1,0 +1,41 @@
+<div class="info">
+  <header class="info-header">
+    <h3 class="section-header">
+      <a (click)="
+        specs.info.$folded = !specs.info.$folded;
+        foldEditor(['info'], specs.info.$folded);
+        ">{{specs.info.title}}</a>
+    </h3>
+  </header>
+
+  <div class="info-container section-content" collapse-when="specs.info.$folded">
+    <!--http://stackoverflow.com/questions/35137878/how-to-detect-async-change-to-ng-content/35138005-->
+    <!--<div marked="specs.info.description"></div>-->
+    <markdown [md]="specs.info.description"></markdown>
+    <!-- TODO: add ace editor later? https://github.com/hardbyte/angular2-bt-components/blob/master/app/components/markdown/aceEditor.ts-->
+
+    <h4>Version <span>{{specs.info.version}}</span></h4>
+    <div class="contact info-box" *ngIf="specs.info.contact">
+      <h4>Contact information</h4>
+      <p *ngIf="specs.info.contact.name">{{specs.info.contact.name}}</p>
+      <p *ngIf="specs.info.contact.email" ng-bind-html="specs.info.contact.email | linky:'_blank'"></p>
+      <p *ngIf="specs.info.contact.url" ng-bind-html="specs.info.contact.url | linky:'_blank'"></p>
+      <p *ngIf="specs.info.contact.email"><a href="mailto://{{specs.info.contact.email}}" target="_blank">{{specs.info.contact.email}}</a></p>
+      <p *ngIf="specs.info.contact.url"><a href="{{specs.info.contact.url}}" target="_blank">{{specs.info.contact.url}}</a></p>
+    </div>
+    <div class="terms info-box" *ngIf="specs.info.termsOfService">
+      <h4>Terms of service</h4>
+      <p *ngIf="specs.info.termsOfService"><a href="{{specs.info.termsOfService}}" target="_blank">{{specs.info.termsOfService}}</a></p>
+    </div>
+    <div class="external-docs" *ngIf="specs.externalDocs">
+      <a href="{{specs.externalDocs.url}}" marked="specs.externalDocs.description"></a>
+    </div>
+    <div *ngIf="specs.info.license" class="license info-box">
+      <h4>License</h4>
+      <p *ngIf="!specs.info.license.url">{{specs.info.license.name}}</p>
+      <p *ngIf="specs.info.license.url">
+        <a target="_blank" href="{{specs.info.license.url}}">{{specs.info.license.name}}</a>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class='info' id='api_info'>
+  <template [ngIf]="info">
+    <div class="info_title">{{info.title}}</div>
+    <div class="info_description markdown">{{info.description}}</div>
+    <template [ngIf]="externalDocs">
+      <p>{{externalDocs.description}}</p>
+      <a href="{{externalDocs.url}}" target="_blank">{{externalDocs.url}}</a>
+    </template>
+    <div class="info_tos" *ngIf="info.termsOfServiceUrl"><a href="{{info.termsOfServiceUrl}}" data-sw-translate>Terms of service</a></div>
+    <div class='info_name' data-sw-translate *ngIf="info.contact?.name">Created by {{info.contact.name}}</div>
+    <div class='info_url' data-sw-translate *ngIf="info.contact?.url">See more at <a href="{{info.contact.url}}">{{info.contact.url}}</a></div>
+    <div class='info_email' *ngIf="info.contact?.email"><a target="_parent" href="mailto:{{info.contact.email}}?subject={{info.title}}" data-sw-translate>Contact the developer</a></div>
+    <div class='info_license' *ngIf="info.license"><a href='{{info.license.url}}'>{{info.license.name}}</a></div>
+  </template>
+</div>
+<div class='container' id='resources_container'>
+  <ul id='resources'>
+    <li *ngFor="#resource of model.paths | mapToIterable"><resource [model]="resource.value"></resource></li>
+  </ul>
+
+  <div class="footer">
+    <h4 style="color: #999">[ <span style="font-variant: small-caps">base url</span>: {{basePath}}
+    <template [ngIf]="info.version">
+  , <span style="font-variant: small-caps" data-sw-translate>api version</span>: {{info.version}}
+    </template>]
+    <span style="float:right" *ngIf="validatorUrl"><a href="{{validatorUrl}}/debug?url={{url}}"><img id="validator" src="{{validatorUrl}}?url={{url}}"></a>
+    </span>
+     </h4>
+  </div>
+</div>

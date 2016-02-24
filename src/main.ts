@@ -6,9 +6,14 @@ import {bootstrap, ELEMENT_PROBE_PROVIDERS} from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, PathLocationStrategy} from 'angular2/router';
 import {HTTP_PROVIDERS, Http} from 'angular2/http';
 
+import {enableProdMode} from 'angular2/core';
+
 import {AuthHttp, AuthConfig} from 'angular2-jwt';
 
 import { AddressesApi } from './API/Client/AddressesApi';
+
+import {FORM_PROVIDERS, FormBuilder, Validators} from 'angular2/common';
+
 
 /*
  * App Component
@@ -20,6 +25,9 @@ import {App} from './app/app';
  * our Services and Providers into Angular's dependency injection
  */
 document.addEventListener('DOMContentLoaded', function main() {
+
+  enableProdMode(); // TODO: check if wanted. Enabled this due to "Expression 'xxxx' was changed after it was checked" https://github.com/angular/angular/issues/5950 https://github.com/angular/angular/issues/6189
+
   bootstrap(App, [
     ...('production' === process.env.ENV ? [] : ELEMENT_PROBE_PROVIDERS),
     ...HTTP_PROVIDERS,
@@ -31,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function main() {
       },
       deps: [Http]
     }),
+    //...FORM_PROVIDERS
    //     provide(AddressesApi, { useClass: AddressesApi }),
 
   ])

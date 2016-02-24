@@ -15,10 +15,13 @@ import {Home} from './home/home';
 
 // SNS
 import {AdminComponent} from './components/admin/admin.component';
+
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {InventoryComponent} from './components/inventory/inventory.component';
 import {PurchasingComponent} from './components/purchasing/purchasing.component';
 import {ClientComponent} from './components/client/client.component';
+
+import {SwaggerComponent} from './components/swagger/swagger.component';
 
 import {DataService} from './services/DataService';
 import { AddressesApi } from '../API/Client/AddressesApi';
@@ -74,6 +77,13 @@ declare var Auth0Lock;
       <li class="nav-item" router-active="active">
         <a [routerLink]=" ['Dashboard'] " class="nav-link">Dashboard</a>
       </li>
+
+      <!--swagger-->
+      <li class="nav-item" router-active="active">
+        <a [routerLink]=" ['Swagger'] " class="nav-link">Swagger</a>
+      </li>
+
+
       <!--admin-->
       <li class="nav-item" router-active="active">
         <a [routerLink]=" ['Admin'] " class="nav-link">Admin</a>
@@ -91,6 +101,7 @@ declare var Auth0Lock;
       <li class="nav-item" router-active="active">
         <a [routerLink]=" ['Purchasing'] " class="nav-link">Purchasing</a>
       </li>
+
 
     </ul>
 
@@ -128,6 +139,8 @@ declare var Auth0Lock;
   { path: '/inventory/...', component: InventoryComponent, name: 'Inventory' },
   //  { path: '/order', component: OrderComponent, name: 'Order' },
   { path: '/purchasing/...', component: PurchasingComponent, name: 'Purchasing' },
+
+  { path: '/swagger', component: SwaggerComponent, name: 'Swagger' },
 
   { path: '/**', redirectTo: ['Index'] }
 ])

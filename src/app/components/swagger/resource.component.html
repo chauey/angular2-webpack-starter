@@ -1,0 +1,26 @@
+<div class='heading'>
+  <h2>
+    <a href='#!/{{id}}' class="toggleEndpointList" data-id="{{id}}">{{name}}</a>   <template [ngIf]="summary"> : </template>{{summary}}
+  </h2>
+  <ul class='options'>
+    <li>
+      <a href='#!/{{id}}' id='endpointListTogger_{{id}}' class="toggleEndpointList" data-id="{{id}}" data-sw-translate>Show/Hide</a>
+    </li>
+    <li>
+      <a href='#' class="collapseResource" data-id="{{id}}" data-sw-translate>
+        List Operations
+      </a>
+    </li>
+    <li>
+      <a href='#' class="expandResource" data-id="{{id}}" data-sw-translate>
+        Expand Operations
+      </a>
+    </li>
+    <li *ngIf="url">
+      <a href='{{url}}' data-sw-translate>Raw</a>
+    </li>
+  </ul>
+</div>
+<ul class='endpoints' id='{{id}}_endpoint_list' style='display:none'>
+
+</ul>

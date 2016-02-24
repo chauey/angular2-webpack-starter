@@ -7,8 +7,13 @@
   <input [(ngModel)]="odata.top" placeholder="top" type="number" />
   <input [(ngModel)]="odata.skip" placeholder="skip" type="number" />
   <input [(ngModel)]="odata.count" placeholder="count" type="checkbox" />
-  <button (click)="getAddressList()">Get</button>
+  <button (click)="getList()">Get</button>
   <pre>{{odata|json}}</pre>
+  <pagination [totalItems]="listWithCount?.count" [(ngModel)]="paginationData.currentPage" [maxSize]="paginationData.maxSize"
+  class="pagination-sm" [boundaryLinks]="paginationData.isBoundaryLinks" [rotate]="paginationData.isRotate" (numPages)="numPages = $event"
+  >
+  <!--(pageChanged)="pageChanged($event)" only set on 1 pagination control or event will fire again-->
+  </pagination>
 
   <!--table-->
   <div class="table-responsive">
@@ -29,10 +34,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="#address of addressList">
+        <tr *ngFor="#address of listWithCount?.list">
           <td>
             <button [routerLink]=" ['Item', {id: address.AddressId}] " class="btn btn-primary">View</button>
-            <!--<a [routerLink]=" ['Item', {id: address.addressId}] ">View</a>-->
+            <a [routerLink]=" ['Item', {id: address.AddressId}] ">View</a>
           </td>
           <td>{{address.AddressId}}</td>
           <td>{{address.AddressLine1}}</td>
@@ -41,7 +46,8 @@
           <td>{{address.StateProvinceId}}</td>
           <td>{{address.PostalCode}}</td>
           <td>{{address.Rowguid}}</td>
-          <td>{{address.ModifiedDate}}</td>
+          <!--https://github.com/angular/angular/issues/6336-->
+          <td>{{address.ModifiedDate | date:"MM/dd/yy"}}</td>
           <td>{{address.SpatialLocation}}</td>
           <td>{{address}}</td>
         </tr>
@@ -63,8 +69,8 @@
       </tfoot>
     </table>
   </div>
-
-  <!--<pre>
-    {{addressList | json}}
-    </pre>-->
+  <!--pager-->
+  <pagination [totalItems]="listWithCount?.count" [(ngModel)]="paginationData.currentPage" [maxSize]="paginationData.maxSize"
+  class="pagination-sm" [boundaryLinks]="paginationData.isBoundaryLinks" [rotate]="paginationData.isRotate" (numPages)="numPages = $event"
+  (pageChanged)="pageChanged($event)"></pagination>
 </div>

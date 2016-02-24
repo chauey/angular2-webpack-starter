@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "es6-promise": "github:typings/typed-es6-promise#9243c53f70fb4909ed7cce3094bec221b9fb6d5f"
+    "es6-promise": "github:typings/typed-es6-promise#9243c53f70fb4909ed7cce3094bec221b9fb6d5f",
+    "moment": "github:typings/typed-moment#a4075cd50e63efbedd850f654594f293ab81a385"
   },
   "devDependencies": {},
   "ambientDependencies": {

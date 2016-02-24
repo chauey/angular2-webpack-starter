@@ -1,0 +1,20 @@
+<header (click)="
+    path.$folded = !path.$folded;
+    foldEditor(['paths', pathName], path.$folded)">
+
+  <h2>
+    <a>{{pathName}}</a>
+  </h2>
+
+  <a class="jump-to-yaml" (click)="focusEdit($event, ['paths', pathName])" tooltip-placement="left" tooltip="Jump to YAML"
+  tooltip-trigger="mouseenter">
+  </a>
+</header>
+
+<ul class="operations" collapse-when="path.$folded">
+  <li *ngFor="#operationKeyValuePair of path | mapToIterable">
+    <operation [model]="operationKeyValuePair.value" [name]="operationKeyValuePair.key" [path]="path" [pathName]="pathName">
+      <!--*ngIf="showOperation(operationKeyValuePair.value, operationKeyValuePair.key)"-->
+    </operation>
+  </li>
+</ul>

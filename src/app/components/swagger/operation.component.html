@@ -1,0 +1,201 @@
+<li class='{{operationName | lowercase}} operation' scroll-into-view-when="isInFocus(['paths', pathName, operationName])">
+
+  <header (click)="
+      operation.$folded = !operation.$folded;
+      foldEditor(['paths', pathName, operationName], operation.$folded)
+    ">
+    <a class="focus-editor" (click)="focusEdit($event, ['paths', pathName, operationName])" tooltip-placement="left" tooltip="Jump to YAML"
+    tooltip-trigger="mouseenter">
+    </a>
+
+    <div class='http-method' class="toggleOperation">{{operationName | uppercase}} {{pathName}}
+    </div>
+
+    <div class="deprecated" *ngIf="operation.deprecated">Deprecated</div>
+  </header>
+
+  <div class='content' collapse-when="operation.$folded">
+    <div class="tags">
+      <span class="tag tag-color-{ { // UNDONE: tagIndexFor(tag)} }" *ngFor="#tag of operation.tags">
+        {{tag}}
+      </span>
+    </div>
+
+    <!--SUMMARY-->
+    <section class="summary" *ngIf="operation.summary">
+      <h4>Summary</h4>
+      <p>{{operation.summary}}</p>
+    </section>
+
+    <section class="description" *ngIf="operation.description">
+      <h4>Description</h4>
+      <!--<div marked="operation.description"></div>-->
+      <markdown [md]="operation.description"></markdown>
+
+    </section>
+
+    <!--PARAMETERS-->
+    <section class="parameters" *ngIf="getParameters().length">
+      <h4>Parameters</h4>
+      <div>
+        <table class="params">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Located in</th>
+              <th>Description</th>
+              <th>Required</th>
+              <th>Schema</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="#parameter of getParameters()">
+              <td>
+                <a (click)="focusEdit($event, [
+                      'paths',
+                      pathName,
+                      operationName,
+                      'parameters',
+                      $index
+                    ])" tooltip-placement="top" tooltip="Jump to YAML" tooltip-trigger="mouseenter">
+                  <span class="mono">{{parameter.name}}</span>
+                </a>
+              </td>
+              <td>{{parameter.in}}</td>
+              <!--<td marked="parameter.description">-->
+              <td>
+                <markdown [md]="parameter.description"></markdown>
+              </td>
+              <td>{{parameter.required ? 'Yes' : 'No'}}</td>
+              <td>
+                <schema-model schema="parameter.schema"></schema-model>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!--RESPONSES-->
+    <section class="responses" *ngIf="operation">
+      <h4>Responses</h4>
+
+      <div>
+        <table class="respns">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Description</th>
+              <th *ngIf="hasAResponseWithHeaders(operation.responses)">Headers</th>
+              <th *ngIf="hasAResponseWithSchema(operation.responses)">Schema</th>
+              <th *ngIf="hasAResponseWithExamples(operation.responses)">Examples</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="#responseKeyValuePair of operation.responses | mapToIterable">
+              <td>
+                <a (click)="focusEdit($event, [
+                    'paths',
+                    pathName,
+                    operationName,
+                    'responses',
+                    responseKeyValuePair.key])" tooltip-placement="top" tooltip="Jump to YAML" tooltip-trigger="mouseenter">
+
+                  <span class="resp-code { { // UNDONE: responseCodeClassFor(responseKeyValuePair.value)} }">
+                      {{responseKeyValuePair.value}}
+                    </span>
+                </a>
+              </td>
+              <!--<td marked="responseKeyValuePair.value.description">-->
+              <td>
+                <markdown [md]="responseKeyValuePair.value.description"></markdown>
+              </td>
+              <td *ngIf="hasAResponseWithHeaders(operation.responses)">
+                <table *ngIf="responseKeyValuePair.value.headers" class="respnse-headers">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Type</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="#headerKeyValuePair of responseKeyValuePair.value.headers | mapToIterable">
+                      <td>{{headerKeyValuePair.key}}</td>
+                      <td>{{headerKeyValuePair.value.description}}</td>
+                      <td>
+                        <json-formatter json="headerKeyValuePair.value.type"></json-formatter>
+                      </td>
+                      <td>
+                        <json-formatter json="headerKeyValuePair.value"></json-formatter>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+              <td *ngIf="hasAResponseWithSchema(operation.responses)">
+                <schema-model *ngIf="responseKeyValuePair.value.schema" schema="responseKeyValuePair.value.schema"></schema-model>
+              </td>
+              <td *ngIf="hasAResponseWithExamples(operation.responses)">
+                <table class="examples">
+                  <tbody>
+                    <tr *ngFor="#exampleKeyValuePair of responseKeyValuePair.value.examples | mapToIterable">
+                      <td>{{exampleKeyValuePair.key}}</td>
+                      <td>
+                        <json-formatter json="exampleKeyValuePair.value" open="1"></json-formatter>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!--SECURITY-->
+    <section class="security" *ngIf="operation.security && operation.security.length">
+      <h4>Security</h4>
+      <table class="security">
+        <thead>
+          <tr>
+            <th>Security Schema</th>
+            <th>Scopes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="#security of operation.security">
+            <td *ngFor="#securityKeyValuePair of operation.security | mapToIterable">{{security.key}}</td>
+            <td *ngFor="#securityKeyValuePair of operation.security | mapToIterable">
+              <strong class="security-value" *ngFor="#value of security.value">
+                {{value}}
+              </strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!--TRY THIS-->
+    <section class="try-operation" *ngIf="enableTryIt">
+
+      <button class="border-only try-it" ng-class="{trying: isTryOpen}" (click)="toggleTry()" *ngIf="!isTryOpen" track-event="try-operation">
+        Try this operation
+      </button>
+
+      <button class="border-only red close-try" ng-class="{'is-open': isTryOpen}" (click)="toggleTry()" *ngIf="isTryOpen">
+        Close
+      </button>
+
+      <!--<div
+        ng-include="'templates/try-operation.html'"
+        *ngIf="isTryOpen">
+      </div>-->
+      <tryOperation *ngIf="isTryOpen"></tryOperation>
+    </section>
+
+  </div>
+</li>

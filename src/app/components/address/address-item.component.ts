@@ -1,12 +1,18 @@
 import {Component, OnInit} from 'angular2/core';
 import {RouteParams, Router} from 'angular2/router';
 import {NgForm}    from 'angular2/common';
+import {FORM_PROVIDERS, FormBuilder, Validators} from 'angular2/common';
 
-import { DataService } from '../../services/DataService';
+//import { DataService } from '../../services/DataService';
+import { AddressesApi } from '../../../API/Client/AddressesApi';
+
+import { ValidationService } from '../../services/validation.service';
+import { ValidationMessageComponent } from '../../components/common/validation-message.component';
+
 
 @Component({
   selector: 'address-item',
-  directives: [],
+  directives: [ValidationMessageComponent],
   pipes: [],
   providers: [],
   styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./address-item.component.css')],
@@ -14,17 +20,40 @@ import { DataService } from '../../services/DataService';
 })
 
 export class AddressItemComponent implements OnInit {
-  // TypeScript public modifiers
-  constructor(private _router: Router,
-    private _routeParams: RouteParams,
-    private _dataService: DataService) {
 
-  }
+  myForm: any;
   searchValue: string = '';
 
   id: number = null;
-  model: any = null;
+  item: any = null;
   submitted = false;
+  errorMessage: string;
+
+
+  // TypeScript public modifiers
+  constructor(private _router: Router,
+    private _routeParams: RouteParams,
+    private _AddressesApi: AddressesApi,
+    private _formBuilder: FormBuilder
+  ) {
+    // template vs model driven forms http://blog.jhades.org/introduction-to-angular-2-forms-template-driven-vs-model-driven/
+    // https://angular.io/docs/ts/latest/api/common/FormBuilder-class.html
+    this.myForm = this._formBuilder.group({
+      'id': ['', Validators.required],
+      // http://www.carlrippon.com/?p=456
+      'addressLine1': ['',
+        Validators.compose([
+          Validators.required,
+          ValidationService.emailValidator,
+          Validators.minLength(6)
+        ])]
+      //,
+      //'email': ['', Validators.compose([Validators.required, ValidationService.emailValidator])
+    });
+
+  }
+
+
 
   ngOnInit() {
     console.log('ngOnInit address-item component');
@@ -33,11 +62,24 @@ export class AddressItemComponent implements OnInit {
     console.log('ngOnInit address-item component id is: ' + this.id);
 
     if (this.id === null || this.id === undefined) {
-      this.model = {};
+      this.item = {};
     } else {
-      ///this.model = this._dataService.getAddressItem(this.id);
+      this.getItem();
     }
 
+  }
+
+  private getItem() {
+    this._AddressesApi.addressesAddressIdGet(this.id)
+      .subscribe(
+      item => this.item = item,
+      error => this.errorMessage = <any>error
+      );
+
+  }
+
+  debugItemJson() {
+    window.alert(JSON.stringify(this.item));
   }
 
   customValidate() {

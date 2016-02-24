@@ -1,0 +1,74 @@
+<div class="container">
+  <!--<h1>Admin</h1>-->
+
+  http://swagger.io/specification/ https://github.com/OAI/OpenAPI-Specification/blob/master/schemas/v2.0/schema.json
+
+  <!--https://github.com/swagger-api/swagger-ui/blob/b52467c1fe560b14baa49bebef738e6408f68bb4/src/main/template/main.handlebars-->
+
+  <preview [model]="swaggerDoc"></preview>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!--<main [model]="swaggerDoc"></main>-->
+
+  <!--paths`-->
+  <ul *ngIf="hideForNowOKDude">
+    <li *ngFor="#pathKeyValuePair of swaggerDoc.paths | mapToIterable">
+      Path: {{pathKeyValuePair.key}} {{pathKeyValuePair.value | json}}
+
+      <!--operations-->
+      <ul>
+        <li *ngFor="#operationKeyValuePair of pathKeyValuePair.value | mapToIterable">
+          Operation: {{operationKeyValuePair.key}} {{operationKeyValuePair.value | json}}
+
+          <!--operation children-->
+          <ul>
+            <li *ngFor="#operationChildKeyValuePair of operationKeyValuePair.value | mapToIterable">
+              Operation Child: {{operationChildKeyValuePair.key}}: {{operationChildKeyValuePair.value | json}}
+
+              <!--parameters-->
+              <ul *ngIf="operationChildKeyValuePair.key === 'parameters'">
+                <li *ngFor="#parameter of operationChildKeyValuePair.value">
+                  Parameter: {{parameter.name}} {{parameter | json}}
+                </li>
+              </ul>
+
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </li>
+  </ul>
+
+
+  <pre>
+  <!--{{swaggerDoc | json}}-->
+  <!--http://stackoverflow.com/questions/34476502/error-value-has-changed-after-checked-stateful-pipe-in-angular2-->
+  </pre> {{swaggerDoc.paths.length}} {{swaggerDoc.definitions.length}}
+
+</div>
