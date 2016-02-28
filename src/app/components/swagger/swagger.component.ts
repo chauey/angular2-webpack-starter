@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { MapToIterablePipe } from '../../pipes/mapToIterable.pipe';
@@ -14,7 +14,7 @@ import { PreviewComponent } from './preview.component';
   template: require('./swagger.component.html')
 })
 
-export class SwaggerComponent {
+export class SwaggerComponent implements OnInit {
 
   swaggerDoc: any;
 

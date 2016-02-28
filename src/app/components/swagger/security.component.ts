@@ -2,26 +2,20 @@ import {Component, Host, Input} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { MapToIterablePipe } from '../../pipes/mapToIterable.pipe';
-import { OperationComponent } from './operation.component';
+import { MarkdownComponent } from '../common/markdown.component'
 
 
 @Component({
-  selector: 'path',
-  directives: [...ROUTER_DIRECTIVES, OperationComponent],
+  selector: 'security',
+  directives: [...ROUTER_DIRECTIVES, MarkdownComponent],
   pipes: [MapToIterablePipe],
   styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
-  template: require('./path.component.html')
+  template: require('./security.component.html')
 })
 
-export class PathComponent {
+export class SecurityComponent {
   @Input('model') model: any;
-  @Input('name') pathName: string;
-
-  @Input('specs') specs: any;
-
-
-  //swaggerDoc: any;
-path: any;
+  specs: any;
 
 
   constructor() {
@@ -29,8 +23,8 @@ path: any;
   }
 
   ngOnInit() {
-    console.log('ngOnInit Swagger Path component');
-    this.path = this.model;
+    console.log('ngOnInit Swagger Security component');
+    this.specs = this.model;
   }
 
 }

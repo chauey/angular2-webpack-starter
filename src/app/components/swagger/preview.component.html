@@ -14,11 +14,14 @@
   <!--<ng-include src="'templates/specs-info.html'"></ng-include>-->
 
   <!--SECURITY-->
-  <ng-include src="'templates/security.html'" *ngIf="specs.securityDefinitions">
-  </ng-include>
+  <!--<ng-include src="'templates/security.html'" *ngIf="specs.securityDefinitions">
+  </ng-include>-->
+  <security model="specs"></security>
 
   <!--TAGS-->
-  <ng-include src="'templates/tags.html'"></ng-include>
+  <!--<ng-include src="'templates/tags.html'"></ng-include>-->
+  <tags model="specs"></tags>
+
 
   <!--PATH HEADER-->
   <header>
@@ -40,7 +43,7 @@
   <!--specs.paths {{specs.paths | json}}-->
   <ul class="paths" collapse-when="specs.paths.$folded">
     <li *ngFor="#pathKeyValuePair of specs.paths | mapToIterable">
-      <path [model]="pathKeyValuePair.value" [name]="pathKeyValuePair.key"></path>
+      <path [model]="pathKeyValuePair.value" [name]="pathKeyValuePair.key" [specs]="specs"></path>
     </li>
     <!--<li
       class="path"

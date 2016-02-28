@@ -13,7 +13,7 @@
 
 <ul class="operations" collapse-when="path.$folded">
   <li *ngFor="#operationKeyValuePair of path | mapToIterable">
-    <operation [model]="operationKeyValuePair.value" [name]="operationKeyValuePair.key" [path]="path" [pathName]="pathName">
+    <operation [model]="operationKeyValuePair.value" [name]="operationKeyValuePair.key" [path]="path" [pathName]="pathName" [specs]="specs">
       <!--*ngIf="showOperation(operationKeyValuePair.value, operationKeyValuePair.key)"-->
     </operation>
   </li>

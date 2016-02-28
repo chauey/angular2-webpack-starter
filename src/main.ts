@@ -9,6 +9,7 @@ import {HTTP_PROVIDERS, Http} from 'angular2/http';
 import {enableProdMode} from 'angular2/core';
 
 import {AuthHttp, AuthConfig} from 'angular2-jwt';
+import {AuthManager} from './app/services/auth-manager.service';
 
 import { AddressesApi } from './API/Client/AddressesApi';
 
@@ -39,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function main() {
       },
       deps: [Http]
     }),
+    provide(AuthManager, { useClass: AuthManager})
     //...FORM_PROVIDERS
    //     provide(AddressesApi, { useClass: AddressesApi }),
 

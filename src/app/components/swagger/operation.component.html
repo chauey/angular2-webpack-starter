@@ -94,7 +94,8 @@
 
           <tbody>
             <tr *ngFor="#responseKeyValuePair of operation.responses | mapToIterable">
-              <td>
+              <!--code-->
+              <td>dfgdf
                 <a (click)="focusEdit($event, [
                     'paths',
                     pathName,
@@ -103,7 +104,7 @@
                     responseKeyValuePair.key])" tooltip-placement="top" tooltip="Jump to YAML" tooltip-trigger="mouseenter">
 
                   <span class="resp-code { { // UNDONE: responseCodeClassFor(responseKeyValuePair.value)} }">
-                      {{responseKeyValuePair.value}}
+                      {{responseKeyValuePair.key}}
                     </span>
                 </a>
               </td>
@@ -168,9 +169,9 @@
         </thead>
         <tbody>
           <tr *ngFor="#security of operation.security">
-            <td *ngFor="#securityKeyValuePair of operation.security | mapToIterable">{{security.key}}</td>
-            <td *ngFor="#securityKeyValuePair of operation.security | mapToIterable">
-              <strong class="security-value" *ngFor="#value of security.value">
+            <td *ngFor="#securityKeyValuePair of security | mapToIterable">{{securityKeyValuePair.key}}</td>
+            <td *ngFor="#securityKeyValuePair of security | mapToIterable">
+              <strong class="security-value" *ngFor="#value of securityKeyValuePair.value">
                 {{value}}
               </strong>
             </td>
@@ -194,7 +195,9 @@
         ng-include="'templates/try-operation.html'"
         *ngIf="isTryOpen">
       </div>-->
-      <tryOperation *ngIf="isTryOpen"></tryOperation>
+      poperationName: {{operationName}}p
+      <tryOperation *ngIf="isTryOpen" [model]="operation" [name]="operationName" [path]="path" [pathName]="pathName" [getParameters]="getParameters"
+      [specs]="specs"></tryOperation>ff
     </section>
 
   </div>

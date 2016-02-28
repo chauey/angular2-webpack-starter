@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { ClientItemComponent } from './client-item.component';
@@ -17,7 +17,7 @@ import { ClientListComponent } from './client-list.component';
   { path: '/:id', component: ClientItemComponent, name: 'Item', useAsDefault: false },
 ])
 
-export class ClientComponent {
+export class ClientComponent implements OnInit{
   constructor() {
 
   }

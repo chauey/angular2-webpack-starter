@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { DataService } from '../../services/DataService';
@@ -24,7 +24,7 @@ import { OrderComponent } from '../order/order.component';
   { path: '/order/...', component: OrderComponent, name: 'Order', useAsDefault: true },
 ])
 
-export class PurchasingComponent {
+export class PurchasingComponent implements OnInit {
   constructor() {
 
   }

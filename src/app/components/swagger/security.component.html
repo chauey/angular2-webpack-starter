@@ -1,60 +1,63 @@
 <div class="security" ng-controller="SecurityCtrl">
   <header>
     <h3 class="section-header">
-      <a ng-click="
+      <a (click)="
         specs.securityDefinitions.$folded = !specs.securityDefinitions.$folded;
         foldEditor(['securityDefinitions'], specs.securityDefinitions.$folded);
-      ">Security</a>
+      ">Securitgggggggggy</a>
     </h3>
   </header>
 
-  <div class="security-definitions" collapse-when="specs.securityDefinitions.$folded">
-    <div ng-repeat="(securityDefinitionName, securityDefinition) in specs.securityDefinitions" class="security-definition {{securityDefinition.type}}">
+  <div class="security-definitions" collapse-when="specs.securityDefinitions.$folded">vvvvvvvvvv
+    <div *ngFor="#securityDefinitionKeyValuePair of specs.securityDefinitions" class="security-definition {{securityDefinitionKeyValuePair.value.type}}">
       <header>
         <h4>
-          <span class="authenticated" style="color:green" ng-if="isAuthenticated(securityDefinitionName)" title="Authenticated">✓</span>
-          <span>{{securityDefinitionName}}</span>
+          <span class="authenticated" style="color:green" *ngIf="isAuthenticated(securityDefinitionKeyValuePair.key)" title="Authenticated">✓</span>
+          <span>{{securityDefinitionKeyValuePair.key}}</span>
           <span class="security-type">({{getHumanSecurityType(securityDefinition.type)}})</span>
           <div class="authentication">
             <div>
-              <button ng-click="authenticate(securityDefinitionName, securityDefinition)" class="authenticate">{{isAuthenticated(securityDefinitionName) ? 'Change Authentication' : 'Authenticate'}}</button>
+              <button (click)="authenticate(securityDefinitionKeyValuePair.key, securityDefinition)" class="authenticate">{{isAuthenticated(securityDefinitionKeyValuePair.key) ? 'Change Authentication' : 'Authenticate'}}</button>
             </div>
           </div>
         </h4>
       </header>
       <section>
-        <p ng-if="securityDefinition.description" marked="securityDefinition.description"></p>
+        <p *ngIf="securityDefinitionKeyValuePair.value.description">
+           <!--marked="securityDefinition.description">-->
+          <markdown [md]="securityDefinitionKeyValuePair.value.description"></markdown>
+        </p>
 
         <table class="table">
           <tbody>
-            <tr ng-if="securityDefinition.name">
+            <tr *ngIf="securityDefinitionKeyValuePair.value.name">
               <td>Name</td>
-              <td>{{securityDefinition.name}}</td>
+              <td>{{securityDefinitionKeyValuePair.value.name}}</td>
             </tr>
-            <tr ng-if="securityDefinition.in">
+            <tr *ngIf="securityDefinitionKeyValuePair.value.in">
               <td>In</td>
-              <td>{{securityDefinition.in}}</td>
+              <td>{{securityDefinitionKeyValuePair.value.in}}</td>
             </tr>
-            <tr ng-if="securityDefinition.flow">
+            <tr *ngIf="securityDefinitionKeyValuePair.value.flow">
               <td>Flow</td>
-              <td>{{securityDefinition.flow}}</td>
+              <td>{{securityDefinitionKeyValuePair.value.flow}}</td>
             </tr>
-            <tr ng-if="securityDefinition.authorizationUrl">
+            <tr *ngIf="securityDefinitionKeyValuePair.value.authorizationUrl">
               <td>Authorization URL</td>
-              <td><a target="_blank" href="{{securityDefinition.authorizationUrl}}">{{securityDefinition.authorizationUrl}}</a></td>
+              <td><a target="_blank" href="{{securityDefinitionKeyValuePair.value.authorizationUrl}}">{{securityDefinitionKeyValuePair.value.authorizationUrl}}</a></td>
             </tr>
-            <tr ng-if="securityDefinition.tokenUrl">
+            <tr *ngIf="securityDefinitionKeyValuePair.value.tokenUrl">
               <td>Token URL</td>
-              <td><a target="_blank" href="{{securityDefinition.tokenUrl}}">{{securityDefinition.tokenUrl}}</a></td>
+              <td><a target="_blank" href="{{securityDefinitionKeyValuePair.value.tokenUrl}}">{{securityDefinitionKeyValuePair.value.tokenUrl}}</a></td>
             </tr>
           </tbody>
         </table>
-        <h4 ng-if="securityDefinition.scopes">Scopes</h4>
-        <table ng-if="securityDefinition.scopes">
+        <h4 *ngIf="securityDefinitionKeyValuePair.value.scopes">Scopes</h4>
+        <table *ngIf="securityDefinitionKeyValuePair.value.scopes">
           <tbody>
-            <tr ng-repeat="(scopeName, scope) in securityDefinition.scopes" class='scopes-table'>
-              <td><strong>{{scopeName}}</strong></td>
-              <td>{{scope}}</td>
+            <tr ng-repeat="#scopeKeyValuePair in securityDefinitionKeyValuePair.value.scopes" class='scopes-table'>
+              <td><strong>{{scopeKeyValuePair.key}}</strong></td>
+              <td>{{scopeKeyValuePair.value}}</td>
             </tr>
           </tbody>
         </table>

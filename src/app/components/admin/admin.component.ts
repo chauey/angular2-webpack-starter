@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { ClientComponent } from '../client/client.component';
@@ -31,7 +31,7 @@ import {RouterActive} from '../../directives/router-active';
 //   { path: '/orders/:id', component: OrderItemComponent, name: 'OrderItem', useAsDefault: false },
  ])
 
-export class AdminComponent {
+export class AdminComponent implements OnInit {
   constructor() {
 
   }

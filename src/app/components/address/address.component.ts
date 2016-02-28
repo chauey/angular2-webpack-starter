@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { AddressItemComponent } from './address-item.component';
@@ -17,7 +17,7 @@ import { AddressListComponent } from './address-list.component';
   { path: '/:id', component: AddressItemComponent, name: 'Item', useAsDefault: false },
 ])
 
-export class AddressComponent {
+export class AddressComponent implements OnInit {
   // TypeScript public modifiers
   constructor() {
 

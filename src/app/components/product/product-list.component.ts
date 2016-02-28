@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { DataService } from '../../services/DataService';
@@ -11,7 +11,7 @@ import { DataService } from '../../services/DataService';
   template: require('./product-list.component.html')
 })
 
-export class ProductListComponent {
+export class ProductListComponent implements OnInit {
 
   searchValue: string = '';
   suppliers: any = this._dataService.supplierList;

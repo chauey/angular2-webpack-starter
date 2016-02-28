@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { OrderItemComponent } from './order-item.component';
@@ -17,7 +17,7 @@ import { OrderListComponent } from './order-list.component';
   { path: '/:id', component: OrderItemComponent, name: 'Item', useAsDefault: false },
 ])
 
-export class OrderComponent {
+export class OrderComponent implements OnInit {
   // TypeScript public modifiers
   constructor() {
 

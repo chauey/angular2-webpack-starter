@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { DataService } from '../../services/DataService';
@@ -21,7 +21,7 @@ import { InventoryItemComponent } from './inventory-item.component';
   { path: '/:id', component: InventoryItemComponent, name: 'Item', useAsDefault: false },
 ])
 
-export class InventoryComponent {
+export class InventoryComponent implements OnInit {
   constructor(private _dataService: DataService) {
 
   }
@@ -39,4 +39,8 @@ export class InventoryComponent {
   vendorCompareData: any = this._dataService.vendorCompareData;
 
   vendorCompareData2: any = this._dataService.vendorCompareData2;
+
+  ngOnInit() {
+    console.log('ngOnInit Inventory component');
+  }
 }

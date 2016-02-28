@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {FORM_DIRECTIVES} from 'angular2/common';
 import {Http} from 'angular2/http';
 
@@ -27,7 +27,7 @@ import {XLarge} from './directives/x-large';
   // Every Angular template is first compiled by the browser before Angular runs it's compiler
   template: require('./home.html')
 })
-export class Home {
+export class Home implements OnInit {
   // TypeScript public modifiers
   constructor(public title: Title, public http: Http) {
 

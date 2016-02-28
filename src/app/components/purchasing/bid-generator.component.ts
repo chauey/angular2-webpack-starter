@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { DataService } from '../../services/DataService';
@@ -15,7 +15,7 @@ import { DataService } from '../../services/DataService';
 }`],
   template: require('./bid-generator.component.html')
 })
-export class BidGeneratorComponent {
+export class BidGeneratorComponent implements OnInit{
 
   searchValue: string = '';
   flattenedPriceCompareData: any = this._dataService.flattenedPriceCompareData;

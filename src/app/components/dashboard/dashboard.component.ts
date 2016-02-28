@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 
 @Component({
   selector: 'dashboard',
@@ -8,7 +8,7 @@ import {Component} from 'angular2/core';
   styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./dashboard.component.css')],
   template: require('./dashboard.component.html')
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
   totalSavedToDate = 1244.42;
   totalSavedLastOrder = 14.124;

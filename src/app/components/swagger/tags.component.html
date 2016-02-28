@@ -1,28 +1,30 @@
 <div class="root tags">
-  <div class="filtered" ng-if="stateParams.tags">
+  <div class="filtered" *ngIf="routeParams.tags">
     <p>Showing only operations with following tag{{getCurrentTags().length === 1 ? '' : 's'}}:</p>
-    <span class="tag tag-color-{ { // UNDONE: tagIndexFor(tag)}}" ng-repeat="tag in getCurrentTags() track by $index">{{tag}}
-      <a class="delete-tag" ui-sref="{tags: ''}">×</a>
+    <span class="tag tag-color-{{ tagIndexFor(tagKeyValuePair.value) }}" *ngFor="#tagKeyValuePair of getCurrentTags() | mapToIterable">{{tagKeyValuePair.value}}
+      <a class="delete-tag" [routerLink]="['' , { tag: '' }]">×</a>
+      <!-- UNDONE: how to link to anchor tag http://stackoverflow.com/questions/34928332/angular-2-navigate-to-internal-anchor-link-->
     </span>
   </div>
-  <div class="all-tags" ng-if="!stateParams.tags && getAllTags().length">
+  <div class="all-tags" *ngIf="!routeParams.tags && getAllTags().length">
     <p>Filter operations by a tag:</p>
-    <table ng-if="tagsHaveDescription()">
-      <tr ng-repeat="tag in getAllTags() track by $index">
+    <table *ngIf="tagsHaveDescription()">
+      <tr *ngFor="#tagKeyValuePair of getAllTags() | mapToIterable">
         <td>
-          <a class="tag tag-color-{ { // UNDONE: tagIndexFor(tag.name)}}" ui-sref="{tags: tag.name}">{{tag.name}}</a>
+          <a class="tag tag-color-{{ tagIndexFor(tagKeyValuePair.value.name) }}" [routerLink]="['', { tag: tagKeyValuePair.value.name }]">{{tagKeyValuePair.value.name}}</a>
         </td>
         <td>
-          <p marked="tag.description"></p>
+          <p marked="tagKeyValuePair.value.description"></p>
         </td>
       </tr>
     </table>
-    <div ng-if="!tagsHaveDescription()">
+    <div *ngIf="!tagsHaveDescription()">
       <a
-        ng-repeat="tag in getAllTags() track by $index"
-        class="tag tag-color-{ { // UNDONE: tagIndexFor(tag.name)}}"
-        ui-sref="{tags: tag.name}">
-          {{tag.name}}
+        *ngFor="#tagKeyValuePair of getAllTags() | mapToIterable"
+        class="tag tag-color-{{tagIndexFor(tagKeyValuePair.name)}}"
+         [routerLink]="['', { tag: tagKeyValuePair.value.name }]">
+        <!--ui-sref="{tags: tag.name}">-->
+          {{tagKeyValuePair.value.name}}
       </a>
     </div>
   </div>
