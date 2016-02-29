@@ -1,16 +1,12 @@
-<table class="schema-model" ng-class="{hidden: !schema}">
+<table class="schema-model" ngClass="{hidden: !_schema}">
   <tr>
     <td>
-      <a
-        class="toggle"
-        ng-click="switchMode()"
-        title="Switch to {{mode == 'schema' ? 'json' : 'schema'}}">
-
+      <a class="toggle" (click)="switchMode()" title="Switch to {{_mode === 'schema' ? 'json' : 'schema'}}">
         ⇄
       </a>
     </td>
-    <td class="view json" ng-show="mode === 'json'"></td>
-    <td class="view schema" ng-show="mode === 'schema'"></td>
+    <td class="view json" *ngIf="_mode === 'json'"></td>
+    <!--<td class="view schema" ng-show="_mode === 'schema'"></td>-->
+    <td class="view schema" *ngIf="_mode === 'schema'"></td>
   </tr>
 </table>
-

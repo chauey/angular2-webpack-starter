@@ -1,12 +1,12 @@
 <div class="root tags">
   <div class="filtered" *ngIf="routeParams.tags">
-    <p>Showing only operations with following tag{{getCurrentTags().length === 1 ? '' : 's'}}:</p>
+    <p>Showing only operations with following tag{{getCurrentTags()?.length === 1 ? '' : 's'}}:</p>
     <span class="tag tag-color-{{ tagIndexFor(tagKeyValuePair.value) }}" *ngFor="#tagKeyValuePair of getCurrentTags() | mapToIterable">{{tagKeyValuePair.value}}
       <a class="delete-tag" [routerLink]="['' , { tag: '' }]">×</a>
       <!-- UNDONE: how to link to anchor tag http://stackoverflow.com/questions/34928332/angular-2-navigate-to-internal-anchor-link-->
     </span>
   </div>
-  <div class="all-tags" *ngIf="!routeParams.tags && getAllTags().length">
+  <div class="all-tags" *ngIf="!routeParams.tags && getAllTags()?.length">
     <p>Filter operations by a tag:</p>
     <table *ngIf="tagsHaveDescription()">
       <tr *ngFor="#tagKeyValuePair of getAllTags() | mapToIterable">

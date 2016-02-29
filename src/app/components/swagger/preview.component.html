@@ -10,25 +10,25 @@
   </ng-include>-->
 
   <!--SPEC INFO-->
-  <specInfo [model]="specs"></specInfo>
-  <!--<ng-include src="'templates/specs-info.html'"></ng-include>-->
+  <specInfo [model]="_specs"></specInfo>
+  <!--<ng-include src="'templates/_specs-info.html'"></ng-include>-->
 
   <!--SECURITY-->
-  <!--<ng-include src="'templates/security.html'" *ngIf="specs.securityDefinitions">
+  <!--<ng-include src="'templates/security.html'" *ngIf="_specs.securityDefinitions">
   </ng-include>-->
-  <security model="specs"></security>
+  <security model="_specs"></security>
 
   <!--TAGS-->
   <!--<ng-include src="'templates/tags.html'"></ng-include>-->
-  <tags model="specs"></tags>
+  <tags model="_specs"></tags>
 
 
   <!--PATH HEADER-->
   <header>
     <h3 class="section-header">
       <a (click)="
-          specs.paths.$folded = !specs.paths.$folded;
-          foldEditor(['paths'], specs.paths.$folded);">
+          _specs.paths.$folded = !_specs.paths.$folded;
+          foldEditor(['paths'], _specs.paths.$folded);">
 
           <span>Paths</span>
       </a>
@@ -40,26 +40,27 @@
   </header>
 
   <!--PATHS-->
-  <!--specs.paths {{specs.paths | json}}-->
-  <ul class="paths" collapse-when="specs.paths.$folded">
-    <li *ngFor="#pathKeyValuePair of specs.paths | mapToIterable">
-      <path [model]="pathKeyValuePair.value" [name]="pathKeyValuePair.key" [specs]="specs"></path>
+  <!--_specs.paths {{_specs.paths | json}}-->
+  <ul class="paths" collapse-when="_specs.paths.$folded">
+    <li *ngFor="#pathKeyValuePair of _specs.paths | mapToIterable">
+      <path [model]="pathKeyValuePair.value" [name]="pathKeyValuePair.key" [specs]="_specs"></path>
     </li>
     <!--<li
       class="path"
       ng-include
       src="'templates/path.html'"
-      ng-repeat="(pathName, path) in specs.paths"
+      ng-repeat="(pathName, path) in _specs.paths"
       *ngIf="showPath(path, pathName)">
     </li>-->
   </ul>
 
+
   <!--MODELS-->
-  <header *ngIf="specs.definitions">
+  <header *ngIf="_specs.definitions">
     <h3 class="section-header">
       <a (click)="
-        specs.definitions.$folded = !specs.definitions.$folded;
-        foldEditor(['definitions'], specs.definitions.$folded);
+        _specs.definitions.$folded = !_specs.definitions.$folded;
+        foldEditor(['definitions'], _specs.definitions.$folded);
       ">Models</a>
       <span class="on-hover">
         <a (click)="listAllDefnitions()">List all models</a>
@@ -67,30 +68,37 @@
     </h3>
   </header>
 
-  <!--<ul class="section-content definitions" *ngIf="showDefinitions(specs.definitions)" collapse-when="specs.definitions.$folded"
-  class="models">
+  <!--<ul class="section-content definitions" *ngIf="showDefinitions(_specs.definitions)" collapse-when="_specs.definitions.$folded"
+  class="models"-->
+  <ul class="section-content definitions" *ngIf="_specs.definitions" collapse-when="_specs.definitions.$folded" class="models">
+    <!--<pre>
+{{_specs.definitions|json}}
+</pre>-->
 
-    <li class="definition" ng-repeat="(modelName, model) in specs.definitions" *ngIf="!isVendorExtension(modelName)" scroll-into-view-when="isInFocus(['definitions', modelName])">
-      <h4>
-          <a
-            (click)="
-              model.$folded = !model.$folded;
-              foldEditor(['definitions', modelName], model.$folded)
-            "
-            class="definition-title">
-            {{modelName}}
-          </a>
-          <a
-            class="jump-to-yaml"
-            (click)="focusEdit($event, ['definitions', modelName])"
-            tooltip-placement="left"
-            tooltip="Jump to YAML"
-            tooltip-trigger="mouseenter">
-          </a>
+    <!--https://github.com/angular/angular/blob/master/modules/angular2/src/core/change_detection/differs/iterable_differs.ts-->
+    <!--<li class="definition" ng-repeat="(modelName, model) in _specs.definitions" *ngIf="!isVendorExtension(modelName)" scroll-into-view-when="isInFocus(['definitions', modelName])">-->
+    <li class="definition" *ngFor="#modelSchemaKeyValuePair of _specs.definitions | mapToIterable">
+      <span *ngIf="!isVendorExtension(modelSchemaKeyValuePair.key)" scroll-into-view-when="isInFocus(['definitions', modelSchemaKeyValuePair.key])">
+        <h4>
+            <a
+              (click)="
+                modelSchemaKeyValuePair.value.$folded = !modelSchemaKeyValuePair.value.$folded;
+                foldEditor(['definitions', modelSchemaKeyValuePair.key], modelSchemaKeyValuePair.value.$folded)"
+              class="definition-title">
+              {{modelSchemaKeyValuePair.key}}
+            </a>
+            <a
+              class="jump-to-yaml"
+              (click)="focusEdit($event, ['definitions', modelSchemaKeyValuePair.key])"
+              tooltip-placement="left"
+              tooltip="Jump to YAML"
+              tooltip-trigger="mouseenter">
+            </a>
         </h4>
-      <div collapse-when="model.$folded">
-        <schema-model schema="model"></schema-model>
-      </div>
+        <div collapse-when="modelSchemaKeyValuePair.value.$folded">
+          <schema-model model="modelSchemaKeyValuePair.value"></schema-model>
+        </div>
+      </span>
     </li>
-  </ul>-->
+  </ul>
 </div>

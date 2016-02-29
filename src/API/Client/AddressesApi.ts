@@ -5,7 +5,8 @@ import {Http, HTTP_PROVIDERS, RequestOptions, Headers, Response, Request, Reques
 //import Rx from 'rxjs/Rx';
 //import * as Rx from '@reactivex/rxjs';
 //import {Observable} from 'rxjs/Observable';
-import * as Rx from 'rxjs';
+import * as Rx from 'rxjs'; // rxjs/add/operator/map
+
 //http://stackoverflow.com/questions/30712638/typescript-export-imported-interface
 
 import { Address } from './Address'

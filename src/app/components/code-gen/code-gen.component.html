@@ -1,0 +1,96 @@
+<div class="preview-wrapper">
+  <div class="dirty-message" *ngIf="isDirty">
+    This preview is out of date. Please <a (click)="loadLatest()">reload</a> to see the latest.
+  </div>
+
+  <!--<ng-include
+    src="'templates/error-presenter.html'"
+    ng-controller="ErrorPresenterCtrl"
+    *ngIf="errors.length || warnings.length">
+  </ng-include>-->
+
+  <!--SPEC INFO-->
+  <specInfo [model]="specs"></specInfo>
+  <!--<ng-include src="'templates/specs-info.html'"></ng-include>-->
+
+  <!--SECURITY-->
+  <!--<ng-include src="'templates/security.html'" *ngIf="specs.securityDefinitions">
+  </ng-include>-->
+  <security model="specs"></security>
+
+  <!--TAGS-->
+  <!--<ng-include src="'templates/tags.html'"></ng-include>-->
+  <tags model="specs"></tags>
+
+
+  <!--PATH HEADER-->
+  <header>
+    <h3 class="section-header">
+      <a (click)="
+          specs.paths.$folded = !specs.paths.$folded;
+          foldEditor(['paths'], specs.paths.$folded);">
+
+          <span>Paths</span>
+      </a>
+
+      <span class="on-hover">
+        <a (click)="listAllOperation()">List all operations</a>
+      </span>
+    </h3>
+  </header>
+
+  <!--PATHS-->
+  <!--specs.paths {{specs.paths | json}}-->
+  <ul class="paths" collapse-when="specs.paths.$folded">
+    <li *ngFor="#pathKeyValuePair of specs.paths | mapToIterable">
+      <path [model]="pathKeyValuePair.value" [name]="pathKeyValuePair.key" [specs]="specs"></path>
+    </li>
+    <!--<li
+      class="path"
+      ng-include
+      src="'templates/path.html'"
+      ng-repeat="(pathName, path) in specs.paths"
+      *ngIf="showPath(path, pathName)">
+    </li>-->
+  </ul>
+
+  <!--MODELS-->
+  <header *ngIf="specs.definitions">
+    <h3 class="section-header">
+      <a (click)="
+        specs.definitions.$folded = !specs.definitions.$folded;
+        foldEditor(['definitions'], specs.definitions.$folded);
+      ">Models</a>
+      <span class="on-hover">
+        <a (click)="listAllDefnitions()">List all models</a>
+      </span>
+    </h3>
+  </header>
+
+  <!--<ul class="section-content definitions" *ngIf="showDefinitions(specs.definitions)" collapse-when="specs.definitions.$folded"
+  class="models">
+
+    <li class="definition" ng-repeat="(modelName, model) in specs.definitions" *ngIf="!isVendorExtension(modelName)" scroll-into-view-when="isInFocus(['definitions', modelName])">
+      <h4>
+          <a
+            (click)="
+              model.$folded = !model.$folded;
+              foldEditor(['definitions', modelName], model.$folded)
+            "
+            class="definition-title">
+            {{modelName}}
+          </a>
+          <a
+            class="jump-to-yaml"
+            (click)="focusEdit($event, ['definitions', modelName])"
+            tooltip-placement="left"
+            tooltip="Jump to YAML"
+            tooltip-trigger="mouseenter">
+          </a>
+        </h4>
+      <div collapse-when="model.$folded">
+        <schema-model schema="model"></schema-model>
+      </div>
+    </li>
+  </ul>-->
+</div>
