@@ -5,8 +5,8 @@
         ⇄
       </a>
     </td>
-    <td class="view json" *ngIf="_mode === 'json'"></td>
+    <td class="view json" ngClass="{hidden: _mode === 'json'}"></td>
     <!--<td class="view schema" ng-show="_mode === 'schema'"></td>-->
-    <td class="view schema" *ngIf="_mode === 'schema'"></td>
+    <td class="view schema" ngClass="{hidden: _mode === 'schema'}"></td>
   </tr>
 </table>

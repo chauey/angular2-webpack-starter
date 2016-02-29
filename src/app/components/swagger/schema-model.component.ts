@@ -2,7 +2,9 @@ import {Component, OnInit, Host, Input} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { MapToIterablePipe } from '../../pipes/mapToIterable.pipe';
-import { MarkdownComponent } from '../common/markdown.component'
+import { MarkdownComponent } from '../common/markdown.component';
+
+// UNDONE: import { JSONFormatter } from 'json-formatter-js/dist/bundle'
 
 
 @Component({
@@ -49,12 +51,12 @@ export class SchemaModelComponent implements OnInit {
   // }
 
 
-  // function render() {
-  //   var formatter = new JSONFormatter($scope.schema, 1);
-  //   $element.find('td.view.json').html(formatter.render());
+  render() {
+    let formatter = new JSONFormatter($scope.schema, 1);
+    $element.find('td.view.json').html(formatter.render());
 
-  //   var schemaView = new JSONSchemaView($scope.schema, 1);
-  //   $element.find('td.view.schema').html(schemaView.render());
-  // }
+    let schemaView = new JSONSchemaView($scope.schema, 1);
+    $element.find('td.view.schema').html(schemaView.render());
+  }
 
 }
