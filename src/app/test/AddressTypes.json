@@ -1,0 +1,42 @@
+{
+  "@odata.context": "http://localhost:2000/odata/$metadata#AddressTypes",
+  "@odata.count": 6,
+  "value": [
+    {
+      "AddressTypeId": 1,
+      "Name": "Billing",
+      "Rowguid": "b84f78b1-4efe-4a0e-8cb7-70e9f112f886",
+      "ModifiedDate": "2008-04-30T00:00:00+07:00"
+    },
+    {
+      "AddressTypeId": 2,
+      "Name": "Home",
+      "Rowguid": "41bc2ff6-f0fc-475f-8eb9-cec0805aa0f2",
+      "ModifiedDate": "2008-04-30T00:00:00+07:00"
+    },
+    {
+      "AddressTypeId": 3,
+      "Name": "Main Office",
+      "Rowguid": "8eeec28c-07a2-4fb9-ad0a-42d4a0bbc575",
+      "ModifiedDate": "2008-04-30T00:00:00+07:00"
+    },
+    {
+      "AddressTypeId": 4,
+      "Name": "Primary",
+      "Rowguid": "24cb3088-4345-47c4-86c5-17b535133d1e",
+      "ModifiedDate": "2008-04-30T00:00:00+07:00"
+    },
+    {
+      "AddressTypeId": 5,
+      "Name": "Shipping",
+      "Rowguid": "b29da3f8-19a3-47da-9daa-15c84f4a83a5",
+      "ModifiedDate": "2008-04-30T00:00:00+07:00"
+    },
+    {
+      "AddressTypeId": 6,
+      "Name": "Archive",
+      "Rowguid": "a67f238a-5ba2-444b-966c-0467ed9c427f",
+      "ModifiedDate": "2008-04-30T00:00:00+07:00"
+    }
+  ]
+}

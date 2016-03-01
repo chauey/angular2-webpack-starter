@@ -1,0 +1,11 @@
+{
+  "@odata.context":"http://localhost:2000/odata/$metadata#PhoneNumberTypes","@odata.count":3,"value":[
+    {
+      "PhoneNumberTypeId":1,"Name":"Cell","ModifiedDate":"2017-12-13T13:19:22.273+07:00"
+    },{
+      "PhoneNumberTypeId":2,"Name":"Home","ModifiedDate":"2017-12-13T13:19:22.273+07:00"
+    },{
+      "PhoneNumberTypeId":3,"Name":"Work","ModifiedDate":"2017-12-13T13:19:22.273+07:00"
+    }
+  ]
+}

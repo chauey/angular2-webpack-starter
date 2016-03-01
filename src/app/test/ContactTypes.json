@@ -1,0 +1,106 @@
+{
+@odata.context: "http://localhost:2000/odata/$metadata#ContactTypes",
+@odata.count: 20,
+value: [
+{
+ContactTypeId: 1,
+Name: "Accounting Manager",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 2,
+Name: "Assistant Sales Agent",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 3,
+Name: "Assistant Sales Representative",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 4,
+Name: "Coordinator Foreign Markets",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 5,
+Name: "Export Administrator",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 6,
+Name: "International Marketing Manager",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 7,
+Name: "Marketing Assistant",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 8,
+Name: "Marketing Manager",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 9,
+Name: "Marketing Representative",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 10,
+Name: "Order Administrator",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 11,
+Name: "Owner",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 12,
+Name: "Owner/Marketing Assistant",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 13,
+Name: "Product Manager",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 14,
+Name: "Purchasing Agent",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 15,
+Name: "Purchasing Manager",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 16,
+Name: "Regional Account Representative",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 17,
+Name: "Sales Agent",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 18,
+Name: "Sales Associate",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 19,
+Name: "Sales Manager",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+},
+{
+ContactTypeId: 20,
+Name: "Sales Representative",
+ModifiedDate: "2008-04-30T00:00:00+07:00"
+}
+]
+}
