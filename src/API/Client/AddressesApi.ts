@@ -15,11 +15,13 @@ import { Error } from './Error'
 
 import { Injectable } from 'angular2/core';
 
+import { IAddressesApi } from './IAddressesApi'
+
 //namespace API.Client {
 'use strict';
 
 @Injectable()
-export class AddressesApi {
+export class AddressesApi implements IAddressesApi {
   protected basePath = 'http://localhost:2000/odata';
   public defaultHeaders: Headers = new Headers({});//any = {};
 

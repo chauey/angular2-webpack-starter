@@ -118,9 +118,13 @@
 /// <reference path="PersonPhonesApi.ts" />
 
 
+/// <reference path="IAddressesApi.ts" />
+
 
 /// <reference path="AddressesApi.ts" />
 
+
+/// <reference path="AddressesApiLocal.ts" />
 
 
 /// <reference path="BusinessEntityAddressesApi.ts" />
