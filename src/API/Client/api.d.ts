@@ -4,6 +4,10 @@
 
 
 
+/// <reference path="AddressInterface.ts" />
+
+
+
 /// <reference path="AddressType.ts" />
 
 

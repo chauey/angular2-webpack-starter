@@ -5,24 +5,24 @@
 // //import Rx from 'rxjs/Rx';
 // //import * as Rx from '@reactivex/rxjs';
 // //import {Observable} from 'rxjs/Observable';
-// import * as Rx from 'rxjs'; // rxjs/add/operator/map
+import * as Rx from 'rxjs'; // rxjs/add/operator/map
 
 // //http://stackoverflow.com/questions/30712638/typescript-export-imported-interface
 
-// import { Address } from './Address'
+import { Address } from './Address';
 
 // import { Error } from './Error'
 
-// import { Injectable } from 'angular2/core';
+import { Injectable } from 'angular2/core';
 
-import { IAddressesApi } from './IAddressesApi'
+import { IAddressesApi } from './IAddressesApi';
 
 //namespace API.Client {
 'use strict';
 
 @Injectable()
 export class AddressesApiLocal implements IAddressesApi {
-//   protected basePath = 'http://localhost:2000/odata';
+   protected basePath = 'http://localhost:2000/odata';
 //   public defaultHeaders: Headers = new Headers({});//any = {};
 
 //   static $inject: string[] = ['$http', '$httpParamSerializer'];
@@ -46,6 +46,35 @@ export class AddressesApiLocal implements IAddressesApi {
    */
   public addressesGet(odata?: any//$Expand?: string, $Filter?: string, $Select?: string, $Orderby?: string, $Top?: number, $Skip?: number, $Count?: boolean
     , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: Address[] }> {
+    
+    
+    // // Get the list of 31 hard-code Addresses
+    // let addresses = this.get();
+
+    // // Then filtering/sorting/paging    
+    // if (odata.filter !== undefined) {
+    //   //urlSearchParams.append('$filter', odata.filter.toString());
+    //   addresses.list = this.filter(addresses.list, odata.filter.toString());
+    // }
+
+    // if (odata.orderby !== undefined) {
+    //   //urlSearchParams.append('$orderby', odata.orderby.toString());
+    //   addresses.list = this.sort(addresses.list, odata.orderby.toString());
+    // }
+
+    // if (odata.select !== undefined || odata.top !== undefined || odata.skip !== undefined) {
+    //   //urlSearchParams.append('$select', odata.select.toString());
+    //   addresses.list = this.paging(addresses.list, odata.select, odata.top, odata.skip);
+    // }
+    
+    // // Return result
+    // return addresses;
+    
+    return null;
+  }
+  
+  public addressesGetArray(odata?: any//$Expand?: string, $Filter?: string, $Select?: string, $Orderby?: string, $Top?: number, $Skip?: number, $Count?: boolean
+    , extraHttpRequestParams?: any): any {
     
     
     // Get the list of 31 hard-code Addresses
@@ -72,7 +101,7 @@ export class AddressesApiLocal implements IAddressesApi {
   }
   
   private sort(addresses, orderby) {
-    addresses.sort((orderby) => {
+    return addresses.sort((orderby) => {
         return (a,b) => {
             if (a[orderby] < b[orderby])
                 return -1;
@@ -84,10 +113,10 @@ export class AddressesApiLocal implements IAddressesApi {
   }
   
   private filter(addresses, keyword) {
-      return address.filter((value) => {
+      return addresses.filter((address) => {
           return (address.addressLine1.indexOf(keyword) >= 0 || address.addressLine2.indexOf(keyword) >= 0 || address.city.indexOf(keyword) >= 0 || 
               address.postalCode.indexOf(keyword) >= 0 || address.spatialLocation.indexOf(keyword) >= 0);
-      }));
+      });
   }
   
   private paging(addresses, odataSelect, odataTop, odataSkip) {
@@ -101,6 +130,33 @@ export class AddressesApiLocal implements IAddressesApi {
   }
   
   private get() {
+      let result = {
+        count: 31,
+        list: []   
+      };
+      
+      let simpleAddresses = this.getSimpletAddresses();
+      for (let simpleAddress of simpleAddresses) {
+          let newAddress = new Address();
+          newAddress.addressId = simpleAddress.AddressId;
+          newAddress.addressLine1 = simpleAddress.AddressLine1;
+          newAddress.addressLine2 = simpleAddress.AddressLine2;
+          
+          newAddress.city = simpleAddress.City;
+          newAddress.stateProvinceId = simpleAddress.StateProvinceId;
+          newAddress.postalCode = simpleAddress.PostalCode;
+          
+          newAddress.spatialLocation = simpleAddress.SpatialLocation;
+          newAddress.rowguid = simpleAddress.Rowguid;
+          newAddress.modifiedDate = new Date(simpleAddress.ModifiedDate);
+          
+          result.list.push(newAddress);
+      }
+      
+      return result.list;
+  }
+  
+  private getSimpletAddresses() {
       return [{
         "AddressId": 1,
         "AddressLine1": "1970 Napa Ct.",

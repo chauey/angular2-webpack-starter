@@ -5,7 +5,8 @@ import { DataService } from '../../services/DataService';
 
 import { Address } from '../../../API/Client/Address';
 
-import { AddressesApi } from '../../../API/Client/AddressesApi';
+//import { AddressesApi } from '../../../API/Client/AddressesApi';
+import { AddressesApiLocal } from '../../../API/Client/AddressesApiLocal';
 
 import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap';
 
@@ -13,7 +14,7 @@ import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap';
   selector: 'address-list',
   directives: [...ROUTER_DIRECTIVES, PAGINATION_DIRECTIVES],
   pipes: [],
-  providers: [], // AddressesApi],
+  providers: [AddressesApiLocal], // AddressesApi],
   styles: [require('./address-list.component.css')],
   template: require('./address-list.component.html')
 })
@@ -37,7 +38,7 @@ export class AddressListComponent implements OnInit {
   }
 
   constructor(private _router: Router, private _dataService: DataService,
-    private _AddressesApi: AddressesApi
+    private _AddressesApi: AddressesApiLocal // AddressesApi
   ) {
   }
 
@@ -48,14 +49,26 @@ export class AddressListComponent implements OnInit {
   }
 
   getList() {
-    this._AddressesApi.addressesGet(this.odata)//, undefined, undefined, undefined, 3)
-      .subscribe(
-      // function(listWithCount) {
-      //   this.listWithCount = listWithCount;
-      //   this.totalItems = listWithCount.count;
-      // },
-      addressListWithCount => this.listWithCount = addressListWithCount,//.addressList,
-      error => this.errorMessage = <any>error);
+    // FROM AddressesApi
+    // this._AddressesApi.addressesGet(this.odata)//, undefined, undefined, undefined, 3)    
+    //   .subscribe(
+    //   // function(listWithCount) {
+    //   //   this.listWithCount = listWithCount;
+    //   //   this.totalItems = listWithCount.count;
+    //   // },
+    //   addressListWithCount => this.listWithCount = addressListWithCount,//.addressList,
+    //   error => this.errorMessage = <any>error);
+    
+    //---------------------------------------------------------------------------------------------
+    
+    // FROM AddressesApiLocal
+    this.listWithCount = {
+      count: 0,
+      list: this._AddressesApi.addressesGetArray(this.odata)   
+    };
+    
+    this.listWithCount.count = this.listWithCount.list.length;
+
   }
 
   //   private totalItems:number = 64;

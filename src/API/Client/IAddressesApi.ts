@@ -1,7 +1,7 @@
 /// <reference path="api.d.ts" />
 
 /* tslint:disable:no-unused-variable member-ordering */
-//import {Http, HTTP_PROVIDERS, RequestOptions, Headers, Response, Request, RequestOptionsArgs, RequestMethod, URLSearchParams} from 'angular2/http';
+//import {Headers} from 'angular2/http';
 //import Rx from 'rxjs/Rx';
 //import * as Rx from '@reactivex/rxjs';
 //import {Observable} from 'rxjs/Observable';
@@ -22,14 +22,16 @@ import { Injectable } from 'angular2/core';
 
     export interface IAddressesApi {
 
-        basePath: string;
+        //basePath: string;
         
-        defaultHeaders: Headers;
+        //defaultHeaders: Headers;
         
-        $inject: string[];
+        //$inject: string[];
         
         // Function types
         addressesGet(odata?: any, extraHttpRequestParams?: any);
+        
+        addressesGetArray(odata?: any, extraHttpRequestParams?: any);
     }
 
 

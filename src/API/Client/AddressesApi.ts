@@ -175,6 +175,10 @@ export class AddressesApi implements IAddressesApi {
     // err => handleErr(err),				// error
     // () => console.log('done'));		// done
   }
+  
+  public addressesGetArray(odata?: any, extraHttpRequestParams?: any): any {
+    return [];      
+  }
 
   private changeDateStringToDateObject(list) {
     list.forEach(address => {

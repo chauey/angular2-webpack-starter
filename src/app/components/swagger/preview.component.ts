@@ -45,7 +45,6 @@ export class PreviewComponent implements OnInit {
 
   // methods
   showDefinitions(definitions) {
-    debugger;
     console.log("typeof definitions === 'object': " + typeof definitions === 'object');
     return (typeof definitions === 'object');
   }

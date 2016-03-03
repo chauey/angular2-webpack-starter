@@ -41,7 +41,6 @@ export class TryOperationComponent {
 
   constructor(private authManager: AuthManager) {
     console.log(this.operationName);
-    debugger;
 
     let blah = authManager;
   }

@@ -36,19 +36,19 @@
       <tbody>
         <tr *ngFor="#address of listWithCount?.list">
           <td>
-            <button [routerLink]=" ['Item', {id: address.AddressId}] " class="btn btn-primary">View</button>
-            <a [routerLink]=" ['Item', {id: address.AddressId}] ">View</a>
+            <button [routerLink]=" ['Item', {id: address.addressId}] " class="btn btn-primary">View</button>
+            <a [routerLink]=" ['Item', {id: address.addressId}] ">View</a>
           </td>
-          <td>{{address.AddressId}}</td>
-          <td>{{address.AddressLine1}}</td>
-          <td>{{address.AddressLine2}}</td>
-          <td>{{address.City}}</td>
-          <td>{{address.StateProvinceId}}</td>
-          <td>{{address.PostalCode}}</td>
-          <td>{{address.Rowguid}}</td>
+          <td>{{address.addressId}}</td>
+          <td>{{address.addressLine1}}</td>
+          <td>{{address.addressLine2}}</td>
+          <td>{{address.city}}</td>
+          <td>{{address.stateProvinceId}}</td>
+          <td>{{address.postalCode}}</td>
+          <td>{{address.rowguid}}</td>
           <!--https://github.com/angular/angular/issues/6336-->
-          <td>{{address.ModifiedDate | date:"MM/dd/yy"}}</td>
-          <td>{{address.SpatialLocation}}</td>
+          <td>{{address.modifiedDate | date:"MM/dd/yy"}}</td>
+          <td>{{address.spatialLocation}}</td>
           <td>{{address}}</td>
         </tr>
       </tbody>
