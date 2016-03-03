@@ -9,7 +9,7 @@ import * as Rx from 'rxjs'; // rxjs/add/operator/map
 
 //http://stackoverflow.com/questions/30712638/typescript-export-imported-interface
 
-import { Address } from './Address'
+import { IAddress } from './AddressInterface'
 
 import { Error } from './Error'
 
@@ -59,7 +59,7 @@ export class AddressesApi implements IAddressesApi {
    * @param $Count include count in response
    */
   public addressesGet(odata?: any//$Expand?: string, $Filter?: string, $Select?: string, $Orderby?: string, $Top?: number, $Skip?: number, $Count?: boolean
-    , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: Address[] }> {
+    , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }> {
     const path = this.basePath + '/Addresses';
 
     //let queryParameters: any = {};
@@ -175,10 +175,10 @@ export class AddressesApi implements IAddressesApi {
     // err => handleErr(err),				// error
     // () => console.log('done'));		// done
   }
-  
-  public addressesGetArray(odata?: any, extraHttpRequestParams?: any): any {
-    return [];      
-  }
+
+  // public addressesGetArray(odata?: any, extraHttpRequestParams?: any): any {
+  //   return [];
+  // }
 
   private changeDateStringToDateObject(list) {
     list.forEach(address => {
@@ -198,7 +198,7 @@ export class AddressesApi implements IAddressesApi {
    * Post a new entity to EntitySet Addresses
    * @param address The entity to post
    */
-  public addressesPost(address?: Address, extraHttpRequestParams?: any): Rx.Observable<Address> {
+  public addressesPost(address?: IAddress, extraHttpRequestParams?: any): Rx.Observable<IAddress> {
     const path = this.basePath + '/Addresses';
 
     let queryParameters: any = {};
@@ -325,7 +325,7 @@ export class AddressesApi implements IAddressesApi {
    * @param addressId key: AddressId
    * @param address The entity to patch
    */
-  public addressesAddressIdPatch(addressId: number, address?: Address, extraHttpRequestParams?: any): Rx.Observable<{}> {
+  public addressesAddressIdPatch(addressId: number, address?: IAddress, extraHttpRequestParams?: any): Rx.Observable<{}> {
     const path = this.basePath + '/Addresses({AddressId})'
       .replace('{' + 'AddressId' + '}', String(addressId));
 

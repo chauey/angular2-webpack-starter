@@ -1,24 +1,19 @@
 /// <reference path="api.d.ts" />
-import { Injectable } from 'angular2/core';
+  import { Injectable } from 'angular2/core';
 
-import { AddressInterface } from './AddressInterface'
+import { IAddress } from './AddressInterface'
 
-//namespace API.Client {
-    'use strict';
-    
-    @Injectable()    
-    export class Address implements AddressInterface {
-        constructor () {
-            this.addressId = 0;
-            this.addressLine1 = '';
-            this.addressLine2 = '';
-            this.city = '';
-            this.stateProvinceId = 0;
-            this.postalCode = '';
-            this.spatialLocation = {};
-            this.rowguid = '';
-            this.modifiedDate = new Date();
-        }
-    }
+'use strict';
 
-//}
+@Injectable()
+export class Address implements IAddress {
+  addressId: number;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  stateProvinceId: number;
+  postalCode: string;
+  spatialLocation: any;//System.Data.Entity.Spatial.DbGeography;
+  rowguid: string;
+  modifiedDate: Date;
+}

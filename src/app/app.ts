@@ -22,9 +22,10 @@ import {PurchasingComponent} from './components/purchasing/purchasing.component'
 import {ClientComponent} from './components/client/client.component';
 
 import {SwaggerComponent} from './components/swagger/swagger.component';
+import {CodeGenComponent} from './components/code-gen/code-gen.component';
 
 import {DataService} from './services/DataService';
-import { AddressesApi } from '../API/Client/AddressesApi';
+import {AddressesApi} from '../API/Client/AddressesApi';
 
 declare var Auth0Lock;
 
@@ -81,6 +82,10 @@ declare var Auth0Lock;
       <!--swagger-->
       <li class="nav-item" router-active="active">
         <a [routerLink]=" ['Swagger'] " class="nav-link">Swagger</a>
+      </li>
+
+      <li class="nav-item" router-active="active">
+        <a [routerLink]=" ['CodeGen'] " class="nav-link">CodeGen</a>
       </li>
 
 
@@ -141,6 +146,7 @@ declare var Auth0Lock;
   { path: '/purchasing/...', component: PurchasingComponent, name: 'Purchasing' },
 
   { path: '/swagger', component: SwaggerComponent, name: 'Swagger' },
+  { path: '/codeGen', component: CodeGenComponent, name: 'CodeGen' },
 
   { path: '/**', redirectTo: ['Index'] }
 ])

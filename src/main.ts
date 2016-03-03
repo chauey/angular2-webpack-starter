@@ -12,6 +12,8 @@ import {AuthHttp, AuthConfig} from 'angular2-jwt';
 import {AuthManager} from './app/services/auth-manager.service';
 
 import { AddressesApi } from './API/Client/AddressesApi';
+import { AddressesApiLocal } from './API/Client/AddressesApiLocal';
+import { IAddressesApi } from './API/Client/IAddressesApi';
 
 import {FORM_PROVIDERS, FormBuilder, Validators} from 'angular2/common';
 
@@ -29,7 +31,8 @@ document.addEventListener('DOMContentLoaded', function main() {
 
   enableProdMode(); // TODO: check if wanted. Enabled this due to "Expression 'xxxx' was changed after it was checked" https://github.com/angular/angular/issues/5950 https://github.com/angular/angular/issues/6189
 
-  bootstrap(App, [
+  bootstrap(App,
+  [
     ...('production' === process.env.ENV ? [] : ELEMENT_PROBE_PROVIDERS),
     ...HTTP_PROVIDERS,
     ...ROUTER_PROVIDERS,
@@ -40,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function main() {
       },
       deps: [Http]
     }),
-    provide(AuthManager, { useClass: AuthManager})
+    provide(AuthManager, { useClass: AuthManager }),
+    //provide(IAddressesApi, { useClass: AddressesApi })
     //...FORM_PROVIDERS
    //     provide(AddressesApi, { useClass: AddressesApi }),
 

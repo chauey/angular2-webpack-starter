@@ -1,88 +1,52 @@
 /// <reference path="api.d.ts" />
 
-//namespace API.Client {
-    'use strict';
+'use strict';
 
+export interface IAddress {
 
+  /**
+   * AddressId
+   */
+  addressId?: number;
 
+  /**
+   * AddressLine1
+   */
+  addressLine1?: string;
 
-    export interface AddressInterface {
+  /**
+   * AddressLine2
+   */
+  addressLine2?: string;
 
+  /**
+   * City
+   */
+  city?: string;
 
+  /**
+   * StateProvinceId
+   */
 
-        /**
-         * AddressId
-         */
+  stateProvinceId?: number;
 
-        addressId?: number;
+  /**
+   * PostalCode
+   */
+  postalCode?: string;
 
+  /**
+   * SpatialLocation
+   */
+  spatialLocation?: any;//System.Data.Entity.Spatial.DbGeography;
 
+  /**
+   * Rowguid
+   */
+  rowguid?: string;
 
-        /**
-         * AddressLine1
-         */
-
-        addressLine1?: string;
-
-
-
-        /**
-         * AddressLine2
-         */
-
-        addressLine2?: string;
-
-
-
-        /**
-         * City
-         */
-
-        city?: string;
-
-
-
-        /**
-         * StateProvinceId
-         */
-
-        stateProvinceId?: number;
-
-
-
-        /**
-         * PostalCode
-         */
-
-        postalCode?: string;
-
-
-
-        /**
-         * SpatialLocation
-         */
-
-        spatialLocation?: any;//System.Data.Entity.Spatial.DbGeography;
-
-
-
-        /**
-         * Rowguid
-         */
-
-        rowguid?: string;
-
-
-
-        /**
-         * ModifiedDate
-         */
-
-        modifiedDate?: Date;
-
-    }
-
-
-
-
-//}
+  /**
+   * ModifiedDate
+   */
+  modifiedDate?: Date;
+}

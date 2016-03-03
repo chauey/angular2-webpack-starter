@@ -10,6 +10,7 @@ import * as Rx from 'rxjs'; // rxjs/add/operator/map
 // //http://stackoverflow.com/questions/30712638/typescript-export-imported-interface
 
 import { Address } from './Address';
+import { IAddress } from './AddressInterface';
 
 // import { Error } from './Error'
 
@@ -22,10 +23,10 @@ import { IAddressesApi } from './IAddressesApi';
 
 @Injectable()
 export class AddressesApiLocal implements IAddressesApi {
-   protected basePath = 'http://localhost:2000/odata';
-//   public defaultHeaders: Headers = new Headers({});//any = {};
+  protected basePath = 'http://localhost:2000/odata';
+  //   public defaultHeaders: Headers = new Headers({});//any = {};
 
-//   static $inject: string[] = ['$http', '$httpParamSerializer'];
+  //   static $inject: string[] = ['$http', '$httpParamSerializer'];
 
   constructor() { //, protected $httpParamSerializer?: (d: any) => any, basePath?: string) {
     // if (basePath) {
@@ -45,13 +46,44 @@ export class AddressesApiLocal implements IAddressesApi {
    * @param $Count include count in response
    */
   public addressesGet(odata?: any//$Expand?: string, $Filter?: string, $Select?: string, $Orderby?: string, $Top?: number, $Skip?: number, $Count?: boolean
-    , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: Address[] }> {
-    
-    
+    , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }> {
+
+
+
+    /* Using a disposable */
+    var source = Rx.Observable.create(
+      //   function (observer) {
+      // observer.next(42);
+      // observer.complete();
+      //   });
+
+      (observer) => {
+
+        let listWithCount = {
+          count: this.addressList.length,
+          list: this.addressList//this.getSimpletAddresses()
+        };
+
+console.log('111');
+        this.changeDateStringToDateObject(listWithCount.list);
+console.log('122211');
+
+
+        observer.next(listWithCount);
+        observer.complete();
+      });
+
+
+    // Note that this is optional, you do not have to return this if you require no cleanup
+    // return Rx.Disposable.create(function () {
+    //     console.log('disposed');
+    // });
+    //});
+
     // // Get the list of 31 hard-code Addresses
     // let addresses = this.get();
 
-    // // Then filtering/sorting/paging    
+    // // Then filtering/sorting/paging
     // if (odata.filter !== undefined) {
     //   //urlSearchParams.append('$filter', odata.filter.toString());
     //   addresses.list = this.filter(addresses.list, odata.filter.toString());
@@ -66,21 +98,21 @@ export class AddressesApiLocal implements IAddressesApi {
     //   //urlSearchParams.append('$select', odata.select.toString());
     //   addresses.list = this.paging(addresses.list, odata.select, odata.top, odata.skip);
     // }
-    
+
     // // Return result
     // return addresses;
-    
-    return null;
+
+    return source;
   }
-  
+
   public addressesGetArray(odata?: any//$Expand?: string, $Filter?: string, $Select?: string, $Orderby?: string, $Top?: number, $Skip?: number, $Count?: boolean
     , extraHttpRequestParams?: any): any {
-    
-    
+
+
     // Get the list of 31 hard-code Addresses
     let addresses = this.get();
 
-    // Then filtering/sorting/paging    
+    // Then filtering/sorting/paging
     if (odata.filter !== undefined) {
       //urlSearchParams.append('$filter', odata.filter.toString());
       addresses = this.filter(addresses, odata.filter.toString());
@@ -95,594 +127,607 @@ export class AddressesApiLocal implements IAddressesApi {
       //urlSearchParams.append('$select', odata.select.toString());
       addresses = this.paging(addresses, odata.select, odata.top, odata.skip);
     }
-    
+
     // Return result
     return addresses;
   }
-  
+
   private sort(addresses, orderby) {
     return addresses.sort((orderby) => {
-        return (a,b) => {
-            if (a[orderby] < b[orderby])
-                return -1;
-            if (a[orderby] > b[orderby])
-                return 1;
-            return 0;
-        };
+      return (a, b) => {
+        if (a[orderby] < b[orderby])
+          return -1;
+        if (a[orderby] > b[orderby])
+          return 1;
+        return 0;
+      };
     });
   }
-  
+
   private filter(addresses, keyword) {
-      return addresses.filter((address) => {
-          return (address.addressLine1.indexOf(keyword) >= 0 || address.addressLine2.indexOf(keyword) >= 0 || address.city.indexOf(keyword) >= 0 || 
-              address.postalCode.indexOf(keyword) >= 0 || address.spatialLocation.indexOf(keyword) >= 0);
-      });
+    return addresses.filter((address) => {
+      return (address.addressLine1.indexOf(keyword) >= 0 || address.addressLine2.indexOf(keyword) >= 0 || address.city.indexOf(keyword) >= 0 ||
+        address.postalCode.indexOf(keyword) >= 0 || address.spatialLocation.indexOf(keyword) >= 0);
+    });
   }
-  
+
   private paging(addresses, odataSelect, odataTop, odataSkip) {
-      let select = odataSelect ? odataSelect.toString() : '';
-      let top = odataTop ? odataTop.toString() : '';
-      let skip = odataSkip ? odataSkip.toString() : '';
-      
-      // UNDONE: paging
-      
-      return addresses;
+    let select = odataSelect ? odataSelect.toString() : '';
+    let top = odataTop ? odataTop.toString() : '';
+    let skip = odataSkip ? odataSkip.toString() : '';
+
+    // UNDONE: paging
+
+    return addresses;
   }
-  
+
   private get() {
-      let result = {
-        count: 31,
-        list: []   
-      };
-      
-      let simpleAddresses = this.getSimpletAddresses();
-      for (let simpleAddress of simpleAddresses) {
-          let newAddress = new Address();
-          newAddress.addressId = simpleAddress.AddressId;
-          newAddress.addressLine1 = simpleAddress.AddressLine1;
-          newAddress.addressLine2 = simpleAddress.AddressLine2;
-          
-          newAddress.city = simpleAddress.City;
-          newAddress.stateProvinceId = simpleAddress.StateProvinceId;
-          newAddress.postalCode = simpleAddress.PostalCode;
-          
-          newAddress.spatialLocation = simpleAddress.SpatialLocation;
-          newAddress.rowguid = simpleAddress.Rowguid;
-          newAddress.modifiedDate = new Date(simpleAddress.ModifiedDate);
-          
-          result.list.push(newAddress);
+    console.log('get');
+
+    let listWithCount = {
+      count: 31,
+      list: this.addressList//this.getSimpletAddresses()
+    };
+
+    this.changeDateStringToDateObject(listWithCount.list);
+
+
+    //let simpleAddresses = this.getSimpletAddresses();
+    // for (let simpleAddress of simpleAddresses) {
+    //   let newAddress = new Address();
+    //   newAddress.addressId = simpleAddress.addressId;
+    //   newAddress.addressLine1 = simpleAddress.addressLine1;
+    //   newAddress.addressLine2 = simpleAddress.addressLine2;
+
+    //   newAddress.city = simpleAddress.city;
+    //   newAddress.stateProvinceId = simpleAddress.stateProvinceId;
+    //   newAddress.postalCode = simpleAddress.postalCode;
+
+    //   newAddress.spatialLocation = simpleAddress.spatialLocation;
+    //   newAddress.rowguid = simpleAddress.rowguid;
+    //   newAddress.modifiedDate = new Date(simpleAddress.modifiedDate);
+
+    //   result.list.push(newAddress);
+    // }
+
+    return listWithCount;
+  }
+
+  private changeDateStringToDateObject(list) {
+    list.forEach(address => {
+      address.modifiedDate = new Date(address.modifiedDate);
+    });
+  }
+
+  // // private getSimpletAddresses(): IAddress[] {
+  // //   console.log('getSimpletAddresses');
+  // return //<IAddress[]>
+  addressList: any[] = [{
+    "addressId": 1,
+    "addressLine1": "1970 Napa Ct.",
+    "addressLine2": null,
+    "city": "Bothell",
+    "stateProvinceId": 79,
+    "postalCode": "98011",
+    "spatialLocation": {
+      "geography": {
+        "coordinateSystemId": 4326,
+        "wellKnownText": "POINT (-122.164644615406 47.7869921906598)",
+        "wellKnownBinary": null
       }
-      
-      return result.list;
-  }
-  
-  private getSimpletAddresses() {
-      return [{
-        "AddressId": 1,
-        "AddressLine1": "1970 Napa Ct.",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.164644615406 47.7869921906598)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "9aadcb0d-36cf-483f-84d8-585c2d4ec6e9",
-        "ModifiedDate": "2007-12-04T00:00:00+07:00"
-        },
-        {
-        "AddressId": 2,
-        "AddressLine1": "9833 Mt. Dias Blv.",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.250185528911 47.6867097047995)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "32a54b9e-e034-4bfb-b573-a71cde60d8c0",
-        "ModifiedDate": "2008-11-30T00:00:00+07:00"
-        },
-        {
-        "AddressId": 3,
-        "AddressLine1": "7484 Roundtree Drive",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.274625789912 47.7631154083121)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "4c506923-6d1b-452c-a07c-baa6f5b142a4",
-        "ModifiedDate": "2013-03-07T00:00:00+07:00"
-        },
-        {
-        "AddressId": 4,
-        "AddressLine1": "9539 Glenside Dr",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.335726442416 47.7392386259644)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "e5946c78-4bcc-477f-9fa1-cc09de16a880",
-        "ModifiedDate": "2009-02-03T00:00:00+07:00"
-        },
-        {
-        "AddressId": 5,
-        "AddressLine1": "1226 Shoe St.",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.091323832402 47.7010357742081)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "fbaff937-4a97-4af0-81fd-b849900e9bb0",
-        "ModifiedDate": "2008-12-19T00:00:00+07:00"
-        },
-        {
-        "AddressId": 6,
-        "AddressLine1": "1399 Firestone Drive",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.360166703417 47.7058111306776)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "febf8191-9804-44c8-877a-33fde94f0075",
-        "ModifiedDate": "2009-02-13T00:00:00+07:00"
-        },
-        {
-        "AddressId": 7,
-        "AddressLine1": "5672 Hale Dr.",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.335726442416 47.7631154083121)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "0175a174-6c34-4d41-b3c1-4419cd6a0446",
-        "ModifiedDate": "2009-12-11T00:00:00+07:00"
-        },
-        {
-        "AddressId": 8,
-        "AddressLine1": "6387 Scenic Avenue",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.372386833918 47.7440139824339)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "3715e813-4dca-49e0-8f1c-31857d21f269",
-        "ModifiedDate": "2008-12-17T00:00:00+07:00"
-        },
-        {
-        "AddressId": 9,
-        "AddressLine1": "8713 Yosemite Ct.",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.189084876407 47.7201372000862)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "268af621-76d7-4c78-9441-144fd139821a",
-        "ModifiedDate": "2012-05-30T00:00:00+07:00"
-        },
-        {
-        "AddressId": 10,
-        "AddressLine1": "250 Race Court",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.042443310399 47.7822168341902)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "0b6b739d-8eb6-4378-8d55-fe196af34c04",
-        "ModifiedDate": "2008-12-02T00:00:00+07:00"
-        },
-        {
-        "AddressId": 11,
-        "AddressLine1": "1318 Lasalle Street",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.225745267909 47.8251950424161)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "981b3303-aca2-49c7-9a96-fb670785b269",
-        "ModifiedDate": "2013-02-28T00:00:00+07:00"
-        },
-        {
-        "AddressId": 12,
-        "AddressLine1": "5415 San Gabriel Dr.",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.335726442416 47.7201372000862)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "1c2c9cfe-ab9f-4f96-8e1f-d9666b6f7f22",
-        "ModifiedDate": "2013-01-05T00:00:00+07:00"
-        },
-        {
-        "AddressId": 13,
-        "AddressLine1": "9265 La Paz",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.0546634409 47.815644329477)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "e0ba2f52-c907-4553-a0db-67fc67d28ae4",
-        "ModifiedDate": "2013-12-14T00:00:00+07:00"
-        },
-        {
-        "AddressId": 14,
-        "AddressLine1": "8157 W. Book",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.164644615406 47.7822168341902)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "a1c658ae-c553-4a9d-a081-a550d39b64df",
-        "ModifiedDate": "2009-12-04T00:00:00+07:00"
-        },
-        {
-        "AddressId": 15,
-        "AddressLine1": "4912 La Vuelta",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.323506311915 47.7822168341902)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "f397e64a-a9d8-4e57-9e7c-b10928acadd6",
-        "ModifiedDate": "2013-11-18T00:00:00+07:00"
-        },
-        {
-        "AddressId": 16,
-        "AddressLine1": "40 Ellis St.",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.164644615406 47.7249125565558)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "0312b65f-cb60-4396-9ec7-a78b2eac1a1b",
-        "ModifiedDate": "2012-11-09T00:00:00+07:00"
-        },
-        {
-        "AddressId": 17,
-        "AddressLine1": "6696 Anchor Drive",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.250185528911 47.7344632694949)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "ce9b3b47-9267-4727-bcd2-687c47482c06",
-        "ModifiedDate": "2013-11-08T00:00:00+07:00"
-        },
-        {
-        "AddressId": 18,
-        "AddressLine1": "1873 Lion Circle",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.0668835714 47.7822168341902)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "963854f7-e3cb-46a1-a3db-1b05f71d6473",
-        "ModifiedDate": "2013-11-30T00:00:00+07:00"
-        },
-        {
-        "AddressId": 19,
-        "AddressLine1": "3148 Rose Street",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.347946572916 47.7392386259644)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "6b7acb0f-cdbf-44fd-ba14-eb08a56c1582",
-        "ModifiedDate": "2014-04-03T00:00:00+07:00"
-        },
-        {
-        "AddressId": 20,
-        "AddressLine1": "6872 Thornwood Dr.",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.140204354405 47.7344632694949)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "4b1f1ed4-97a4-43fd-bb1e-9e05817718e8",
-        "ModifiedDate": "2009-02-05T00:00:00+07:00"
-        },
-        {
-        "AddressId": 21,
-        "AddressLine1": "5747 Shirley Drive",
-        "AddressLine2": null,
-        "City": "Bothell",
-        "StateProvinceId": 79,
-        "PostalCode": "98011",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.030223179898 47.7153618436167)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "d83299d7-a0f4-4055-9bd5-5908e245d757",
-        "ModifiedDate": "2009-02-11T00:00:00+07:00"
-        },
-        {
-        "AddressId": 22,
-        "AddressLine1": "636 Vine Hill Way",
-        "AddressLine2": null,
-        "City": "Portland",
-        "StateProvinceId": 58,
-        "PostalCode": "97205",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.6223011785 45.5241741562999)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "7f641525-2704-4f73-9d8a-eb062cfbfa3c",
-        "ModifiedDate": "2011-05-24T00:00:00+07:00"
-        },
-        {
-        "AddressId": 23,
-        "AddressLine1": "6657 Sand Pointe Lane",
-        "AddressLine2": null,
-        "City": "Seattle",
-        "StateProvinceId": 79,
-        "PostalCode": "98104",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.373607213 47.7295638308999)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "b991568f-5096-4a92-b25c-1a3e4d2acc66",
-        "ModifiedDate": "2009-01-15T00:00:00+07:00"
-        },
-        {
-        "AddressId": 24,
-        "AddressLine1": "80 Sunview Terrace",
-        "AddressLine2": null,
-        "City": "Duluth",
-        "StateProvinceId": 36,
-        "PostalCode": "55802",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-92.0734750944588 46.8033901799154)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "be07d3c8-6e58-4670-9da9-151ab6d3d620",
-        "ModifiedDate": "2011-05-24T00:00:00+07:00"
-        },
-        {
-        "AddressId": 25,
-        "AddressLine1": "9178 Jumping St.",
-        "AddressLine2": null,
-        "City": "Dallas",
-        "StateProvinceId": 73,
-        "PostalCode": "75201",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-96.7718703803229 32.7698003131228)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "c8df3bd9-48f0-4654-a8dd-14a67a84d3c6",
-        "ModifiedDate": "2012-07-31T00:00:00+07:00"
-        },
-        {
-        "AddressId": 26,
-        "AddressLine1": "5725 Glaze Drive",
-        "AddressLine2": null,
-        "City": "San Francisco",
-        "StateProvinceId": 9,
-        "PostalCode": "94109",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-122.408489591016 37.7605893030868)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "77415959-a4ee-4da6-86f9-70c097560005",
-        "ModifiedDate": "2011-05-24T00:00:00+07:00"
-        },
-        {
-        "AddressId": 27,
-        "AddressLine1": "2487 Riverside Drive",
-        "AddressLine2": null,
-        "City": "Nevada",
-        "StateProvinceId": 74,
-        "PostalCode": "84407",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-111.911600969772 41.252325627917)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "c1d0f3b0-6b2a-4388-8861-48f44d8270a1",
-        "ModifiedDate": "2011-05-24T00:00:00+07:00"
-        },
-        {
-        "AddressId": 28,
-        "AddressLine1": "9228 Via Del Sol",
-        "AddressLine2": null,
-        "City": "Phoenix",
-        "StateProvinceId": 6,
-        "PostalCode": "85004",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-112.218924565813 33.6607829141045)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "12ae5ee1-fc3e-468b-9b92-3b970b169774",
-        "ModifiedDate": "2011-08-01T00:00:00+07:00"
-        },
-        {
-        "AddressId": 29,
-        "AddressLine1": "8291 Crossbow Way",
-        "AddressLine2": null,
-        "City": "Memphis",
-        "StateProvinceId": 72,
-        "PostalCode": "38103",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-90.1599537213446 35.1727653015068)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "7cc794ad-1822-412b-ab94-337a89a1d0c9",
-        "ModifiedDate": "2011-05-24T00:00:00+07:00"
-        },
-        {
-        "AddressId": 30,
-        "AddressLine1": "9707 Coldwater Drive",
-        "AddressLine2": null,
-        "City": "Orlando",
-        "StateProvinceId": 15,
-        "PostalCode": "32804",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-81.2829863937824 28.6211149133174)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "7431591f-36c1-4a65-b722-0e006db73557",
-        "ModifiedDate": "2011-07-01T00:00:00+07:00"
-        },
-        {
-        "AddressId": 31,
-        "AddressLine1": "9100 Sheppard Avenue North",
-        "AddressLine2": null,
-        "City": "Ottawa",
-        "StateProvinceId": 57,
-        "PostalCode": "K4B 1T7",
-        "SpatialLocation": {
-            "Geography": {
-            "CoordinateSystemId": 4326,
-            "WellKnownText": "POINT (-75.3508830623448 45.3125878635219)",
-            "WellKnownBinary": null
-            }
-        },
-        "Rowguid": "644dea26-e6fd-4019-85e6-35364ddab0cc",
-        "ModifiedDate": "2011-05-24T00:00:00+07:00"
-        }];
-  }
+    },
+    "rowguid": "9aadcb0d-36cf-483f-84d8-585c2d4ec6e9",
+    "modifiedDate": "2007-12-04T00:00:00+07:00"
+  },
+    {
+      "addressId": 2,
+      "addressLine1": "9833 Mt. Dias Blv.",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.250185528911 47.6867097047995)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "32a54b9e-e034-4bfb-b573-a71cde60d8c0",
+      "modifiedDate": "2008-11-30T00:00:00+07:00"
+    },
+    {
+      "addressId": 3,
+      "addressLine1": "7484 Roundtree Drive",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.274625789912 47.7631154083121)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "4c506923-6d1b-452c-a07c-baa6f5b142a4",
+      "modifiedDate": "2013-03-07T00:00:00+07:00"
+    },
+    {
+      "addressId": 4,
+      "addressLine1": "9539 Glenside Dr",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.335726442416 47.7392386259644)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "e5946c78-4bcc-477f-9fa1-cc09de16a880",
+      "modifiedDate": "2009-02-03T00:00:00+07:00"
+    },
+    {
+      "addressId": 5,
+      "addressLine1": "1226 Shoe St.",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.091323832402 47.7010357742081)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "fbaff937-4a97-4af0-81fd-b849900e9bb0",
+      "modifiedDate": "2008-12-19T00:00:00+07:00"
+    },
+    {
+      "addressId": 6,
+      "addressLine1": "1399 Firestone Drive",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.360166703417 47.7058111306776)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "febf8191-9804-44c8-877a-33fde94f0075",
+      "modifiedDate": "2009-02-13T00:00:00+07:00"
+    },
+    {
+      "addressId": 7,
+      "addressLine1": "5672 Hale Dr.",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.335726442416 47.7631154083121)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "0175a174-6c34-4d41-b3c1-4419cd6a0446",
+      "modifiedDate": "2009-12-11T00:00:00+07:00"
+    },
+    {
+      "addressId": 8,
+      "addressLine1": "6387 Scenic Avenue",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.372386833918 47.7440139824339)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "3715e813-4dca-49e0-8f1c-31857d21f269",
+      "modifiedDate": "2008-12-17T00:00:00+07:00"
+    },
+    {
+      "addressId": 9,
+      "addressLine1": "8713 Yosemite Ct.",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.189084876407 47.7201372000862)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "268af621-76d7-4c78-9441-144fd139821a",
+      "modifiedDate": "2012-05-30T00:00:00+07:00"
+    },
+    {
+      "addressId": 10,
+      "addressLine1": "250 Race Court",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.042443310399 47.7822168341902)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "0b6b739d-8eb6-4378-8d55-fe196af34c04",
+      "modifiedDate": "2008-12-02T00:00:00+07:00"
+    },
+    {
+      "addressId": 11,
+      "addressLine1": "1318 Lasalle Street",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.225745267909 47.8251950424161)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "981b3303-aca2-49c7-9a96-fb670785b269",
+      "modifiedDate": "2013-02-28T00:00:00+07:00"
+    },
+    {
+      "addressId": 12,
+      "addressLine1": "5415 San Gabriel Dr.",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.335726442416 47.7201372000862)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "1c2c9cfe-ab9f-4f96-8e1f-d9666b6f7f22",
+      "modifiedDate": "2013-01-05T00:00:00+07:00"
+    },
+    {
+      "addressId": 13,
+      "addressLine1": "9265 La Paz",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.0546634409 47.815644329477)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "e0ba2f52-c907-4553-a0db-67fc67d28ae4",
+      "modifiedDate": "2013-12-14T00:00:00+07:00"
+    },
+    {
+      "addressId": 14,
+      "addressLine1": "8157 W. Book",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.164644615406 47.7822168341902)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "a1c658ae-c553-4a9d-a081-a550d39b64df",
+      "modifiedDate": "2009-12-04T00:00:00+07:00"
+    },
+    {
+      "addressId": 15,
+      "addressLine1": "4912 La Vuelta",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.323506311915 47.7822168341902)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "f397e64a-a9d8-4e57-9e7c-b10928acadd6",
+      "modifiedDate": "2013-11-18T00:00:00+07:00"
+    },
+    {
+      "addressId": 16,
+      "addressLine1": "40 Ellis St.",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.164644615406 47.7249125565558)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "0312b65f-cb60-4396-9ec7-a78b2eac1a1b",
+      "modifiedDate": "2012-11-09T00:00:00+07:00"
+    },
+    {
+      "addressId": 17,
+      "addressLine1": "6696 Anchor Drive",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.250185528911 47.7344632694949)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "ce9b3b47-9267-4727-bcd2-687c47482c06",
+      "modifiedDate": "2013-11-08T00:00:00+07:00"
+    },
+    {
+      "addressId": 18,
+      "addressLine1": "1873 Lion Circle",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.0668835714 47.7822168341902)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "963854f7-e3cb-46a1-a3db-1b05f71d6473",
+      "modifiedDate": "2013-11-30T00:00:00+07:00"
+    },
+    {
+      "addressId": 19,
+      "addressLine1": "3148 Rose Street",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.347946572916 47.7392386259644)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "6b7acb0f-cdbf-44fd-ba14-eb08a56c1582",
+      "modifiedDate": "2014-04-03T00:00:00+07:00"
+    },
+    {
+      "addressId": 20,
+      "addressLine1": "6872 Thornwood Dr.",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.140204354405 47.7344632694949)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "4b1f1ed4-97a4-43fd-bb1e-9e05817718e8",
+      "modifiedDate": "2009-02-05T00:00:00+07:00"
+    },
+    {
+      "addressId": 21,
+      "addressLine1": "5747 Shirley Drive",
+      "addressLine2": null,
+      "city": "Bothell",
+      "stateProvinceId": 79,
+      "postalCode": "98011",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.030223179898 47.7153618436167)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "d83299d7-a0f4-4055-9bd5-5908e245d757",
+      "modifiedDate": "2009-02-11T00:00:00+07:00"
+    },
+    {
+      "addressId": 22,
+      "addressLine1": "636 Vine Hill Way",
+      "addressLine2": null,
+      "city": "Portland",
+      "stateProvinceId": 58,
+      "postalCode": "97205",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.6223011785 45.5241741562999)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "7f641525-2704-4f73-9d8a-eb062cfbfa3c",
+      "modifiedDate": "2011-05-24T00:00:00+07:00"
+    },
+    {
+      "addressId": 23,
+      "addressLine1": "6657 Sand Pointe Lane",
+      "addressLine2": null,
+      "city": "Seattle",
+      "stateProvinceId": 79,
+      "postalCode": "98104",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.373607213 47.7295638308999)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "b991568f-5096-4a92-b25c-1a3e4d2acc66",
+      "modifiedDate": "2009-01-15T00:00:00+07:00"
+    },
+    {
+      "addressId": 24,
+      "addressLine1": "80 Sunview Terrace",
+      "addressLine2": null,
+      "city": "Duluth",
+      "stateProvinceId": 36,
+      "postalCode": "55802",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-92.0734750944588 46.8033901799154)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "be07d3c8-6e58-4670-9da9-151ab6d3d620",
+      "modifiedDate": "2011-05-24T00:00:00+07:00"
+    },
+    {
+      "addressId": 25,
+      "addressLine1": "9178 Jumping St.",
+      "addressLine2": null,
+      "city": "Dallas",
+      "stateProvinceId": 73,
+      "postalCode": "75201",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-96.7718703803229 32.7698003131228)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "c8df3bd9-48f0-4654-a8dd-14a67a84d3c6",
+      "modifiedDate": "2012-07-31T00:00:00+07:00"
+    },
+    {
+      "addressId": 26,
+      "addressLine1": "5725 Glaze Drive",
+      "addressLine2": null,
+      "city": "San Francisco",
+      "stateProvinceId": 9,
+      "postalCode": "94109",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-122.408489591016 37.7605893030868)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "77415959-a4ee-4da6-86f9-70c097560005",
+      "modifiedDate": "2011-05-24T00:00:00+07:00"
+    },
+    {
+      "addressId": 27,
+      "addressLine1": "2487 Riverside Drive",
+      "addressLine2": null,
+      "city": "Nevada",
+      "stateProvinceId": 74,
+      "postalCode": "84407",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-111.911600969772 41.252325627917)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "c1d0f3b0-6b2a-4388-8861-48f44d8270a1",
+      "modifiedDate": "2011-05-24T00:00:00+07:00"
+    },
+    {
+      "addressId": 28,
+      "addressLine1": "9228 Via Del Sol",
+      "addressLine2": null,
+      "city": "Phoenix",
+      "stateProvinceId": 6,
+      "postalCode": "85004",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-112.218924565813 33.6607829141045)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "12ae5ee1-fc3e-468b-9b92-3b970b169774",
+      "modifiedDate": "2011-08-01T00:00:00+07:00"
+    },
+    {
+      "addressId": 29,
+      "addressLine1": "8291 Crossbow Way",
+      "addressLine2": null,
+      "city": "Memphis",
+      "stateProvinceId": 72,
+      "postalCode": "38103",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-90.1599537213446 35.1727653015068)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "7cc794ad-1822-412b-ab94-337a89a1d0c9",
+      "modifiedDate": "2011-05-24T00:00:00+07:00"
+    },
+    {
+      "addressId": 30,
+      "addressLine1": "9707 Coldwater Drive",
+      "addressLine2": null,
+      "city": "Orlando",
+      "stateProvinceId": 15,
+      "postalCode": "32804",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-81.2829863937824 28.6211149133174)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "7431591f-36c1-4a65-b722-0e006db73557",
+      "modifiedDate": "2011-07-01T00:00:00+07:00"
+    },
+    {
+      "addressId": 31,
+      "addressLine1": "9100 Sheppard Avenue North",
+      "addressLine2": null,
+      "city": "Ottawa",
+      "stateProvinceId": 57,
+      "postalCode": "K4B 1T7",
+      "spatialLocation": {
+        "geography": {
+          "coordinateSystemId": 4326,
+          "wellKnownText": "POINT (-75.3508830623448 45.3125878635219)",
+          "wellKnownBinary": null
+        }
+      },
+      "rowguid": "644dea26-e6fd-4019-85e6-35364ddab0cc",
+      "modifiedDate": "2011-05-24T00:00:00+07:00"
+    }];
+  //}
 }

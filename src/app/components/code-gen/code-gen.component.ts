@@ -3,20 +3,20 @@ import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { MapToIterablePipe } from '../../pipes/mapToIterable.pipe';
 
+import { TypescriptInterfaceComponent } from './typescriptInterface.component';
 
 
 @Component({
   selector: 'codeGen',
-  directives: [...ROUTER_DIRECTIVES, ResourceComponent, SpecInfoComponent,
-    PathComponent, SecurityComponent, TagsComponent],
+  directives: [...ROUTER_DIRECTIVES, TypescriptInterfaceComponent],
   pipes: [MapToIterablePipe],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [],
   template: require('./code-gen.component.html')
 })
 
 export class CodeGenComponent {
   @Input('model') model: any;
-  specs: any;
+  _specs: any;
 
 
   constructor() {
@@ -25,7 +25,9 @@ export class CodeGenComponent {
 
   ngOnInit() {
     console.log('ngOnInit code-gen component');
-    this.specs = this.model;
+    this._specs = this.model;
+
+       this._specs = require('../../test/swaggerDocPetStoreFull.json');
   }
 
 }

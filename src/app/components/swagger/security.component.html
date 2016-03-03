@@ -4,11 +4,11 @@
       <a (click)="
         specs.securityDefinitions.$folded = !specs.securityDefinitions.$folded;
         foldEditor(['securityDefinitions'], specs.securityDefinitions.$folded);
-      ">Securitgggggggggy</a>
+      ">Security</a>
     </h3>
   </header>
 
-  <div class="security-definitions" collapse-when="specs.securityDefinitions.$folded">vvvvvvvvvv
+  <div class="security-definitions" collapse-when="specs.securityDefinitions.$folded">
     <div *ngFor="#securityDefinitionKeyValuePair of specs.securityDefinitions" class="security-definition {{securityDefinitionKeyValuePair.value.type}}">
       <header>
         <h4>
@@ -24,7 +24,7 @@
       </header>
       <section>
         <p *ngIf="securityDefinitionKeyValuePair.value.description">
-           <!--marked="securityDefinition.description">-->
+          <!--marked="securityDefinition.description">-->
           <markdown [md]="securityDefinitionKeyValuePair.value.description"></markdown>
         </p>
 
@@ -65,4 +65,3 @@
     </div>
   </div>
 </div>
-

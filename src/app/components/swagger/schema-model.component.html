@@ -5,7 +5,17 @@
         ⇄
       </a>
     </td>
-    <td class="view json" ngClass="{hidden: _mode === 'json'}"></td>
+    <td class="view json" ngClass="{hidden: _mode === 'json'}">
+      { {_jsonFormatter.render()} }
+
+
+
+      {{_jsonHtml}}
+
+
+      <!--http://stackoverflow.com/questions/31548311/angular-2-html-binding-->
+      <div [innerHTML]="_jsonHtml"></div>
+    </td>
     <!--<td class="view schema" ng-show="_mode === 'schema'"></td>-->
     <td class="view schema" ngClass="{hidden: _mode === 'schema'}"></td>
   </tr>
