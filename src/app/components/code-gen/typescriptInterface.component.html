@@ -1,0 +1,28 @@
+<div class="preview-wrapper">
+
+  <!--DEFINITIONS/MODELS/CLASSES-->
+  <ul>
+    <li class="definition">
+      <pre>
+/// &lt;reference path="api.d.ts" /&gt;
+'use strict';
+
+interface {{_name}} {<template ngFor #propertyKeyValuePair [ngForOf]="_definition.properties| mapToIterable">
+<template [ngIf]="_isCommentProperties">
+  /*
+   * {{propertyKeyValuePair.key | properCase }}
+   */</template>
+  {{propertyKeyValuePair.key}}: {{propertyKeyValuePair.value.type}};</template>
+}
+
+NAME: {{_name}}
+PROPERTIES:
+<template ngFor #propertyKeyValuePair [ngForOf]="_definition.properties| mapToIterable">
+   {{propertyKeyValuePair.key}}: {{propertyKeyValuePair.value.type}}</template>
+
+
+        </pre>
+    </li>
+  </ul>
+
+</div>
