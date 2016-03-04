@@ -1,11 +1,9 @@
 /// <reference path="api.d.ts" />
-  import { Injectable } from 'angular2/core';
 
 import { IAddress } from './AddressInterface'
 
 'use strict';
 
-@Injectable()
 export class Address implements IAddress {
   addressId: number;
   addressLine1: string;

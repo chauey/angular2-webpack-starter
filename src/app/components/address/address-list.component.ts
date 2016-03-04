@@ -32,9 +32,10 @@ export class AddressListComponent implements OnInit {
 
   paginationData = {
     isBoundaryLinks: true,
-    maxSize: 5,
+    maxSize: 10,
     isRotate: false,
-    currentPage: 1
+    currentPage: 1,
+    itemsPerPage: this.odata.top
   }
 
   constructor(private _router: Router, private _dataService: DataService,
@@ -49,7 +50,6 @@ export class AddressListComponent implements OnInit {
   }
 
   getList() {
-    // FROM AddressesApi
     this._AddressesApi.addressesGet(this.odata)//, undefined, undefined, undefined, 3)
       .subscribe(
       // function(listWithCount) {
@@ -58,17 +58,6 @@ export class AddressListComponent implements OnInit {
       // },
       addressListWithCount => this.listWithCount = addressListWithCount,//.addressList,
       error => this.errorMessage = <any>error);
-
-    //---------------------------------------------------------------------------------------------
-
-    // FROM AddressesApiLocal
-    // this.listWithCount = {
-    //   count: 0,
-    //   list: this._AddressesApi.addressesGetArray(this.odata)
-    // };
-
-    //this.listWithCount.count = this.listWithCount.list.length;
-
   }
 
   //   private totalItems:number = 64;

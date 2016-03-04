@@ -11,8 +11,8 @@
   <pre>{{odata|json}}</pre>
   <pagination [totalItems]="listWithCount?.count" [(ngModel)]="paginationData.currentPage" [maxSize]="paginationData.maxSize"
   class="pagination-sm" [boundaryLinks]="paginationData.isBoundaryLinks" [rotate]="paginationData.isRotate" (numPages)="numPages = $event"
-  >
-  <!--(pageChanged)="pageChanged($event)" only set on 1 pagination control or event will fire again-->
+  [itemsPerPage]="paginationData.itemsPerPage">
+    <!--(pageChanged)="pageChanged($event)" only set on 1 pagination control or event will fire again-->
   </pagination>
 
   <!--table-->
@@ -72,5 +72,5 @@
   <!--pager-->
   <pagination [totalItems]="listWithCount?.count" [(ngModel)]="paginationData.currentPage" [maxSize]="paginationData.maxSize"
   class="pagination-sm" [boundaryLinks]="paginationData.isBoundaryLinks" [rotate]="paginationData.isRotate" (numPages)="numPages = $event"
-  (pageChanged)="pageChanged($event)"></pagination>
+  (pageChanged)="pageChanged($event)" [itemsPerPage]="paginationData.itemsPerPage"></pagination>
 </div>

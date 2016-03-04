@@ -30,8 +30,6 @@ export interface IAddressesApi {
 
   // Function types
   addressesGet(odata?: any, extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }>;
-
-  //addressesGetArray(odata?: any, extraHttpRequestParams?: any);
 }
 
 

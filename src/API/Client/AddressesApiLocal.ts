@@ -51,26 +51,60 @@ export class AddressesApiLocal implements IAddressesApi {
 
 
     /* Using a disposable */
-    var source = Rx.Observable.create(
-      //   function (observer) {
-      // observer.next(42);
-      // observer.complete();
-      //   });
+    let source = Rx.Observable.create(
 
       (observer) => {
 
-        let listWithCount = {
-          count: this.addressList.length,
-          list: this.addressList//this.getSimpletAddresses()
+        let id = setTimeout(() => {
+          try {
+            let listWithCount = {
+              count: this.addressList.length,
+              list: this.addressList//this.getSimpletAddresses()
+            };
+
+            console.log('111');
+            this.changeDateStringToDateObject(listWithCount.list);
+            console.log('122211');
+
+
+            // filter
+            if (odata.filter) {
+              listWithCount.list = this.filter(listWithCount.list, odata.filter.toString());
+              listWithCount.count = listWithCount.list.length;
+            }
+        
+        
+            // sort
+            if (odata.orderby) {
+              listWithCount.list = this.sort(listWithCount.list, odata.orderby.toString());
+            }
+
+    
+            // paging
+            if (odata.top || odata.skip) {
+              listWithCount.list = this.paging(listWithCount.list, odata.top, odata.skip);
+            }
+        
+        
+            // select
+            if (odata.select) {
+              // TODO
+            }
+
+            observer.next(listWithCount);
+            observer.complete();
+          } catch (error) {
+            observer.onError(error);
+          }
+        }, 1000);
+
+        // console.log('started');
+
+        return () => {
+          // console.log('disposal called');
+          clearTimeout(id);
         };
 
-console.log('111');
-        this.changeDateStringToDateObject(listWithCount.list);
-console.log('122211');
-
-
-        observer.next(listWithCount);
-        observer.complete();
       });
 
 
@@ -80,117 +114,37 @@ console.log('122211');
     // });
     //});
 
-    // // Get the list of 31 hard-code Addresses
-    // let addresses = this.get();
-
-    // // Then filtering/sorting/paging
-    // if (odata.filter !== undefined) {
-    //   //urlSearchParams.append('$filter', odata.filter.toString());
-    //   addresses.list = this.filter(addresses.list, odata.filter.toString());
-    // }
-
-    // if (odata.orderby !== undefined) {
-    //   //urlSearchParams.append('$orderby', odata.orderby.toString());
-    //   addresses.list = this.sort(addresses.list, odata.orderby.toString());
-    // }
-
-    // if (odata.select !== undefined || odata.top !== undefined || odata.skip !== undefined) {
-    //   //urlSearchParams.append('$select', odata.select.toString());
-    //   addresses.list = this.paging(addresses.list, odata.select, odata.top, odata.skip);
-    // }
-
-    // // Return result
-    // return addresses;
-
     return source;
   }
 
-  public addressesGetArray(odata?: any//$Expand?: string, $Filter?: string, $Select?: string, $Orderby?: string, $Top?: number, $Skip?: number, $Count?: boolean
-    , extraHttpRequestParams?: any): any {
-
-
-    // Get the list of 31 hard-code Addresses
-    let addresses = this.get();
-
-    // Then filtering/sorting/paging
-    if (odata.filter !== undefined) {
-      //urlSearchParams.append('$filter', odata.filter.toString());
-      addresses = this.filter(addresses, odata.filter.toString());
-    }
-
-    if (odata.orderby !== undefined) {
-      //urlSearchParams.append('$orderby', odata.orderby.toString());
-      addresses = this.sort(addresses, odata.orderby.toString());
-    }
-
-    if (odata.select !== undefined || odata.top !== undefined || odata.skip !== undefined) {
-      //urlSearchParams.append('$select', odata.select.toString());
-      addresses = this.paging(addresses, odata.select, odata.top, odata.skip);
-    }
-
-    // Return result
-    return addresses;
-  }
-
   private sort(addresses, orderby) {
-    return addresses.sort((orderby) => {
-      return (a, b) => {
-        if (a[orderby] < b[orderby])
-          return -1;
-        if (a[orderby] > b[orderby])
-          return 1;
-        return 0;
-      };
+    return addresses.sort((a, b) => {
+      if (a[orderby] < b[orderby])
+        return -1;
+      if (a[orderby] > b[orderby])
+        return 1;
+      return 0;
     });
   }
 
   private filter(addresses, keyword) {
     return addresses.filter((address) => {
-      return (address.addressLine1.indexOf(keyword) >= 0 || address.addressLine2.indexOf(keyword) >= 0 || address.city.indexOf(keyword) >= 0 ||
-        address.postalCode.indexOf(keyword) >= 0 || address.spatialLocation.indexOf(keyword) >= 0);
+      return ((address.addressLine1 && address.addressLine1.indexOf(keyword) >= 0) ||
+        (address.addressLine2 && address.addressLine2.indexOf(keyword) >= 0) ||
+        (address.city && address.city.indexOf(keyword) >= 0) ||
+        (address.postalCode && address.postalCode.indexOf(keyword) >= 0));
     });
   }
 
-  private paging(addresses, odataSelect, odataTop, odataSkip) {
-    let select = odataSelect ? odataSelect.toString() : '';
-    let top = odataTop ? odataTop.toString() : '';
-    let skip = odataSkip ? odataSkip.toString() : '';
+  private paging(addresses, odataTop, odataSkip) {
+    let top = odataTop ? Number(odataTop) : 0;
+    let skip = odataSkip ? Number(odataSkip) : 0;
 
-    // UNDONE: paging
+    if (top >= 0 && skip >= 0) {
+      addresses = addresses.slice(skip, skip + top);
+    }
 
     return addresses;
-  }
-
-  private get() {
-    console.log('get');
-
-    let listWithCount = {
-      count: 31,
-      list: this.addressList//this.getSimpletAddresses()
-    };
-
-    this.changeDateStringToDateObject(listWithCount.list);
-
-
-    //let simpleAddresses = this.getSimpletAddresses();
-    // for (let simpleAddress of simpleAddresses) {
-    //   let newAddress = new Address();
-    //   newAddress.addressId = simpleAddress.addressId;
-    //   newAddress.addressLine1 = simpleAddress.addressLine1;
-    //   newAddress.addressLine2 = simpleAddress.addressLine2;
-
-    //   newAddress.city = simpleAddress.city;
-    //   newAddress.stateProvinceId = simpleAddress.stateProvinceId;
-    //   newAddress.postalCode = simpleAddress.postalCode;
-
-    //   newAddress.spatialLocation = simpleAddress.spatialLocation;
-    //   newAddress.rowguid = simpleAddress.rowguid;
-    //   newAddress.modifiedDate = new Date(simpleAddress.modifiedDate);
-
-    //   result.list.push(newAddress);
-    // }
-
-    return listWithCount;
   }
 
   private changeDateStringToDateObject(list) {
