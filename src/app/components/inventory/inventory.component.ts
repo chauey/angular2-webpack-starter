@@ -11,7 +11,7 @@ import { InventoryItemComponent } from './inventory-item.component';
   selector: 'inventory',
   directives: [...ROUTER_DIRECTIVES],
   providers: [DataService],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory.component.css')],
+  styles: [require('./inventory.component.css')],
   template: require('./inventory.component.html')
 })
 

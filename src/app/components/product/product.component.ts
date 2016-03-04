@@ -9,7 +9,7 @@ import { ProductImportComponent } from './product-import.component';
   selector: 'dashboard',
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./product.component.css')],
+  styles: [require('./product.component.css')],
   template: require('./product.component.html')
 })
 

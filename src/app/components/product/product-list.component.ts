@@ -7,7 +7,7 @@ import { DataService } from '../../services/DataService';
   selector: 'product-list',
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./product-list.component.css')],
+  styles: [require('./product-list.component.css')],
   template: require('./product-list.component.html')
 })
 

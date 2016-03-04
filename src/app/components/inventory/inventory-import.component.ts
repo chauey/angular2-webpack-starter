@@ -11,7 +11,7 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
   directives: [NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES, FILE_UPLOAD_DIRECTIVES],
   providers: [],
   pipes: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory-import.component.css')],
+  styles: [require('./inventory-import.component.css')],
   template: require('./inventory-import.component.html')
 })
 

@@ -9,6 +9,7 @@ import {FORM_PROVIDERS} from 'angular2/common';
 
 import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt';
 
+import {Alert, ButtonCheckbox, ButtonRadio, Collapse, Pagination, Carousel, DatePicker, Tooltip } from 'ng2-bootstrap/ng2-bootstrap';
 
 import {RouterActive} from './directives/router-active';
 import {Home} from './home/home';
@@ -34,12 +35,11 @@ declare var Auth0Lock;
  * Top Level Component
  */
 @Component({
-  selector: 'app',
-  providers: [...FORM_PROVIDERS, DataService, AddressesApi],
-  directives: [...ROUTER_DIRECTIVES, RouterActive],
-  pipes: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'),
-    `
+    selector: 'app',
+    providers: [...FORM_PROVIDERS, DataService, AddressesApi],
+    directives: [...ROUTER_DIRECTIVES, RouterActive],
+    pipes: [],
+    styles: [require('./app.scss'),`
     // nav ul {
     //   display: inline;
     //   list-style-type: none;
@@ -54,6 +54,7 @@ declare var Auth0Lock;
     //   background-color: lightgray;
     // }
   `],
+    template: require('./app.html')
   template: `
 
 <header>
@@ -135,106 +136,100 @@ declare var Auth0Lock;
 })
 
 @RouteConfig([
-  { path: '/', component: Home, name: 'Index' },
-  { path: '/home', component: Home, name: 'Home' },
+    { path: '/', component: Home, name: 'Index' },
+    { path: '/home', component: Home, name: 'Home' },
 
-  { path: '/dashboard', component: DashboardComponent, name: 'Dashboard' },
-  { path: '/admin/...', component: AdminComponent, name: 'Admin' },
-  { path: '/client/...', component: ClientComponent, name: 'Client' },
-  { path: '/inventory/...', component: InventoryComponent, name: 'Inventory' },
-  //  { path: '/order', component: OrderComponent, name: 'Order' },
-  { path: '/purchasing/...', component: PurchasingComponent, name: 'Purchasing' },
+    { path: '/dashboard', component: DashboardComponent, name: 'Dashboard' },
+    { path: '/admin/...', component: AdminComponent, name: 'Admin' },
+    { path: '/client/...', component: ClientComponent, name: 'Client' },
+    { path: '/inventory/...', component: InventoryComponent, name: 'Inventory' },
+    //  { path: '/order', component: OrderComponent, name: 'Order' },
+    { path: '/purchasing/...', component: PurchasingComponent, name: 'Purchasing' },
 
-  { path: '/swagger', component: SwaggerComponent, name: 'Swagger' },
+    { path: '/swagger', component: SwaggerComponent, name: 'Swagger' },
   { path: '/codeGen', component: CodeGenComponent, name: 'CodeGen' },
 
-  { path: '/**', redirectTo: ['Index'] }
+    { path: '/**', redirectTo: ['Index'] }
 ])
 
 export class App {
-  angularclassLogo = 'assets/img/angularclass-avatar.png';
-  name = 'AA MVP CodeGen'; //'Angular 2 Webpack Starter';
-  url = 'https://twitter.com/AngularClass';
-  profile;
+    angularclassLogo = 'assets/img/angularclass-avatar.png';
+    name = 'AA MVP CodeGen'; //'Angular 2 Webpack Starter';
+    url = 'https://twitter.com/AngularClass';
+    profile;
 
 
-  lock = new Auth0Lock('HIOzw6Qm96f06Stri9cuTWJzutngVeeq', 'stalknsave.auth0.com');
-  // DkSsSq1LaQbXI2dkE0DRkhEtbZHVjpNi
-  // default ('HIOzw6Qm96f06Stri9cuTWJzutngVeeq', 'stalknsave.auth0.com'); //'AUTH0_CLIENT_ID', 'AUTH0_DOMAIN');
-  jwtHelper: JwtHelper = new JwtHelper();
+    lock = new Auth0Lock('HIOzw6Qm96f06Stri9cuTWJzutngVeeq', 'stalknsave.auth0.com');
+    // DkSsSq1LaQbXI2dkE0DRkhEtbZHVjpNi
+    // default ('HIOzw6Qm96f06Stri9cuTWJzutngVeeq', 'stalknsave.auth0.com'); //'AUTH0_CLIENT_ID', 'AUTH0_DOMAIN');
+    jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(public http: Http, public authHttp: AuthHttp) {
-    this.profile = JSON.parse(localStorage.getItem('profile'));
-  }
+    constructor(public http: Http, public authHttp: AuthHttp) {
+        this.profile = JSON.parse(localStorage.getItem('profile'));
+    }
 
+    login() {
+        // Popup Mode - https://auth0.com/docs/libraries/lock/types-of-applications#popup-mode
+        this.lock.show((err: string, profile: string, id_token: string) => {
 
+            this.profile = profile;
+            if (err) {
+                console.log('There was an error :/', err);
+                throw new Error(err);
+            }
 
+            localStorage.setItem('profile', JSON.stringify(profile));
+            localStorage.setItem('id_token', id_token);
 
+            console.log('Hey dude', profile);
+        });
+    }
 
+    logout() {
+        localStorage.removeItem('profile');
+        localStorage.removeItem('id_token');
+        this.profile = null;
+    }
 
+    loggedIn() {
+        return tokenNotExpired();
+    }
 
-  login() {
-    // Popup Mode - https://auth0.com/docs/libraries/lock/types-of-applications#popup-mode
-    this.lock.show((err: string, profile: string, id_token: string) => {
+    getThing() {
+        this.http.get('http://localhost:3001/ping')
+            .subscribe(
+            data => console.log(data.json()),
+            err => console.log(err),
+            () => console.log('Complete')
+            );
+    }
 
-      this.profile = profile;
-      if (err) {
-        console.log('There was an error :/', err);
-        throw new Error(err);
-      }
+    getSecretThing() {
+        this.authHttp.get('http://localhost:3001/secured/ping')
+            .subscribe(
+            data => console.log(data.json()),
+            err => console.log(err),
+            () => console.log('Complete')
+            );
+    }
 
-      localStorage.setItem('profile', JSON.stringify(profile));
-      localStorage.setItem('id_token', id_token);
+    tokenSubscription() {
+        this.authHttp.tokenStream.subscribe(
+            data => console.log(data),
+            err => console.log(err),
+            () => console.log('Complete')
+        );
+    }
 
-      console.log('Hey dude', profile);
-    });
-  }
+    useJwtHelper() {
+        var token = localStorage.getItem('id_token');
 
-  logout() {
-    localStorage.removeItem('profile');
-    localStorage.removeItem('id_token');
-    this.profile = null;
-  }
-
-  loggedIn() {
-    return tokenNotExpired();
-  }
-
-  getThing() {
-    this.http.get('http://localhost:3001/ping')
-      .subscribe(
-      data => console.log(data.json()),
-      err => console.log(err),
-      () => console.log('Complete')
-      );
-  }
-
-  getSecretThing() {
-    this.authHttp.get('http://localhost:3001/secured/ping')
-      .subscribe(
-      data => console.log(data.json()),
-      err => console.log(err),
-      () => console.log('Complete')
-      );
-  }
-
-  tokenSubscription() {
-    this.authHttp.tokenStream.subscribe(
-      data => console.log(data),
-      err => console.log(err),
-      () => console.log('Complete')
-    );
-  }
-
-  useJwtHelper() {
-    var token = localStorage.getItem('id_token');
-
-    console.log(
-      this.jwtHelper.decodeToken(token),
-      this.jwtHelper.getTokenExpirationDate(token),
-      this.jwtHelper.isTokenExpired(token)
-    );
-  }
+        console.log(
+            this.jwtHelper.decodeToken(token),
+            this.jwtHelper.getTokenExpirationDate(token),
+            this.jwtHelper.isTokenExpired(token)
+        );
+    }
 }
 
 /*

@@ -10,7 +10,7 @@ import { DataService } from '../../services/DataService';
   directives: [],
   pipes: [ValuesPipe],
   providers: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory-item.component.css')],
+  styles: [require('./inventory-item.component.css')],
   template: require('./inventory-item.component.html')
 })
 export class InventoryItemComponent implements OnInit {

@@ -13,7 +13,7 @@ import { OrderComponent } from '../order/order.component';
   directives: [...ROUTER_DIRECTIVES],
   providers: [DataService],
   pipes: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./purchasing.component.css')],
+  styles: [require('./purchasing.component.css')],
   template: require('./purchasing.component.html')
 })
 

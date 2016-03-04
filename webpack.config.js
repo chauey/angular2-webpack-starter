@@ -25,10 +25,14 @@ var bootstrapPath = path.join(
     'node_modules/bootstrap/dist/css'
 );
 
+// const autoprefixer = require('autoprefixer');
+
 /*
  * Config
  */
 module.exports = {
+    
+    
   // static data for index.html
   metadata: metadata,
   // for faster builds use 'eval'
@@ -50,7 +54,7 @@ module.exports = {
 
   resolve: {
     // ensure loader extensions match
-    extensions: ['','.ts','.js','.json','.css','.html'],
+    extensions: ['','.ts','.js','.json','.css','.scss','.html'],
      modulesDirectories: ['node_modules', bootstrapPath]
 
   },
@@ -80,9 +84,18 @@ module.exports = {
       { test: /\.css$/,   loader: 'raw-loader' },
 
       // support for .html as raw text
-      { test: /\.html$/,  loader: 'raw-loader' }
-
+      { test: /\.html$/,  loader: 'raw-loader' },
+      
       // if you add a loader include the resolve file extension above
+      
+      // { test: /\.scss$/, loaders: ['style', 'css', 'postcss', 'sass'] },
+      
+      { test: /\.scss$/, loaders: ['raw-loader','sass-loader'] },
+      
+      { test: /\.(woff2?|ttf|eot|svg)$/, loader: 'url?limit=10000' },
+      
+      // Bootstrap 4
+      { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' }
     ]
   },
 
@@ -98,8 +111,19 @@ module.exports = {
         'ENV': JSON.stringify(metadata.ENV),
         'NODE_ENV': JSON.stringify(metadata.ENV)
       }
+    }),
+    
+    // require the plugin
+    new ProvidePlugin({
+        jQuery: 'jquery',
+        $: 'jquery',
+        jquery: 'jquery',
+        "Tether": 'tether',
+        "window.Tether": "tether"
     })
   ],
+  
+  // postcss: [autoprefixer],
 
   // Other module loader config
   tslint: {

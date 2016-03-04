@@ -2,6 +2,9 @@
  * Providers provided by Angular
  */
 import {provide} from 'angular2/core';
+import 'jquery';
+import 'bootstrap-loader';
+
 import {bootstrap, ELEMENT_PROBE_PROVIDERS} from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, PathLocationStrategy} from 'angular2/router';
 import {HTTP_PROVIDERS, Http} from 'angular2/http';
@@ -16,7 +19,6 @@ import { AddressesApiLocal } from './API/Client/AddressesApiLocal';
 import { IAddressesApi } from './API/Client/IAddressesApi';
 
 import {FORM_PROVIDERS, FormBuilder, Validators} from 'angular2/common';
-
 
 /*
  * App Component

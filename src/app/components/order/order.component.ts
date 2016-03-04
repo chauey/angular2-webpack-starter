@@ -8,7 +8,7 @@ import { OrderListComponent } from './order-list.component';
   selector: 'dashboard',
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./order.component.css')],
+  styles: [require('./order.component.css')],
   template: require('./order.component.html')
 })
 

@@ -8,7 +8,7 @@ import { ClientListComponent } from './client-list.component';
   selector: 'client',
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./client.component.css')],
+  styles: [require('./client.component.css')],
   template: require('./client.component.html')
 })
 

@@ -9,7 +9,7 @@ import { DataService } from '../../services/DataService';
   directives: [],
   pipes: [],
   providers: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./supplier-item.component.css')],
+  styles: [require('./supplier-item.component.css')],
   template: require('./supplier-item.component.html')
 })
 

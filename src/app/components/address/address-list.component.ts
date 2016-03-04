@@ -8,11 +8,11 @@ import { Address } from '../../../API/Client/Address';
 import { AddressesApi } from '../../../API/Client/AddressesApi';
 import { IAddressesApi } from '../../../API/Client/IAddressesApi';
 
-import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap';
+import {Pagination} from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
   selector: 'address-list',
-  directives: [...ROUTER_DIRECTIVES, PAGINATION_DIRECTIVES],
+  directives: [...ROUTER_DIRECTIVES, Pagination],
   pipes: [],
   //providers: [AddressesApiLocal], // AddressesApi],
   styles: [require('./address-list.component.css')],

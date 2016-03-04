@@ -8,7 +8,7 @@ import { DataService } from '../../services/DataService';
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
   providers: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./bid-generator.component.css')
+  styles: [require('./bid-generator.component.css')
   ,
 `.bestPrice {
     background-color: #dff0d8;

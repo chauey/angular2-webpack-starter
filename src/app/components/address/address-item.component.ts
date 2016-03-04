@@ -15,7 +15,7 @@ import { ValidationMessageComponent } from '../../components/common/validation-m
   directives: [ValidationMessageComponent],
   pipes: [],
   providers: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./address-item.component.css')],
+  styles: [require('./address-item.component.css')],
   template: require('./address-item.component.html')
 })
 

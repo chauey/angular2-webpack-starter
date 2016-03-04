@@ -13,7 +13,7 @@ import { IAddressesApi } from '../../../API/Client/IAddressesApi';
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
   providers: [provide(AddressesApi, { useClass: AddressesApiLocal })],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./address.component.css')],
+  styles: [require('./address.component.css')],
   template: require('./address.component.html')
 })
 

@@ -10,7 +10,7 @@ import { EntityFieldValuePipe } from '../../pipes/entity-field-value.pipe';
   directives: [...ROUTER_DIRECTIVES],
   pipes: [EntityFieldValuePipe],
   providers: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./inventory-list.component.css')],
+  styles: [require('./inventory-list.component.css')],
   template: require('./inventory-list.component.html')
 })
 export class InventoryListComponent implements OnInit {

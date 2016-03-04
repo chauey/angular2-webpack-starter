@@ -14,7 +14,7 @@ import {RouterActive} from '../../directives/router-active';
   selector: 'admin',
   directives: [...ROUTER_DIRECTIVES, RouterActive ],
   pipes: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./admin.component.css')],
+  styles: [require('./admin.component.css')],
   template: require('./admin.component.html')
 })
 

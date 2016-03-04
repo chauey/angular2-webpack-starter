@@ -53,7 +53,7 @@ module.exports = {
   resolve: {
     cache: false,
     // ensure loader extensions match
-    extensions: ['','.ts','.js','.json','.css','.html']
+    extensions: ['','.ts','.js','.json','.css','.scss','.html']
   },
 
   module: {
@@ -94,9 +94,18 @@ module.exports = {
       { test: /\.css$/,   loader: 'raw-loader' },
 
       // support for .html as raw text
-      { test: /\.html$/,  loader: 'raw-loader' }
+      { test: /\.html$/,  loader: 'raw-loader' },
 
       // if you add a loader include the file extension
+      
+      // { test: /\.scss$/, loaders: ['style', 'css', 'postcss', 'sass'] },
+      
+      { test: /\.scss$/, loaders: ['raw-loader','sass-loader'] },
+      
+      { test: /\.(woff2?|ttf|eot|svg)$/, loader: 'url?limit=10000' },
+      
+      // Bootstrap 4
+      { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' }
     ]
   },
 

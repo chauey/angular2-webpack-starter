@@ -8,7 +8,7 @@ import { SupplierListComponent } from './supplier-list.component';
   selector: 'dashboard',
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./supplier.component.css')],
+  styles: [require('./supplier.component.css')],
   template: require('./supplier.component.html')
 })
 
