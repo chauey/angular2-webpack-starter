@@ -5,7 +5,7 @@ import { DataService } from '../../services/DataService';
 
 import { Address } from '../../../API/Client/Address';
 
-import { AddressesApi } from '../../../API/Client/AddressesApi';
+import { AddressesApiLocal } from '../../../API/Client/AddressesApiLocal';
 import { IAddressesApi } from '../../../API/Client/IAddressesApi';
 
 import {Pagination} from 'ng2-bootstrap/ng2-bootstrap';
@@ -39,7 +39,7 @@ export class AddressListComponent implements OnInit {
   }
 
   constructor(private _router: Router, private _dataService: DataService,
-    private _AddressesApi: AddressesApi // AddressesApi
+    private _AddressesApiLocal: AddressesApiLocal // AddressesApi
   ) {
   }
 
@@ -50,7 +50,7 @@ export class AddressListComponent implements OnInit {
   }
 
   getList() {
-    this._AddressesApi.addressesGet(this.odata)//, undefined, undefined, undefined, 3)
+    this._AddressesApiLocal.addressesGet(this.odata)//, undefined, undefined, undefined, 3)
       .subscribe(
       // function(listWithCount) {
       //   this.listWithCount = listWithCount;
@@ -58,6 +58,15 @@ export class AddressListComponent implements OnInit {
       // },
       addressListWithCount => this.listWithCount = addressListWithCount,//.addressList,
       error => this.errorMessage = <any>error);
+  }
+
+  edit(id: number) {
+    this._router.navigate(['Item', { id: id }]);
+    console.log('edit with id: ' + id);
+  }
+
+  delete(id: number) {
+    console.log('delete with id: ' + id);
   }
 
   //   private totalItems:number = 64;

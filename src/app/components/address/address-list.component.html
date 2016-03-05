@@ -36,8 +36,8 @@
       <tbody>
         <tr *ngFor="#address of listWithCount?.list">
           <td>
-            <button [routerLink]=" ['Item', {id: address.addressId}] " class="btn btn-primary">View</button>
-            <a [routerLink]=" ['Item', {id: address.addressId}] ">View</a>
+            <button (click)="edit(address.addressId)" class="btn btn-primary">edit</button>
+            <button (click)="delete(address.addressId)" class="btn btn-primary">delete</button>
           </td>
           <td>{{address.addressId}}</td>
           <td>{{address.addressLine1}}</td>

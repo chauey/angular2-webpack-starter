@@ -117,6 +117,12 @@ export class AddressesApiLocal implements IAddressesApi {
     return source;
   }
 
+  public getAddressById(id: number) {
+    return this.addressList.filter((address) => {
+      return address.addressId === id;
+    })[0];
+  }
+
   private sort(addresses, orderby) {
     return addresses.sort((a, b) => {
       if (a[orderby] < b[orderby])

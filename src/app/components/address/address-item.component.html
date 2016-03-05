@@ -7,8 +7,8 @@
 
     <!--id-->
     <div class="form-group">
-      <label for="id">Address Line 1</label>
-      <input id="id" ngControl="id" type="text" class="form-control" [(ngModel)]="item.AddressId">
+      <label for="id">Id</label>
+      <input id="id" ngControl="id" type="text" class="form-control" [(ngModel)]="item.addressId" />
       <validation-message control="id"></validation-message>
       <!--<validation-message control="name"></validation-message>-->
       <!--<div [hidden]="id.valid" class="alert alert-danger">
@@ -18,11 +18,12 @@
 
     <div class="form-group">
       <label for="addressLine1">Address Line 1</label>
-      <input id="addressLine1" ngControl="addressLine1" type="text" class="form-control" [(ngModel)]="item.AddressLine1">
+      <input id="addressLine1" ngControl="addressLine1" #spy type="text" class="form-control" [(ngModel)]="item.addressLine1">
+      <br>TODO: remove this: {{spy.className}}
       <validation-message control="addressLine1"></validation-message>
     </div>
 
-    <!--<div class="form-group">
+    <div class="form-group">
       <label for="addressLine2">Address Line 2</label>
       <input id="addressLine2" ngControl="addressLine2" type="text" class="form-control" [(ngModel)]="item.addressLine2">
       <validation-message control="addressLine2"></validation-message>
@@ -35,9 +36,9 @@
     </div>
 
     <div class="form-group">
-      <label for="stateId">State</label>
-      <input id="stateId" ngControl="stateId" type="text" class="form-control" [(ngModel)]="item.stateId">
-      <validation-message control="stateId"></validation-message>
+      <label for="modifiedDate">Modified Date</label>
+      <input id="modifiedDate" ngControl="modifiedDate" type="date" class="form-control" [(ngModel)]="item.modifiedDate"/>
+      <validation-message control="modifiedDate"></validation-message>
     </div>
 
     <div class="form-group">
@@ -47,27 +48,24 @@
     </div>
 
     <div class="form-group">
-      <label for="addressLine1">Address Line 1</label>
-      <input id="addressLine1" ngControl="addressLine1" type="text" class="form-control" [(ngModel)]="item.AddressLine1">
-      <validation-message control="addressLine1"></validation-message>
-    </div>
-
-    <div class="form-group">
-      <label for="rowguid">Address Line 1</label>
+      <label for="rowguid">Row guid</label>
       <input id="rowguid" ngControl="rowguid" type="text" class="form-control" [(ngModel)]="item.rowguid">
       <validation-message control="rowguid"></validation-message>
     </div>
 
     <div class="form-group">
-      <label for="addressLine1">Address Line 1</label>
-      <input id="addressLine1" ngControl="addressLine1" type="text" class="form-control" [(ngModel)]="item.AddressLine1">
-      <validation-message control="addressLine1"></validation-message>
+      <label for="stateProvinceId">State</label>
+      <input id="stateProvinceId" ngControl="stateProvinceId" type="text" class="form-control" [(ngModel)]="item.stateProvinceId">
+      <validation-message control="stateProvinceId"></validation-message>
     </div>
 
--->
     <div *ngIf="!myForm.valid" class="ui error message">Form is invalid</div>
 
-    <button type="submit" [disabled]="!addressItemForm.form.valid" class="btn btn-primary">Submit</button>
+    <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
+
+    <button type="button" [disabled]="myForm.pristine" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+
+    <button type="submit" [disabled]="!myForm.valid" class="btn btn-primary">Submit</button>
 
   </form>
 

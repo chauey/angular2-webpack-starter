@@ -1,7 +1,7 @@
 <header>
-    <nav class="navbar navbar-dark bg-primary">
+  <nav class="navbar navbar-dark bg-primary">
 
-        <h1><!--Hello {{ profile?.name }}
+  <h1><!--Hello {{ profile?.name }}
       <img [src]="angularclassLogo" width="10%"/>
       <img src="./assets/img/logo.jpg"/-->
       <img src="./assets/img/AALogoSmall.png"/>
@@ -14,53 +14,53 @@
       </form>
     </h1>
 
-        <ul class="nav navbar-nav">
-            <!--SNS-->
-            <!--dashboard-->
-            <li class="nav-item" router-active="active">
-                <a [routerLink]=" ['Dashboard'] " class="nav-link">Dashboard</a>
-            </li>
+    <ul class="nav navbar-nav navbar-full">
+      <!--SNS-->
+      <!--dashboard-->
+      <li class="nav-item" router-active="active">
+        <a [routerLink]=" ['Dashboard'] " class="nav-link">Dashboard</a>
+      </li>
 
-            <!--swagger-->
-            <li class="nav-item" router-active="active">
-                <a [routerLink]=" ['Swagger'] " class="nav-link">Swagger</a>
-            </li>
+      <!--swagger-->
+      <li class="nav-item" router-active="active">
+        <a [routerLink]=" ['Swagger'] " class="nav-link">Swagger</a>
+      </li>
 
-            <li class="nav-item" router-active="active">
-                <a [routerLink]=" ['CodeGen'] " class="nav-link">CodeGen</a>
-            </li>
+      <li class="nav-item" router-active="active">
+        <a [routerLink]=" ['CodeGen'] " class="nav-link">CodeGen</a>
+      </li>
 
 
-            <!--admin-->
-            <li class="nav-item" router-active="active">
-                <a [routerLink]=" ['Admin'] " class="nav-link">Admin</a>
-            </li>
-            <!--(Companies, Suppliers, Products, ...)-->
-            <!--settings-->
-            <!--li class="nav-item" router-active="active">
+      <!--admin-->
+      <li class="nav-item" router-active="active">
+        <a [routerLink]=" ['Admin'] " class="nav-link">Admin</a>
+      </li>
+      <!--(Companies, Suppliers, Products, ...)-->
+      <!--settings-->
+      <!--li class="nav-item" router-active="active">
             <a [routerLink]=" ['Settings'] " class="nav-link">Settings</a>
           </li-->
-            <!--inventory-->
-            <li class="nav-item" router-active="active">
-                <a [routerLink]=" ['Inventory'] " class="nav-link">Inventory</a>
-            </li>
-            <!--purchasing-->
-            <li class="nav-item" router-active="active">
-                <a [routerLink]=" ['Purchasing'] " class="nav-link">Purchasing</a>
-            </li>
+      <!--inventory-->
+      <li class="nav-item" router-active="active">
+        <a [routerLink]=" ['Inventory'] " class="nav-link">Inventory</a>
+      </li>
+      <!--purchasing-->
+      <li class="nav-item" router-active="active">
+        <a [routerLink]=" ['Purchasing'] " class="nav-link">Purchasing</a>
+      </li>
 
 
-        </ul>
+    </ul>
 
-        <form class="form-inline pull-xs-right">
-            <input class="form-control" type="text" placeholder="Search">
-            <button class="btn btn-disabled" type="submit">Search</button>
-        </form>
-    </nav>
+    <form class="form-inline pull-xs-right">
+      <input class="form-control" type="text" placeholder="Search">
+      <button class="btn btn-disabled" type="submit">Search</button>
+    </form>
+  </nav>
 </header>
 
 <main>
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </main>
 
 <br/>
@@ -70,6 +70,6 @@
 <br/>
 <br/>
 <footer id="mainFooter" class="container text-center">
-    Copyright (c) 2016 Angular Architects
+  Copyright (c) 2016 Angular Architects
 </footer>
 <!--WebPack Angular 2 Starter by <a [href]="url">@AngularClass</a>-->

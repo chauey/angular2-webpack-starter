@@ -12,8 +12,11 @@ import { IAddressesApi } from '../../../API/Client/IAddressesApi';
   selector: 'dashboard',
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
-  providers: [provide(AddressesApi, { useClass: AddressesApiLocal })],
-  styles: [require('./address.component.css')],
+  providers: [
+    provide(AddressesApi, { useClass: AddressesApi }),
+    provide(AddressesApiLocal, { useClass: AddressesApiLocal })
+  ],
+  styles: [require('./address.component.scss')],
   template: require('./address.component.html')
 })
 
