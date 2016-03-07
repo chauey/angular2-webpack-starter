@@ -1,7 +1,7 @@
 /// <reference path="api.d.ts" />
 
 // /* tslint:disable:no-unused-variable member-ordering */
-// import {Http, HTTP_PROVIDERS, RequestOptions, Headers, Response, Request, RequestOptionsArgs, RequestMethod, URLSearchParams} from 'angular2/http';
+import {URLSearchParams} from 'angular2/http';
 // //import Rx from 'rxjs/Rx';
 // //import * as Rx from '@reactivex/rxjs';
 // //import {Observable} from 'rxjs/Observable';
@@ -18,20 +18,17 @@ import { Injectable } from 'angular2/core';
 
 import { IAddressesApi } from './IAddressesApi';
 
+import { SearchParams } from './SearchParams';
+
 //namespace API.Client {
 'use strict';
 
 @Injectable()
 export class AddressesApiLocal implements IAddressesApi {
   protected basePath = 'http://localhost:2000/odata';
-  //   public defaultHeaders: Headers = new Headers({});//any = {};
-
-  //   static $inject: string[] = ['$http', '$httpParamSerializer'];
-
+  searchParams :SearchParams;
+  
   constructor() { //, protected $httpParamSerializer?: (d: any) => any, basePath?: string) {
-    // if (basePath) {
-    //     this.basePath = basePath;
-    // }
   }
 
   /**
@@ -47,14 +44,15 @@ export class AddressesApiLocal implements IAddressesApi {
    */
   public addressesGet(odata?: any//$Expand?: string, $Filter?: string, $Select?: string, $Orderby?: string, $Top?: number, $Skip?: number, $Count?: boolean
     , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }> {
-
-
-
+      
+    // this.searchParams = new SearchParams(odata.select, odata.orderby, odata.expand, 
+    //                                       odata.filter, odata.top, odata.skip);     
+     
     /* Using a disposable */
     let source = Rx.Observable.create(
 
       (observer) => {
-
+        
         let id = setTimeout(() => {
           try {
             let listWithCount = {
@@ -65,7 +63,7 @@ export class AddressesApiLocal implements IAddressesApi {
             console.log('111');
             this.changeDateStringToDateObject(listWithCount.list);
             console.log('122211');
-
+            
 
             // filter
             if (odata.filter) {
