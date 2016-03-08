@@ -18,16 +18,14 @@ import { Injectable } from 'angular2/core';
 
 import { IAddressesApi } from './IAddressesApi';
 
-import { SearchParams } from './SearchParams';
+import { HttpHelper } from './HttpHelper';
 
 //namespace API.Client {
 'use strict';
 
 @Injectable()
 export class AddressesApiLocal implements IAddressesApi {
-  protected basePath = 'http://localhost:2000/odata';
-  searchParams :SearchParams;
-  
+
   constructor() { //, protected $httpParamSerializer?: (d: any) => any, basePath?: string) {
   }
 
@@ -42,51 +40,42 @@ export class AddressesApiLocal implements IAddressesApi {
    * @param $Skip skip elements
    * @param $Count include count in response
    */
-  public addressesGet(odata?: any//$Expand?: string, $Filter?: string, $Select?: string, $Orderby?: string, $Top?: number, $Skip?: number, $Count?: boolean
+  public addressesGet(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
     , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }> {
-      
-    // this.searchParams = new SearchParams(odata.select, odata.orderby, odata.expand, 
-    //                                       odata.filter, odata.top, odata.skip);     
-     
+
     /* Using a disposable */
     let source = Rx.Observable.create(
 
       (observer) => {
-        
+
         let id = setTimeout(() => {
           try {
             let listWithCount = {
               count: this.addressList.length,
-              list: this.addressList//this.getSimpletAddresses()
+              list: this.addressList
             };
 
-            console.log('111');
             this.changeDateStringToDateObject(listWithCount.list);
-            console.log('122211');
-            
 
             // filter
-            if (odata.filter) {
-              listWithCount.list = this.filter(listWithCount.list, odata.filter.toString());
+            if (filter) {
+              listWithCount.list = this.filter(listWithCount.list, filter);
               listWithCount.count = listWithCount.list.length;
             }
-        
-        
+
             // sort
-            if (odata.orderby) {
-              listWithCount.list = this.sort(listWithCount.list, odata.orderby.toString());
+            if (orderBy) {
+              listWithCount.list = this.sort(listWithCount.list, orderBy);
             }
 
-    
             // paging
-            if (odata.top || odata.skip) {
-              listWithCount.list = this.paging(listWithCount.list, odata.top, odata.skip);
+            if (top || skip) {
+              listWithCount.list = this.paging(listWithCount.list, top, skip);
             }
-        
-        
+
             // select
-            if (odata.select) {
-              // TODO
+            if (select) {
+              // TODO:
             }
 
             observer.next(listWithCount);

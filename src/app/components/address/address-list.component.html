@@ -1,17 +1,16 @@
 <div class="container">
 
-  <input [(ngModel)]="odata.expand" placeholder="expand" />
-  <input [(ngModel)]="odata.filter" placeholder="filter" />
-  <input [(ngModel)]="odata.select" placeholder="select" />
-  <input [(ngModel)]="odata.orderby" placeholder="orderby" />
-  <input [(ngModel)]="odata.top" placeholder="top" type="number" />
-  <input [(ngModel)]="odata.skip" placeholder="skip" type="number" />
-  <input [(ngModel)]="odata.count" placeholder="count" type="checkbox" />
+  <input [(ngModel)]="expand" placeholder="expand" />
+  <input [(ngModel)]="filter" placeholder="filter" />
+  <input [(ngModel)]="select" placeholder="select" />
+  <input [(ngModel)]="orderby" placeholder="orderby" />
+  <input [(ngModel)]="top" placeholder="top" type="number" />
+  <input [(ngModel)]="skip" placeholder="skip" type="number" />
+  <input [(ngModel)]="count" placeholder="count" type="checkbox" />
   <button (click)="getList()">Get</button>
-  <pre>{{odata|json}}</pre>
   <pagination [totalItems]="listWithCount?.count" [(ngModel)]="paginationData.currentPage" [maxSize]="paginationData.maxSize"
   class="pagination-sm" [boundaryLinks]="paginationData.isBoundaryLinks" [rotate]="paginationData.isRotate" (numPages)="numPages = $event"
-  [itemsPerPage]="paginationData.itemsPerPage">
+  [itemsPerPage]="top">
     <!--(pageChanged)="pageChanged($event)" only set on 1 pagination control or event will fire again-->
   </pagination>
 
@@ -72,5 +71,5 @@
   <!--pager-->
   <pagination [totalItems]="listWithCount?.count" [(ngModel)]="paginationData.currentPage" [maxSize]="paginationData.maxSize"
   class="pagination-sm" [boundaryLinks]="paginationData.isBoundaryLinks" [rotate]="paginationData.isRotate" (numPages)="numPages = $event"
-  (pageChanged)="pageChanged($event)" [itemsPerPage]="paginationData.itemsPerPage"></pagination>
+  (pageChanged)="pageChanged($event)" [itemsPerPage]="top"></pagination>
 </div>

@@ -8,12 +8,12 @@ import {Component, Directive, EventEmitter, ElementRef} from 'angular2/core';
 declare var ace: any;
 
 @Directive({
-  selector: "ace-editor",
+  selector: 'ace-editor',
   inputs: [
-    "text"
+    'text'
   ],
   outputs: [
-    "textChanged"
+    'textChanged'
   ]
 })
 export class AceEditorDirective {
@@ -39,12 +39,12 @@ export class AceEditorDirective {
     // this is the <div ace-editor> root element
     let el = elementRef.nativeElement;
     this.editor = ace.edit(el);
-    this.editor.setTheme("ace/theme/monokai");
+    this.editor.setTheme('ace/theme/monokai');
     //this.editor.getSession().setMode("ace/mode/xml");
-    this.editor.getSession().setMode("ace/mode/typescript");
+    this.editor.getSession().setMode('ace/mode/typescript');
     //this.editor.setTheme("ace/theme/twilight");
 
-    this.editor.on("change", (e) => {
+    this.editor.on('change', (e) => {
       if (dir.settingText) return;
       // discard the delta (e), and provide whole document
       dir.textChanged.next(dir.editor.getValue());
@@ -56,11 +56,11 @@ export class AceEditorDirective {
     //let beautify = ace.require("ace/ext/beautify");
     //this.editor.commands.addCommands(beautify.commands);
 
-    console.log("constructor end");
+    console.log('constructor end');
   }
 
   ngOnInit() {
-    console.log("aceEditor ngOnInit");
+    console.log('aceEditor ngOnInit');
     // UNDONE: remove this.text = "function()    {}";
   }
 

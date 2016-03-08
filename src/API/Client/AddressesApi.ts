@@ -17,7 +17,7 @@ import { Injectable } from 'angular2/core';
 
 import { IAddressesApi } from './IAddressesApi'
 
-import { SearchParams } from './SearchParams';
+import { HttpHelper } from './HttpHelper';
 
 //namespace API.Client {
 'use strict';
@@ -28,8 +28,8 @@ export class AddressesApi implements IAddressesApi {
   public defaultHeaders: Headers = new Headers({});//any = {};
 
   static $inject: string[] = ['$http', '$httpParamSerializer'];
-  searchParams :SearchParams;
-  
+  //searchParams :SearchParams;
+
   constructor(protected $http: Http) { //, protected $httpParamSerializer?: (d: any) => any, basePath?: string) {
     // if (basePath) {
     //     this.basePath = basePath;
@@ -61,52 +61,21 @@ export class AddressesApi implements IAddressesApi {
    * @param $Skip skip elements
    * @param $Count include count in response
    */
-  public addressesGet(odata?: any//$Expand?: string, $Filter?: string, $Select?: string, $Orderby?: string, $Top?: number, $Skip?: number, $Count?: boolean
+  public addressesGet(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
     , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }> {
+
+    let oData = HttpHelper.createOData(select, orderBy, expand, filter, top, skip, count);
+    let urlSearchParams = HttpHelper.createUrlSearchParamsFromOData(oData);
+
     const path = this.basePath + '/Addresses';
 
-    //let queryParameters: any = {};
-    //let headerParams: any = this.extendObj({}, this.defaultHeaders);
-
-    const searchParams: SearchParams = new SearchParams(odata.select, odata.orderby, odata.expand, 
-                                                              odata.filter, odata.top, odata.skip, odata.count);
-    
-    // if ($Expand !== undefined) {
-    //     queryParameters['$expand'] = $Expand;
-    //     urlSearchParams.append('$expand', $Expand.toString());
-    // }
-    // if ($Filter !== undefined) {
-    //     queryParameters['$filter'] = $Filter;
-    //     urlSearchParams.append('$filter', $Filter.toString());
-    // }
-    // if ($Select !== undefined) {
-    //     queryParameters['$select'] = $Select;
-    //     urlSearchParams.append('$select', $Select.toString());
-    // }
-    // if ($Orderby !== undefined) {
-    //     queryParameters['$orderby'] = $Orderby;
-    //     urlSearchParams.append('$orderby', $Orderby.toString());
-    // }
-    // if ($Top !== undefined) {
-    //     queryParameters['$top'] = $Top;
-    //     urlSearchParams.append('$top', $Top.toString());
-    // }
-    // if ($Skip !== undefined) {
-    //     queryParameters['$skip'] = $Skip;
-    //     urlSearchParams.append('$skip', $Skip.toString());
-    // }
-    // if ($Count !== undefined) {
-    //     queryParameters['$count'] = $Count;
-    //     urlSearchParams.append('$count', $Count.toString());
-    // }
-
-    var options = new RequestOptions({
+    let options = new RequestOptions({
       method: RequestMethod.Get,
       url: path,
-      search: urlSearchParams.searchParams
+      search: urlSearchParams
     });
 
-    var req = new Request(options);
+    let req = new Request(options);
     // let that = this;
     return this.$http.request(req)
       //return this.$http.get(path)//, httpRequestParams)
@@ -206,7 +175,7 @@ export class AddressesApi implements IAddressesApi {
    * @param addressId key: AddressId
    * @param $Select description
    */
-  public addressesAddressIdGet(addressId: number, $Select?: string, extraHttpRequestParams?: any):
+  public addressesAddressIdGet(addressId: number, select?: string, extraHttpRequestParams?: any):
     Rx.Observable<any> {
     const path = this.basePath + '/Addresses({AddressId})'
       .replace('{' + 'AddressId' + '}', String(addressId));
@@ -219,7 +188,9 @@ export class AddressesApi implements IAddressesApi {
       throw new Error('Missing required parameter addressId when calling addressesAddressIdGet');
     }
 
-    let searchParams: SearchParams = new SearchParams($Select);
+    let oData = HttpHelper.createOData(select, null, null, null, null, null, null);
+    let urlSearchParams = HttpHelper.createUrlSearchParamsFromOData(oData);
+
 
     // let httpRequestParams: any = {
     //   method: 'GET',
@@ -233,7 +204,7 @@ export class AddressesApi implements IAddressesApi {
     var options = new RequestOptions({
       method: RequestMethod.Get,
       url: path,
-      search: searchParams.searchParams
+      search: urlSearchParams
     });
 
     var req = new Request(options);

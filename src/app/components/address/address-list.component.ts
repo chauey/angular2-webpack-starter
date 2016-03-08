@@ -24,18 +24,22 @@ export class AddressListComponent implements OnInit {
   searchValue: string = '';
   errorMessage: string;
   listWithCount: any; //Address[];
-  odata = {
-    top: 5,
-    skip: 0,
-    count: true
-  }
+
+  top: number = 5;
+  skip: number =  0;
+  count: boolean =  true;
+  expand: string = null;
+  filter: string = null;
+  select: string = null;
+  orderBy: string = null;
+
 
   paginationData = {
     isBoundaryLinks: true,
     maxSize: 10,
     isRotate: false,
     currentPage: 1,
-    itemsPerPage: this.odata.top
+    //itemsPerPage: this.top
   }
 
   constructor(private _router: Router, private _dataService: DataService,
@@ -50,7 +54,7 @@ export class AddressListComponent implements OnInit {
   }
 
   getList() {
-    this._AddressesApiLocal.addressesGet(this.odata)//, undefined, undefined, undefined, 3)
+    this._AddressesApiLocal.addressesGet(this.expand, this.filter, this.select, this.orderBy, this.top, this.skip, this.count, null)//, undefined, undefined, undefined, 3)
       .subscribe(
       // function(listWithCount) {
       //   this.listWithCount = listWithCount;
@@ -78,7 +82,7 @@ export class AddressListComponent implements OnInit {
 
   private setPage(pageNo: number): void {
     this.paginationData.currentPage = pageNo;
-    this.odata.skip = ((this.paginationData.currentPage - 1) * this.odata.top);
+    this.skip = ((this.paginationData.currentPage - 1) * this.top);
     this.getList();
   };
 
