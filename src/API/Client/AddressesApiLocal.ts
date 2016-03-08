@@ -18,8 +18,6 @@ import { Injectable } from 'angular2/core';
 
 import { IAddressesApi } from './IAddressesApi';
 
-import { HttpHelper } from './HttpHelper';
-
 //namespace API.Client {
 'use strict';
 

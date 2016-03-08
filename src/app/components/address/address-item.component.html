@@ -1,14 +1,14 @@
 <div class="container">
 
   <!--<h1>Item</h1>-->
-  <form (ngSubmit)="onSubmit()" #addressItemForm="ngForm" *ngIf="item" [ngFormModel]="myForm">
+  <form (ngSubmit)="onSubmit()" #addressItemForm="ngForm" *ngIf="_item" [ngFormModel]="_myForm">
 
-    <!--<pre>{{item | json}}</pre>-->
+    <!--<pre>{{_item | json}}</pre>-->
 
     <!--id-->
     <div class="form-group">
       <label for="id">Id</label>
-      <input id="id" ngControl="id" type="text" class="form-control" [(ngModel)]="item.addressId" />
+      <input id="id" ngControl="id" type="text" class="form-control" [(ngModel)]="_item.addressId" />
       <validation-message control="id"></validation-message>
       <!--<validation-message control="name"></validation-message>-->
       <!--<div [hidden]="id.valid" class="alert alert-danger">
@@ -18,54 +18,54 @@
 
     <div class="form-group">
       <label for="addressLine1">Address Line 1</label>
-      <input id="addressLine1" ngControl="addressLine1" #spy type="text" class="form-control" [(ngModel)]="item.addressLine1">
-      <br>TODO: remove this: {{spy.className}}
+      <input id="addressLine1" ngControl="addressLine1" #spy type="text" class="form-control" [(ngModel)]="_item.addressLine1">
+      <!--<br>TODO: remove this: {{spy.className}}-->
       <validation-message control="addressLine1"></validation-message>
     </div>
 
     <div class="form-group">
       <label for="addressLine2">Address Line 2</label>
-      <input id="addressLine2" ngControl="addressLine2" type="text" class="form-control" [(ngModel)]="item.addressLine2">
+      <input id="addressLine2" ngControl="addressLine2" type="text" class="form-control" [(ngModel)]="_item.addressLine2">
       <validation-message control="addressLine2"></validation-message>
     </div>
 
     <div class="form-group">
       <label for="city">City</label>
-      <input id="city" ngControl="city" type="text" class="form-control" [(ngModel)]="item.city">
+      <input id="city" ngControl="city" type="text" class="form-control" [(ngModel)]="_item.city">
       <validation-message control="city"></validation-message>
     </div>
 
     <div class="form-group">
       <label for="modifiedDate">Modified Date</label>
-      <input id="modifiedDate" ngControl="modifiedDate" type="date" class="form-control" [(ngModel)]="item.modifiedDate"/>
+      <input id="modifiedDate" ngControl="modifiedDate" type="date" class="form-control" [(ngModel)]="_item.modifiedDate"/>
       <validation-message control="modifiedDate"></validation-message>
     </div>
 
     <div class="form-group">
       <label for="postalCode">Postal Code</label>
-      <input id="postalCode" ngControl="postalCode" type="text" class="form-control" [(ngModel)]="item.postalCode">
+      <input id="postalCode" ngControl="postalCode" type="text" class="form-control" [(ngModel)]="_item.postalCode">
       <validation-message control="postalCode"></validation-message>
     </div>
 
     <div class="form-group">
       <label for="rowguid">Row guid</label>
-      <input id="rowguid" ngControl="rowguid" type="text" class="form-control" [(ngModel)]="item.rowguid">
+      <input id="rowguid" ngControl="rowguid" type="text" class="form-control" [(ngModel)]="_item.rowguid">
       <validation-message control="rowguid"></validation-message>
     </div>
 
     <div class="form-group">
       <label for="stateProvinceId">State</label>
-      <input id="stateProvinceId" ngControl="stateProvinceId" type="text" class="form-control" [(ngModel)]="item.stateProvinceId">
+      <input id="stateProvinceId" ngControl="stateProvinceId" type="text" class="form-control" [(ngModel)]="_item.stateProvinceId">
       <validation-message control="stateProvinceId"></validation-message>
     </div>
 
-    <div *ngIf="!myForm.valid" class="ui error message">Form is invalid</div>
+    <div *ngIf="!_myForm.valid" class="ui error message">Form is invalid</div>
 
     <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
 
-    <button type="button" [disabled]="myForm.pristine" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+    <button type="button" [disabled]="_myForm.pristine" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
 
-    <button type="submit" [disabled]="!myForm.valid" class="btn btn-primary">Submit</button>
+    <button type="submit" [disabled]="!_myForm.valid" class="btn btn-primary">Submit</button>
 
   </form>
 
