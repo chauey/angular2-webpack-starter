@@ -3,12 +3,15 @@ import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { MapToIterablePipe } from '../../pipes/mapToIterable.pipe';
 
-import { TypescriptInterfaceComponent } from './typescriptInterface.component';
+import { CodeEditorComponent } from '../common/code-editor.component';
 
+
+import { TypescriptInterfaceComponent } from './typescriptInterface.component';
+import { ItemViewComponent } from './item-view.component';
 
 @Component({
   selector: 'codeGen',
-  directives: [...ROUTER_DIRECTIVES, TypescriptInterfaceComponent],
+  directives: [...ROUTER_DIRECTIVES, TypescriptInterfaceComponent, ItemViewComponent, CodeEditorComponent],
   pipes: [MapToIterablePipe],
   styles: [],
   template: require('./code-gen.component.html')
@@ -17,17 +20,20 @@ import { TypescriptInterfaceComponent } from './typescriptInterface.component';
 export class CodeGenComponent {
   @Input('model') model: any;
   _specs: any;
-
+  markdown: string;
 
   constructor() {
-
   }
 
   ngOnInit() {
     console.log('ngOnInit code-gen component');
     this._specs = this.model;
 
-       this._specs = require('../../test/swaggerDocPetStoreFull.json');
+    this._specs = require('../../test/swaggerDocPetStoreFull.json');
+
+    this.markdown = "testing editor value";
+
+
   }
 
 }

@@ -1,0 +1,16 @@
+&lt;div class="container"&gt;
+  &lt;form (ngSubmit)="onSubmit()" #addressItemForm="ngForm" *ngIf="item" [ngFormModel]="myForm"&gt;
+
+    <template ngFor #propertyKeyValuePair [ngForOf]="_definition.properties| mapToIterable">
+      &lt;div class="form-group"&gt;
+        &lt;label for="{{propertyKeyValuePair.key}}"&gt;{{propertyKeyValuePair.key}}&lt;/label&gt;
+        &lt;input id="{{propertyKeyValuePair.key}}" ngControl="{{propertyKeyValuePair.key}}" type="text" class="form-control" [(ngModel)]="item.{{propertyKeyValuePair.key}}"&gt;
+        &lt;validation-message control="{{propertyKeyValuePair.key}}"&gt;&lt;/validation-message&gt;
+      &lt;/div&gt;
+    </template>
+
+    &lt;div *ngIf="!myForm.valid" class="ui error message"&gt;Form is invalid&lt;/div&gt;
+    &lt;button type="submit" [disabled]="!addressItemForm.form.valid" class="btn btn-primary"&gt;Submit&lt;/button&gt;
+    &lt;button type="button" class="btn btn-primary" (click)="cancel()"&gt;Cancel&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/div&gt;

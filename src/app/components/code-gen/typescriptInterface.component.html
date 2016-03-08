@@ -1,4 +1,3 @@
-<pre>
 /// &lt;reference path="api.d.ts" /&gt;
 'use strict';
 
@@ -11,8 +10,3 @@ interface {{_name}} {<template ngFor #propertyKeyValuePair [ngForOf]="_definitio
    */</template>
   {{propertyKeyValuePair.key}}: {{propertyKeyValuePair.value.type}};</template>
 }
-</pre>
-<!--NAME: {{_name}}
-PROPERTIES:
-<template ngFor #propertyKeyValuePair [ngForOf]="_definition.properties| mapToIterable">
-   {{propertyKeyValuePair.key}}: {{propertyKeyValuePair.value.type}}</template>-->

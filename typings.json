@@ -5,6 +5,7 @@
   },
   "devDependencies": {},
   "ambientDependencies": {
+    "ace": "github:DefinitelyTyped/DefinitelyTyped/ace/ace.d.ts#2f7fb157a8482a8efa1a50e724b27bf8736eb379",
     "angular-protractor": "github:angular/DefinitelyTyped/angular-protractor/angular-protractor.d.ts#31e7317c9a0793857109236ef7c7f223305a8aa9",
     "es6-shim": "github:angular/DefinitelyTyped/es6-shim/es6-shim.d.ts#31e7317c9a0793857109236ef7c7f223305a8aa9",
     "hammerjs": "github:angular/DefinitelyTyped/hammerjs/hammerjs.d.ts#31e7317c9a0793857109236ef7c7f223305a8aa9",

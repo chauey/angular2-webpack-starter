@@ -1,25 +1,55 @@
 <div class="preview-wrapper">
-  <!--DEFINITIONS/MODELS/CLASSES-->
+  ace editor test
+  <code-editor></code-editor>
+
+  <pre>
+    SWAGGER/OAI:
+    DEFINITIONS:
+    PATHS:
+      OPERATIONS:
+    LANGUAGES:
+      typescript
+        1. base
+        2. model interface
+        3. api
+        4. ui (security, routes, providers,...)
+          4.1 parent (routes, providers, ...)
+          4.2 item view (formbuilder input validation, ...)
+          4.3 list (paging, sorting, filter, ...)
+          4.4 routes?
+  </pre>
+
+  <!--2. model interface-->
   <ul>
     <li class="definition" *ngFor="#modelSchemaKeyValuePair of _specs.definitions | mapToIterable">
-      DIV TYPESCRIPT INTERFACE<br/>
-      Comment Properties: <input type="checkbox" [(ngModel)]="_isCommentProperties" />
+      2. model interface
+
+      <br/> Comment Properties:
+      <input type="checkbox" [(ngModel)]="_isCommentProperties" />
 
       <div>
-        <typescriptInterface [model]="modelSchemaKeyValuePair.value"
+        <pre><typescriptInterface [model]="modelSchemaKeyValuePair.value"
         [definitionName]="modelSchemaKeyValuePair.key"
         [isCommentProperties]="_isCommentProperties">
-        </typescriptInterface>
+        </typescriptInterface></pre>
       </div>
-
-      PRE
-      <pre>
-KEY: {{modelSchemaKeyValuePair.key}}
-
-VALUE: {{modelSchemaKeyValuePair.value|json}}
-        </pre>
     </li>
   </ul>
 
+  <!--4.2 item (formbuilder input validation, ...)-->
+  <ul>
+    <li class="definition" *ngFor="#modelSchemaKeyValuePair of _specs.definitions | mapToIterable">
+      4.2 item (formbuilder input validation, ...)
 
+      <br/> Comment Properties:
+      <input type="checkbox" [(ngModel)]="_isCommentProperties" />
+
+      <div>
+        <pre onclick="alert(this.innerHTML)"><itemView [model]="modelSchemaKeyValuePair.value"
+        [definitionName]="modelSchemaKeyValuePair.key"
+        [isCommentProperties]="_isCommentProperties">
+        </itemView></pre>
+      </div>
+    </li>
+  </ul>
 </div>

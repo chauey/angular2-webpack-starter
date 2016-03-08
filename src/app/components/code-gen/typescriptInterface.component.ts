@@ -25,7 +25,7 @@ export class TypescriptInterfaceComponent {
   }
 
   ngOnInit() {
-    console.log('ngOnInit code-gen component');
+    console.log('ngOnInit typescript interface component');
     this._definition = this.model;
 
        // TODO: an idea: this._model = new modelCodeGenMetaData(this.model);
