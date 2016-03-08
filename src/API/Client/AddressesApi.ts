@@ -17,6 +17,8 @@ import { Injectable } from 'angular2/core';
 
 import { IAddressesApi } from './IAddressesApi'
 
+import { SearchParams } from './SearchParams';
+
 //namespace API.Client {
 'use strict';
 
@@ -26,7 +28,8 @@ export class AddressesApi implements IAddressesApi {
   public defaultHeaders: Headers = new Headers({});//any = {};
 
   static $inject: string[] = ['$http', '$httpParamSerializer'];
-
+  searchParams :SearchParams;
+  
   constructor(protected $http: Http) { //, protected $httpParamSerializer?: (d: any) => any, basePath?: string) {
     // if (basePath) {
     //     this.basePath = basePath;
@@ -65,29 +68,9 @@ export class AddressesApi implements IAddressesApi {
     //let queryParameters: any = {};
     //let headerParams: any = this.extendObj({}, this.defaultHeaders);
 
-    let urlSearchParams: URLSearchParams = new URLSearchParams();
-
-    if (odata.expand !== undefined) {
-      urlSearchParams.append('$xpand', odata.expand);
-    }
-    if (odata.filter !== undefined) {
-      urlSearchParams.append('$filter', odata.filter.toString());
-    }
-    if (odata.select !== undefined) {
-      urlSearchParams.append('$select', odata.select.toString());
-    }
-    if (odata.orderby !== undefined) {
-      urlSearchParams.append('$orderby', odata.orderby.toString());
-    }
-    if (odata.top !== undefined) {
-      urlSearchParams.append('$top', odata.top.toString());
-    }
-    if (odata.skip !== undefined) {
-      urlSearchParams.append('$skip', odata.skip.toString());
-    }
-    if (odata.count !== undefined) {
-      urlSearchParams.append('$count', odata.count.toString());
-    }
+    const searchParams: SearchParams = new SearchParams(odata.select, odata.orderby, odata.expand, 
+                                                              odata.filter, odata.top, odata.skip, odata.count);
+    
     // if ($Expand !== undefined) {
     //     queryParameters['$expand'] = $Expand;
     //     urlSearchParams.append('$expand', $Expand.toString());
@@ -120,7 +103,7 @@ export class AddressesApi implements IAddressesApi {
     var options = new RequestOptions({
       method: RequestMethod.Get,
       url: path,
-      search: urlSearchParams
+      search: urlSearchParams.searchParams
     });
 
     var req = new Request(options);
@@ -236,12 +219,7 @@ export class AddressesApi implements IAddressesApi {
       throw new Error('Missing required parameter addressId when calling addressesAddressIdGet');
     }
 
-    let urlSearchParams: URLSearchParams = new URLSearchParams();
-
-    if ($Select !== undefined) {
-      //queryParameters['$select'] = $Select;
-      urlSearchParams.append('$select', $Select.toString());
-    }
+    let searchParams: SearchParams = new SearchParams($Select);
 
     // let httpRequestParams: any = {
     //   method: 'GET',
@@ -255,7 +233,7 @@ export class AddressesApi implements IAddressesApi {
     var options = new RequestOptions({
       method: RequestMethod.Get,
       url: path,
-      search: urlSearchParams
+      search: searchParams.searchParams
     });
 
     var req = new Request(options);
