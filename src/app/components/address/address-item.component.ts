@@ -13,9 +13,9 @@ import { DialogService } from '../../services/dialog.service';
 import { DataStorageService } from '../../services/dataStorage.service';
 
 //import * as moment from 'moment/moment';
-//import moment = require('moment/moment');
-//import * as moment from 'moment/moment';
 import moment = require('moment');
+//import * as moment from 'moment/moment';
+//import * as moment from 'moment';
 
 @Component({
   selector: 'address-item',
@@ -43,7 +43,8 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
     private _AddressesApiLocal: AddressesApiLocal,
     private _formBuilder: FormBuilder,
     private _dialog: DialogService,
-    private _dataStorage: DataStorageService
+    private _dataStorage: DataStorageService//,
+    //private _moment: moment
   ) {
     this._momentFunction = moment; // TODO: inject the moment function in, not get from global?
     // template vs model driven forms http://blog.jhades.org/introduction-to-angular-2-forms-template-driven-vs-model-driven/
@@ -133,10 +134,8 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
     this._item = this._AddressesApiLocal.getAddressById(this._id);
     if (this._item.modifiedDate !== '') {
       let date = new Date(this._item.modifiedDate);
-      //let momentDate = this._moment;
 
-      //this.item.modifiedDate = moment(date).format('YYYY-MM-DD');//.(date.getFullYear()).month(date.getMonth()).date(date.getDate()).format('YYYY-MM-DD');
-      this._item.modifiedDate = this._momentFunction(date).format('YYYY-MM-DD');//.(date.getFullYear()).month(date.getMonth()).date(date.getDate()).format('YYYY-MM-DD');
+      this._item.modifiedDate = this._momentFunction(date).format('YYYY-MM-DD');
 
       this._dataStorage.set(this._item);
     }

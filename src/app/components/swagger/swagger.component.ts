@@ -5,7 +5,7 @@ import { MapToIterablePipe } from '../../pipes/mapToIterable.pipe';
 import { MainComponent } from './main.component';
 import { PreviewComponent } from './preview.component';
 
-
+// TODO: https://github.com/swagger-api/swagger-ui#localization-and-translation
 @Component({
   selector: 'admin',
   directives: [...ROUTER_DIRECTIVES, MainComponent, PreviewComponent ],
@@ -30,5 +30,3 @@ export class SwaggerComponent implements OnInit {
   }
 
 }
-
-// TOD: https://github.com/swagger-api/swagger-ui#localization-and-translation

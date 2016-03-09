@@ -1,5 +1,5 @@
 import {URLSearchParams} from 'angular2/http';
-import {oData} from './oData'
+import {oData} from './oData';
 
 export class HttpHelper {
 

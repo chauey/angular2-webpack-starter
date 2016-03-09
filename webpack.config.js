@@ -3,6 +3,7 @@
 var webpack = require('webpack');
 var helpers = require('./helpers');
 
+var ProvidePlugin = require('webpack/lib/ProvidePlugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
@@ -24,7 +25,7 @@ var metadata = {
 //     'node_modules/bootstrap/dist/css'
 // );
 
-// const autoprefixer = require('autoprefixer');
+ const autoprefixer = require('autoprefixer');
 
 /*
  * Config
@@ -43,10 +44,10 @@ module.exports = {
   // our angular app
   entry: { 'polyfills': './src/polyfills.ts', 'main': './src/main.ts' },
 
-  resolve: {
-    extensions: ['', '.ts', '.js']
-    // extensions: ['', '.ts', '.webpack.js', '.web.js', '.js']
-  },
+  // resolve: {
+  //   extensions: ['', '.ts', '.js']
+  //   // extensions: ['', '.ts', '.webpack.js', '.web.js', '.js']
+  // },
 
   // Config for our build files
   output: {
@@ -56,22 +57,22 @@ module.exports = {
     chunkFilename: '[id].chunk.js'
   },
 
-//  resolve: {
-//    // ensure loader extensions match
-//    extensions: ['','.ts','.js','.json','.css','.scss','.html'],
-//     modulesDirectories: ['node_modules', bootstrapPath]
+ resolve: {
+   // ensure loader extensions match
+   extensions: ['','.ts','.js','.json','.css','.scss','.html']//,
+    //modulesDirectories: ['node_modules', bootstrapPath]
 
-//  },
+ },
 
   module: {
     preLoaders: [
-      // { test: /\.ts$/, loader: 'tslint-loader', exclude: [ helpers.root('node_modules') ] },
+      { test: /\.ts$/, loader: 'tslint-loader', exclude: [ helpers.root('node_modules') ] },
       // TODO(gdi2290): `exclude: [ helpers.root('node_modules/rxjs') ]` fixed with rxjs 5 beta.3 release
       { test: /\.js$/, loader: "source-map-loader", exclude: [ helpers.root('node_modules/rxjs') ] }
     ],
     loaders: [
       // Support for .ts files.
-      { test: /\.ts$/, loader: 'awesome-typescript-loader', exclude: [ /\.(spec|e2e)\.ts$/, helpers.root('node_modules') ] },
+      { test: /\.ts$/, loader: 'awesome-typescript-loader', exclude: [ /\.(spec|e2e)\.ts$/ ] },
 
       // Support for *.json files.
       { test: /\.json$/,  loader: 'json-loader', exclude: [ helpers.root('node_modules') ] },
@@ -109,19 +110,19 @@ module.exports = {
         'NODE_ENV': JSON.stringify(metadata.ENV),
         'HMR': HMR
       }
-    })
+    }),
 
     // require the plugin
-    // new ProvidePlugin({
-    //     jQuery: 'jquery',
-    //     $: 'jquery',
-    //     jquery: 'jquery',
-    //     "Tether": 'tether',
-    //     "window.Tether": "tether"
-    // })
+    new ProvidePlugin({
+        jQuery: 'jquery',
+        $: 'jquery',
+        jquery: 'jquery',
+        "Tether": 'tether',
+        "window.Tether": "tether"
+    })
   ],
 
-  // postcss: [autoprefixer],
+   postcss: [autoprefixer],
 
   // Other module loader config
 

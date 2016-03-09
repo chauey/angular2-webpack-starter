@@ -19,18 +19,13 @@ export class TryOperationComponent {
   @Input('name') operationName: string;
   @Input('path') path: any;
   @Input('pathName') pathName: string;
-
   @Input('getParameters') getParameters: () => void;
-
-
-
   @Input('specs') specs: any;
 
   //swaggerDoc: any;
   operation: any;
   enableTryIt: boolean = true;
   isTryOpen: boolean = false;
-
 
   requestModel: any;
   requestSchema: any;
@@ -44,30 +39,6 @@ export class TryOperationComponent {
 
     let blah = authManager;
   }
-
-
-  ngOnInit() {
-    console.log('ngOnInit Swagger Try Operation component');
-    this.operation = this.model;
-    // UNDONE:
-    this.parameters = this.getParameters();
-    this.securityOptions = this.getSecurityOptions();
-
-
-    this.configureSchemaForm();
-
-    // Deeply watch specs for updates to regenerate the from
-    // $scope.$watch('specs', function () {
-    this.requestModel = this.makeRequestModel();
-    this.requestSchema = this.makeRequestSchema();
-    // }, true);
-
-
-
-    //SchemaForm.options = defaultOptions;
-  }
-
-
 
   // let parameters = $scope.getParameters();
   // let securityOptions = getSecurityOptions();
@@ -105,6 +76,23 @@ export class TryOperationComponent {
 
   // SchemaForm.options = defaultOptions;
 
+  ngOnInit() {
+    console.log('ngOnInit Swagger Try Operation component');
+    this.operation = this.model;
+    // UNDONE:
+    this.parameters = this.getParameters();
+    this.securityOptions = this.getSecurityOptions();
+
+
+    this.configureSchemaForm();
+
+    // Deeply watch specs for updates to regenerate the from
+    // $scope.$watch('specs', function () {
+    this.requestModel = this.makeRequestModel();
+    this.requestSchema = this.makeRequestSchema();
+    // }, true);
+    //SchemaForm.options = defaultOptions;
+  }
 
 
   /*
@@ -205,7 +193,7 @@ export class TryOperationComponent {
   makeRequestSchema() {
 
     // base schema
-    let schema = {
+    let schema : any = {
       type: 'object',
       title: 'Request',
       required: ['scheme', 'accept'],
@@ -223,10 +211,10 @@ export class TryOperationComponent {
 
           // All possible Accept headers
           enum: this.walkToProperty('produces')
-        },
-        security: {},
-        contentType: {},
-        parameters: {}
+        }//,
+        //security: {},
+        //contentType: {},
+        //parameters: {}
       }
     };
 
@@ -273,8 +261,8 @@ export class TryOperationComponent {
         .forEach(function(paramSchema) {
 
           // extend the parameters property with the schema
-          // Kevin: comment out the code below cuz it shows error
-          // schema.properties.parameters.properties[paramSchema.name] = paramSchema;
+          schema.properties.parameters
+            .properties[paramSchema.name] = paramSchema;
         });
     }
 
@@ -290,7 +278,7 @@ export class TryOperationComponent {
   makeRequestModel() {
 
     // base model
-    let model = {
+    let model : any = {
 
       // Add first scheme as default scheme
       scheme: this.walkToProperty('schemes')[0],
@@ -299,11 +287,11 @@ export class TryOperationComponent {
       accept: this.walkToProperty('produces')[0],
 
       // Create new security empty array
-      security: [],
+      // security: [],
 
-      contentType: '',
+      // contentType: '',
 
-      parameters: {}
+      // parameters: {}
     };
 
     // if there is security options add the security property
@@ -439,7 +427,7 @@ export class TryOperationComponent {
    * @returns {array} - a list of security options or an empty array
   */
   getSecurityOptions() {
-    let securityOptions = [];
+    let securityOptions : any = [];
 
     // operation level securities
     if (Array.isArray(this.operation.security)) {
@@ -461,15 +449,15 @@ export class TryOperationComponent {
     // UNDONE: return _.unique(securityOptions).filter(function (security) {
     //http://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
 
-    let securityOptionsUniQue = [];
+    // let securityOptionsUniQue = [];
 
-    securityOptions.forEach((security) => {
-      if (!securityOptionsUniQue.findIndex(security)) {
-        securityOptionsUniQue.push(security);
-      }
-    });
+    // securityOptions.forEach((security) => {
+      // if (!securityOptionsUniQue.findIndex(security)) {
+        // securityOptionsUniQue.push(security);
+      // }
+    // });
 
-    securityOptions = securityOptionsUniQue;
+    // securityOptions = securityOptionsUniQue;
 
     return securityOptions.filter(
       // only return authenticated options
@@ -651,9 +639,9 @@ export class TryOperationComponent {
 
     // generate the query string portion of the URL based on query parameters
     // UNDONE: how to convert this JQuery param function?
-    // queryParamsStr = decodeURIComponent(
-    // UNDONE: $.param(queryParams, isCollectionQueryParam)
-    // );
+    queryParamsStr = decodeURIComponent(
+      '// UNDONE: $.param(queryParams, isCollectionQueryParam'
+    );
 
     // fill in path parameter values inside the path
     pathStr = this.pathName.replace(pathParamRegex,
@@ -869,7 +857,7 @@ export class TryOperationComponent {
 
       // if encoding is x-www-form-urlencoded use jQuery.param method to stringify
     } else if (/urlencode/.test(contentType)) {
-      return // UNDONE: $.param(bodyModel);
+      return; // UNDONE: $.param(bodyModel);
     }
 
     return null;
@@ -972,14 +960,12 @@ export class TryOperationComponent {
    *
    * @returns {boolean}
   */
-  isJson(value) {
+  isJson(value : any) {
 
     // if value is already parsed return true
-    // this Object.is(value) is not working
-    // if (Object.is(value) || Array.isArray(value)) {
-    if (value !== null && typeof value === 'object' || Array.isArray(value)) {
-      return true;
-    }
+    // UNDONE: if (Object.is(value) || Array.isArray(value)) {
+      // return true;
+    // }
 
     let err;
     try {

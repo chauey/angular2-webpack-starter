@@ -5,7 +5,6 @@ import { MapToIterablePipe } from '../../pipes/mapToIterable.pipe';
 
 import { CodeEditorComponent } from '../common/code-editor.component';
 
-
 import { TypescriptInterfaceComponent } from './typescriptInterface.component';
 import { ItemViewComponent } from './item-view.component';
 
@@ -31,9 +30,7 @@ export class CodeGenComponent {
 
     this._specs = require('../../test/swaggerDocPetStoreFull.json');
 
-    this.markdown = "testing editor value";
-
+    this.markdown = '*testing editor value';
 
   }
-
 }

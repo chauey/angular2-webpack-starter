@@ -12,7 +12,7 @@ export class MapToIterablePipe {
     var a = [];
     for (var key in dict) {
       if (dict.hasOwnProperty(key)) {
-        a.push({key: key, value: dict[key]});
+        a.push({ key: key, value: dict[key] });
       }
     }
     return a;

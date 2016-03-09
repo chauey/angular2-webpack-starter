@@ -2,7 +2,9 @@ import {Component, Host, Input} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { MapToIterablePipe } from '../../pipes/mapToIterable.pipe';
-// perhaps original backbone version added to the JSON data , like sumary. https://github.com/swagger-api/swagger-ui/blob/e549de222d6270a6bd19f8f30bb3cc618213b1f8/src/main/javascript/view/ResourceView.js
+// perhaps original backbone version added to the JSON data , like sumary.
+// https://github.com/swagger-api/swagger-ui/blob/e549de222d6270a6bd19f8f30bb3cc618213b1f8/src/main/javascript/view/ResourceView.js
+
 @Component({
   selector: 'resource',
   directives: [...ROUTER_DIRECTIVES],

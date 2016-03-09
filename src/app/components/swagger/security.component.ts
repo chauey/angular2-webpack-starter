@@ -2,7 +2,7 @@ import {Component, Host, Input} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import { MapToIterablePipe } from '../../pipes/mapToIterable.pipe';
-import { MarkdownComponent } from '../common/markdown.component'
+import { MarkdownComponent } from '../common/markdown.component';
 
 
 @Component({
@@ -16,7 +16,6 @@ import { MarkdownComponent } from '../common/markdown.component'
 export class SecurityComponent {
   @Input('model') model: any;
   specs: any;
-
 
   constructor() {
 

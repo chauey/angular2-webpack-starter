@@ -9,42 +9,29 @@ import { DataService } from '../../services/DataService';
   pipes: [],
   providers: [],
   styles: [require('./bid-generator.component.css')
-  ,
-`.bestPrice {
+    ,
+    `.bestPrice {
     background-color: #dff0d8;
 }`],
   template: require('./bid-generator.component.html')
 })
-export class BidGeneratorComponent implements OnInit{
-
+export class BidGeneratorComponent implements OnInit {
   searchValue: string = '';
   flattenedPriceCompareData: any = this._dataService.flattenedPriceCompareData;
 
   constructor(private _router: Router, private _dataService: DataService) {
   }
 
-
-  //     determineWhichProductsNeedOrdering();
-
-  // determineWhichProductsNeedOrdering() {
-  //   for(let i = 0; this.model.length; i++) {
-  //     console.log(this.model[i]);
-  //   }
-  // }
-
   filter() {
     console.log('filter with value: ' + this.searchValue);
   }
 
   createOrders() {
-
     console.log('createOrders called');
     this._router.navigate(['Order']);
-
   }
 
   ngOnInit() {
     console.log('ngOnInit bid-generator component');
   }
-
 }

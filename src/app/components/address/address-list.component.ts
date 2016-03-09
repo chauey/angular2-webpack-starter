@@ -8,11 +8,15 @@ import { Address } from '../../../API/Client/Address';
 import { AddressesApiLocal } from '../../../API/Client/AddressesApiLocal';
 import { IAddressesApi } from '../../../API/Client/IAddressesApi';
 
-// import {Pagination} from 'ng2-bootstrap/ng2-bootstrap';
+//import {Pagination} from 'ng2-bootstrap/ng2-bootstrap';
+//import ng2Bootstrap = require('ng2-bootstrap/');
+//import {Pagination} from 'ng2-bootstrap/components/pagination';
+import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
+
 
 @Component({
   selector: 'address-list',
-  directives: [...ROUTER_DIRECTIVES],
+  directives: [...ROUTER_DIRECTIVES, ...PAGINATION_DIRECTIVES ],
   pipes: [],
   //providers: [AddressesApiLocal], // AddressesApi],
   styles: [require('./address-list.component.css')],
@@ -23,23 +27,22 @@ export class AddressListComponent implements OnInit {
 
   searchValue: string = '';
   errorMessage: string;
-  listWithCount: any; //Address[];
+  listWithCount: any;
 
   top: number = 5;
-  skip: number =  0;
-  count: boolean =  true;
+  skip: number = 0;
+  count: boolean = true;
   expand: string = null;
   filter: string = null;
   select: string = null;
   orderBy: string = null;
-
 
   paginationData = {
     isBoundaryLinks: true,
     maxSize: 10,
     isRotate: false,
     currentPage: 1,
-    //itemsPerPage: this.top
+    // itemsPerPage: this.top
   };
 
   constructor(private _router: Router, private _dataService: DataService,
@@ -54,13 +57,9 @@ export class AddressListComponent implements OnInit {
   }
 
   getList() {
-    this._AddressesApiLocal.addressesGet(this.expand, this.filter, this.select, this.orderBy, this.top, this.skip, this.count, null)//, undefined, undefined, undefined, 3)
+    this._AddressesApiLocal.addressesGet(this.expand, this.filter, this.select, this.orderBy, this.top, this.skip, this.count, null)
       .subscribe(
-      // function(listWithCount) {
-      //   this.listWithCount = listWithCount;
-      //   this.totalItems = listWithCount.count;
-      // },
-      addressListWithCount => this.listWithCount = addressListWithCount,//.addressList,
+      addressListWithCount => this.listWithCount = addressListWithCount,
       error => this.errorMessage = <any>error);
   }
 
@@ -72,13 +71,6 @@ export class AddressListComponent implements OnInit {
   delete(id: number) {
     console.log('delete with id: ' + id);
   }
-
-  //   private totalItems:number = 64;
-  //   private currentPage:number = 4;
-  //
-  //   private maxSize:number = 5;
-  // private bigTotalItems:number = 175;
-  // private bigCurrentPage:number = 1;
 
   private setPage(pageNo: number): void {
     this.paginationData.currentPage = pageNo;
