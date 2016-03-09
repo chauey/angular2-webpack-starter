@@ -17,7 +17,7 @@ import { MarkdownComponent } from '../common/markdown.component';
   selector: 'schema-model',
   directives: [...ROUTER_DIRECTIVES, MarkdownComponent],
   pipes: [MapToIterablePipe],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [require('./swagger.component.css')],
   template: require('./schema-model.component.html')
 })
 

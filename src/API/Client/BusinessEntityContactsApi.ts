@@ -1,4 +1,4 @@
-/// <reference path="api.d.ts" />
+// <reference path="api.d.ts" />
 
 /* tslint:disable:no-unused-variable member-ordering */
 import {Http, HTTP_PROVIDERS} from 'angular2/http';

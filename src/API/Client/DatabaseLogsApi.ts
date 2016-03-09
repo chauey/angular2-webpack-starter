@@ -1,4 +1,4 @@
-/// <reference path="api.d.ts" />
+// <reference path="api.d.ts" />
 
 /* tslint:disable:no-unused-variable member-ordering */
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
@@ -120,8 +120,8 @@ import { DatabaseLog } from './DatabaseLog'
                 method: 'GET',
                 url: path,
                 json: true,
-                
-                
+
+
                 params: queryParameters,
                 headers: headerParams
             };
@@ -156,8 +156,8 @@ import { DatabaseLog } from './DatabaseLog'
                 url: path,
                 json: true,
                 data: databaseLog,
-                
-                
+
+
                 params: queryParameters,
                 headers: headerParams
             };

@@ -6,6 +6,6 @@ export class ProperCasePipe implements PipeTransform {
     console.log(value);
     return value.replace(/(?:^|\s)([a-z])/, function(firstLetter) {
       return firstLetter.toUpperCase();
-    }); value;
+    });
   }
 }

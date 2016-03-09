@@ -1,6 +1,14 @@
 import {Router} from 'angular2/router';
 import {isPresent} from 'angular2/src/facade/lang';
-import {Directive, Query, QueryList, Attribute, ElementRef, Renderer} from 'angular2/core';
+import {
+  Directive,
+  Query,
+  QueryList,
+  Attribute,
+  ElementRef,
+  Renderer,
+  Optional
+} from 'angular2/core';
 import {Instruction, RouterLink} from 'angular2/router';
 
 /**
@@ -14,7 +22,7 @@ import {Instruction, RouterLink} from 'angular2/router';
  * ```
  */
 @Directive({
-  selector: '[router-active]',
+  selector: '[router-active], [routerActive]',
   inputs: ['routerActive']
 })
 export class RouterActive {
@@ -22,17 +30,43 @@ export class RouterActive {
   routerActiveAttr: string = 'active';
 
   constructor(
-    router: Router,
-    element: ElementRef,
-    renderer: Renderer,
-    @Query(RouterLink) routerLink: QueryList<RouterLink>,
-    @Attribute('router-active') routerActiveAttr: string) {
+    public router: Router,
+    public element: ElementRef,
+    public renderer: Renderer,
+    @Query(RouterLink) public routerLink: QueryList<RouterLink>,
+    @Optional() @Attribute('router-active') routerActiveAttr?: string) {
 
-    router.subscribe(() => {
-      let active = (<any>routerLink).first.isRouteActive;
-      renderer.setElementClass(element.nativeElement, this._attrOrProp(), active);
+      this.routerActiveAttr = this._defaultAttrValue(routerActiveAttr);
+  }
+
+  ngOnInit() {
+    this.routerLink.changes.subscribe(() => {
+      if (this.routerLink.first) {
+        this._updateClass();
+        this._findRootRouter().subscribe(() => {
+          this._updateClass();
+        });
+      }
     });
   }
+
+  private _findRootRouter(): Router {
+    var router: Router = this.router;
+    while (isPresent(router.parent)) {
+      router = router.parent;
+    }
+    return router;
+  }
+
+  private _updateClass() {
+    let active = this.routerLink.first.isRouteActive;
+    this.renderer.setElementClass(this.element.nativeElement, this._attrOrProp(), active);
+  }
+
+  private _defaultAttrValue(attr?: string) {
+    return this.routerActiveAttr = attr || this.routerActiveAttr;
+  }
+
   private _attrOrProp() {
     return isPresent(this.routerActive) ? this.routerActive : this.routerActiveAttr;
   }

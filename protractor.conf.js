@@ -1,10 +1,13 @@
 // @AngularClass
+require('ts-node/register');
 
 exports.config = {
   baseUrl: 'http://localhost:3000/',
 
+  // use `npm run e2e`
   specs: [
-    'test/**/*.e2e.js'
+    'src/**/**.e2e.ts',
+    'src/**/*.e2e.ts'
   ],
   exclude: [],
 
@@ -32,6 +35,7 @@ exports.config = {
     browser.ignoreSynchronization = true;
   },
 
+  seleniumServerJar: "node_modules/protractor/selenium/selenium-server-standalone-2.48.2.jar",
 
   /**
    * Angular 2 configuration

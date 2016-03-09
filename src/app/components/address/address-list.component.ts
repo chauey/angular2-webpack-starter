@@ -8,11 +8,11 @@ import { Address } from '../../../API/Client/Address';
 import { AddressesApiLocal } from '../../../API/Client/AddressesApiLocal';
 import { IAddressesApi } from '../../../API/Client/IAddressesApi';
 
-import {Pagination} from 'ng2-bootstrap/ng2-bootstrap';
+// import {Pagination} from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
   selector: 'address-list',
-  directives: [...ROUTER_DIRECTIVES, Pagination],
+  directives: [...ROUTER_DIRECTIVES],
   pipes: [],
   //providers: [AddressesApiLocal], // AddressesApi],
   styles: [require('./address-list.component.css')],
@@ -40,7 +40,7 @@ export class AddressListComponent implements OnInit {
     isRotate: false,
     currentPage: 1,
     //itemsPerPage: this.top
-  }
+  };
 
   constructor(private _router: Router, private _dataService: DataService,
     private _AddressesApiLocal: AddressesApiLocal // AddressesApi

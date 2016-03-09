@@ -10,7 +10,7 @@ import { PreviewComponent } from './preview.component';
   selector: 'admin',
   directives: [...ROUTER_DIRECTIVES, MainComponent, PreviewComponent ],
   pipes: [MapToIterablePipe],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [require('./swagger.component.css')],
   template: require('./swagger.component.html')
 })
 

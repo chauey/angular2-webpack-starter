@@ -1,5 +1,3 @@
-/// <reference path="api.d.ts" />
-
 /* tslint:disable:no-unused-variable member-ordering */
 import {Http, HTTP_PROVIDERS, RequestOptions, Headers, Response, Request, RequestOptionsArgs, RequestMethod, URLSearchParams} from 'angular2/http';
 //import Rx from 'rxjs/Rx';
@@ -9,13 +7,13 @@ import * as Rx from 'rxjs'; // rxjs/add/operator/map
 
 //http://stackoverflow.com/questions/30712638/typescript-export-imported-interface
 
-import { IAddress } from './AddressInterface'
+import { IAddress } from './AddressInterface';
 
-import { Error } from './Error'
+import { Error } from './Error';
 
 import { Injectable } from 'angular2/core';
 
-import { IAddressesApi } from './IAddressesApi'
+import { IAddressesApi } from './IAddressesApi';
 
 import { HttpHelper } from './HttpHelper';
 
@@ -104,7 +102,9 @@ export class AddressesApi implements IAddressesApi {
       //   //that.changeDateStringToDateObject(listWithCount.list);
       //   return listWithCount;
       // }
-      )//res => function(res) { return {count: res.json(), addressList: <Address[]>res.json().value};})//{count: res.json(), addressList: <Address[]>res.json().value})//<Address[]>res.json().value//.value)//data)
+      )
+      //res => function(res) { return {count: res.json(), addressList: <Address[]>res.json().value};})
+      //{count: res.json(), addressList: <Address[]>res.json().value})//<Address[]>res.json().value//.value)//data)
       .catch(this.handleError);
 
     // console.log('req.method:', RequestMethod[req.method]); // Post

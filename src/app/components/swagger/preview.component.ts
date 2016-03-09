@@ -21,7 +21,7 @@ import { TagsComponent } from './tags.component';
   pipes: [MapToIterablePipe],
   providers: [],
   selector: 'preview',
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [require('./swagger.component.css')],
   template: require('./preview.component.html')
 })
 // export and class

@@ -9,7 +9,7 @@ import { ResourceComponent } from './resource.component';
   selector: 'main',
   directives: [...ROUTER_DIRECTIVES, ResourceComponent],
   pipes: [MapToIterablePipe],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [require('./swagger.component.css')],
   template: require('./main.component.html')
 })
 

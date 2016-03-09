@@ -3,13 +3,13 @@
 
 <head>
 
-  <title>{%= o.webpackConfig.metadata.title %}</title>
+  <title><%= webpackConfig.metadata.title %></title>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!--http://v4-alpha.getbootstrap.com/getting-started/introduction/-->
-  <meta name="description" content="{%= o.webpackConfig.metadata.title %}">
+  <meta name="description" content="<%= webpackConfig.metadata.title %>">
 
   <!-- use http://www.favicon-generator.org/ to replace files in public/icon-->
   <link rel="apple-touch-icon" sizes="57x57" href="/assets/icon/apple-icon-57x57.png">
@@ -32,17 +32,18 @@
   <!-- end favicon -->
 
   <!-- base url -->
-  <base href="{%= o.webpackConfig.metadata.baseUrl %}">
+  <base href="<%= webpackConfig.metadata.baseUrl %>">
 
   <!-- Auth0 Lock script and AngularJS module, did npm install auth0-lock instead -->
-  <!--Not needed for now to remove auth0 cdn <script src="//cdn.auth0.com/js/lock-8.2.min.js"></script>-->
+  <!--Not needed for now to remove auth0 cdn -->
+  <script src="//cdn.auth0.com/js/lock-8.2.min.js"></script>
 
-  {% for (var css in o.htmlWebpackPlugin.files.css) { %}
-  <link href="{%=o.htmlWebpackPlugin.files.css[css] %}" rel="stylesheet"> {% } %}
+  <!--{% for (var css in o.htmlWebpackPlugin.files.css) { %}
+  <link href="{%=o.htmlWebpackPlugin.files.css[css] %}" rel="stylesheet"> {% } %}-->
 
   <!--TODO: find out how to best include bootstrap. also added in packages and required into many components at the moment.-->
-  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
-   integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
+   integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 </head>
 
 <body style="background: ;">
@@ -62,19 +63,14 @@
     ga('send', 'pageview');
   </script>
 
-  {% if (o.webpackConfig.metadata.ENV === 'development') { %}
+  <% if (webpackConfig.metadata.ENV === 'development') { %>
   <!-- Webpack Dev Server reload -->
-  <script src="http://{%= o.webpackConfig.metadata.host %}:{%= o.webpackConfig.metadata.port %}/webpack-dev-server.js"></script>
-  {% } %}
-
-  <!-- Webpack HtmlWebpackPlugin manually inject scripts -->
-  {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
-  <script src="{%= o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
-  {% } %}
+  <script src="http://<%= webpackConfig.metadata.host %>:<%= webpackConfig.metadata.port %>/webpack-dev-server.js"></script>
+  <% } %>
 
   <!-- jQuery first, then Bootstrap JS.   http://v4-alpha.getbootstrap.com/getting-started/introduction/ -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js"></script>
 
   <!--http://valor-software.github.io/ng2-charts/-->
@@ -86,7 +82,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/mode-markdown.js"></script>
 
 
-  <script>
+  <!--<script>
     Array.prototype.contains = function (v) {
       for (var i = 0; i < this.length; i++) {
         if (this[i] === v) return true;
@@ -103,7 +99,7 @@
       }
       return arr;
     }
-  </script>
+  </script>-->
 </body>
 
 </html>

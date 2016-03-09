@@ -10,7 +10,7 @@ import { AuthManager } from '../../services/auth-manager.service';
   selector: 'tryOperation',
   directives: [...ROUTER_DIRECTIVES, MarkdownComponent],
   pipes: [MapToIterablePipe],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [require('./swagger.component.css')],
   template: require('./try-operation.component.html')
 })
 
@@ -223,7 +223,10 @@ export class TryOperationComponent {
 
           // All possible Accept headers
           enum: this.walkToProperty('produces')
-        }
+        },
+        security: {},
+        contentType: {},
+        parameters: {}
       }
     };
 
@@ -270,8 +273,8 @@ export class TryOperationComponent {
         .forEach(function(paramSchema) {
 
           // extend the parameters property with the schema
-          schema.properties.parameters
-            .properties[paramSchema.name] = paramSchema;
+          // Kevin: comment out the code below cuz it shows error
+          // schema.properties.parameters.properties[paramSchema.name] = paramSchema;
         });
     }
 
@@ -293,7 +296,14 @@ export class TryOperationComponent {
       scheme: this.walkToProperty('schemes')[0],
 
       // Default Accept header is the first one
-      accept: this.walkToProperty('produces')[0]
+      accept: this.walkToProperty('produces')[0],
+
+      // Create new security empty array
+      security: [],
+
+      contentType: '',
+
+      parameters: {}
     };
 
     // if there is security options add the security property
@@ -450,7 +460,18 @@ export class TryOperationComponent {
 
     // UNDONE: return _.unique(securityOptions).filter(function (security) {
     //http://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
-    return securityOptions.unique().filter(
+
+    let securityOptionsUniQue = [];
+
+    securityOptions.forEach((security) => {
+      if (!securityOptionsUniQue.findIndex(security)) {
+        securityOptionsUniQue.push(security);
+      }
+    });
+
+    securityOptions = securityOptionsUniQue;
+
+    return securityOptions.filter(
       // only return authenticated options
       (security) => this.authManager.securityIsAuthenticated(security)
       // function(security) {
@@ -630,9 +651,9 @@ export class TryOperationComponent {
 
     // generate the query string portion of the URL based on query parameters
     // UNDONE: how to convert this JQuery param function?
-    queryParamsStr = decodeURIComponent(
-      // UNDONE: $.param(queryParams, isCollectionQueryParam)
-    );
+    // queryParamsStr = decodeURIComponent(
+    // UNDONE: $.param(queryParams, isCollectionQueryParam)
+    // );
 
     // fill in path parameter values inside the path
     pathStr = this.pathName.replace(pathParamRegex,
@@ -898,7 +919,7 @@ export class TryOperationComponent {
       'Referer', 'User-Agent', 'Cache-Control', 'Content-Length'];
 
     // UNDONE: create call with Http object in Angular 2 TypeScript?
-    console.log("makeCall not implemented");
+    console.log('makeCall not implemented');
     // $.ajax({
     //   url: this.generateUrl(),
     //   type: this.operationName,
@@ -954,7 +975,9 @@ export class TryOperationComponent {
   isJson(value) {
 
     // if value is already parsed return true
-    if (Object.is(value) || Array.isArray(value)) {
+    // this Object.is(value) is not working
+    // if (Object.is(value) || Array.isArray(value)) {
+    if (value !== null && typeof value === 'object' || Array.isArray(value)) {
       return true;
     }
 

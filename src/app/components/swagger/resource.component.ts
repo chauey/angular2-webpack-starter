@@ -7,7 +7,7 @@ import { MapToIterablePipe } from '../../pipes/mapToIterable.pipe';
   selector: 'resource',
   directives: [...ROUTER_DIRECTIVES],
   pipes: [MapToIterablePipe],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [require('./swagger.component.css')],
   template: require('./resource.component.html')
 })
 

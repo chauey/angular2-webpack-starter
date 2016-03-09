@@ -1,4 +1,4 @@
-/// <reference path="api.d.ts" />
+// <reference path="api.d.ts" />
 
 //namespace API.Client {
     'use strict';

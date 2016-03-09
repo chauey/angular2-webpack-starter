@@ -10,7 +10,7 @@ import { TryOperationComponent } from './try-operation.component';
   selector: 'operation',
   directives: [...ROUTER_DIRECTIVES, MarkdownComponent, TryOperationComponent],
   pipes: [MapToIterablePipe],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [require('./swagger.component.css')],
   template: require('./operation.component.html')
 })
 
@@ -94,7 +94,7 @@ export class OperationComponent {
       parameter.schema = null; // UNDONE://_.pick(parameter, 'type', 'items');
 
     } else {
-      let schema = { type: parameter.type };
+      let schema = { type: parameter.type, format: '' };
 
       if (parameter.format) {
         schema.format = parameter.format;

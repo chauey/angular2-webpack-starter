@@ -28,9 +28,7 @@ import {CodeGenComponent} from './components/code-gen/code-gen.component';
 import {DataService} from './services/DataService';
 import {AddressesApi} from '../API/Client/AddressesApi';
 
-//import {Auth0Lock} from 'auth0-lock';
-//import * as Auth0Lock from 'auth0-lock';
-//import Auth0Lock = require('auth0-lock');
+// import Auth0Lock = require('auth0-lock');
 
 //declare var Auth0Lock;
 
@@ -43,24 +41,9 @@ import {AddressesApi} from '../API/Client/AddressesApi';
     providers: [...FORM_PROVIDERS, DataService, AddressesApi],
     directives: [...ROUTER_DIRECTIVES, RouterActive],
     pipes: [],
-    styles: [require('./app.scss'),`
-    // nav ul {
-    //   display: inline;
-    //   list-style-type: none;
-    //   margin: 0;
-    //   padding: 0;
-    //   width: 60px;
-    // }
-    // nav li {
-    //   display: inline;
-    // }
-    // nav li.active {
-    //   background-color: lightgray;
-    // }
-  `],
+    styles: [require('./app.scss')],
     template: require('./app.html')
 })
-
 @RouteConfig([
     { path: '/', component: Home, name: 'Index' },
     { path: '/home', component: Home, name: 'Home' },
@@ -164,5 +147,4 @@ export class App {
  * (The examples may not be updated as quickly. Please open an issue on github for us to update it)
  * For help or questions please contact us at @AngularClass on twitter
  * or our chat on Slack at https://AngularClass.com/slack-join
- * or via chat on Gitter at https://gitter.im/AngularClass/angular2-webpack-starter
  */

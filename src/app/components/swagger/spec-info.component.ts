@@ -9,7 +9,7 @@ import { MarkdownComponent } from '../common/markdown.component';
   selector: 'specInfo',
   directives: [...ROUTER_DIRECTIVES, MarkdownComponent],
   pipes: [MapToIterablePipe],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [require('./swagger.component.css')],
   template: require('./spec-info.component.html')
 })
 

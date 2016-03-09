@@ -10,7 +10,7 @@ import { TagManagerService, Tag } from '../../services/tag-manager.service';
   directives: [...ROUTER_DIRECTIVES],
   pipes: [MapToIterablePipe],
   providers: [TagManagerService],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [require('./swagger.component.css')],
   template: require('./tags.component.html')
 })
 

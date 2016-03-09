@@ -9,7 +9,7 @@ import { OperationComponent } from './operation.component';
   selector: 'path',
   directives: [...ROUTER_DIRECTIVES, OperationComponent],
   pipes: [MapToIterablePipe],
-  styles: [require('bootstrap/dist/css/bootstrap.min.css'), require('./swagger.component.css')],
+  styles: [require('./swagger.component.css')],
   template: require('./path.component.html')
 })
 

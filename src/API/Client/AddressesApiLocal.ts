@@ -1,5 +1,3 @@
-/// <reference path='api.d.ts' />
-
 // /* tslint:disable:no-unused-variable member-ordering */
 import {URLSearchParams} from 'angular2/http';
 // //import Rx from 'rxjs/Rx';

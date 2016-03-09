@@ -1,5 +1,3 @@
-/// <reference path="api.d.ts" />
-
 'use strict';
 
 export interface IAddress {

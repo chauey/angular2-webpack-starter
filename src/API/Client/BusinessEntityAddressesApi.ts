@@ -1,4 +1,4 @@
-/// <reference path="api.d.ts" />
+// <reference path="api.d.ts" />
 
 /* tslint:disable:no-unused-variable member-ordering */
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
@@ -120,8 +120,8 @@ import { BusinessEntityAddress } from './BusinessEntityAddress'
                 method: 'GET',
                 url: path,
                 json: true,
-                
-                
+
+
                 params: queryParameters,
                 headers: headerParams
             };
@@ -156,8 +156,8 @@ import { BusinessEntityAddress } from './BusinessEntityAddress'
                 url: path,
                 json: true,
                 data: businessEntityAddress,
-                
-                
+
+
                 params: queryParameters,
                 headers: headerParams
             };
@@ -223,8 +223,8 @@ import { BusinessEntityAddress } from './BusinessEntityAddress'
                 method: 'GET',
                 url: path,
                 json: true,
-                
-                
+
+
                 params: queryParameters,
                 headers: headerParams
             };
@@ -288,8 +288,8 @@ import { BusinessEntityAddress } from './BusinessEntityAddress'
                 method: 'DELETE',
                 url: path,
                 json: true,
-                
-                
+
+
                 params: queryParameters,
                 headers: headerParams
             };

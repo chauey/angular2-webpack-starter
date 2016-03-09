@@ -8,10 +8,11 @@ With components, pipes, services/providers, webpack, ng6, CRUD, formbuilder, inp
 > An Angular 2 test area [Angular 2](https://angular.io) ([Router](https://angular.io/docs/js/latest/api/router/), [Forms](https://angular.io/docs/js/latest/api/forms/),
 [Http](https://angular.io/docs/js/latest/api/http/),
 [Services](https://gist.github.com/gdi2290/634101fec1671ee12b3e#_follow_@AngularClass_on_twitter),
-[Tests](https://angular.io/docs/js/latest/api/test/), [E2E](https://angular.github.io/protractor/#/faq#what-s-the-difference-between-karma-and-protractor-when-do-i-use-which-)), [Karma](https://karma-runner.github.io/), [Protractor](https://angular.github.io/protractor/), [Jasmine](https://github.com/jasmine/jasmine), [Istanbul](https://github.com/gotwarlost/istanbul), [TypeScript](http://www.typescriptlang.org/), [Typings](https://github.com/typings/typings), and [Webpack](http://webpack.github.io/) by [AngularClass](https://angularclass.com).
+[Tests](https://angular.io/docs/js/latest/api/test/), [E2E](https://angular.github.io/protractor/#/faq#what-s-the-difference-between-karma-and-protractor-when-do-i-use-which-)), [Karma](https://karma-runner.github.io/), [Protractor](https://angular.github.io/protractor/), [Jasmine](https://github.com/jasmine/jasmine), [Istanbul](https://github.com/gotwarlost/istanbul), [TypeScript](http://www.typescriptlang.org/), [Typings](https://github.com/typings/typings), [TsLint](http://palantir.github.io/tslint/), and [Webpack](http://webpack.github.io/) by [AngularClass](https://angularclass.com).
 
 > If you're looking for Angular 1.x please use [NG6-starter](https://github.com/angularclass/NG6-starter)
-> If you're looking to learn about Webpack and ES6 Build Tools check out [ES6-build-tools](https://github.com/AngularClass/ES6-build-tools)
+> If you're looking to learn about Webpack and ES6 Build Tools check out [ES6-build-tools](https://github.com/AngularClass/ES6-build-tools)  
+> If you're looking to learn TypeScript see [TypeStrong/learn-typescript](https://github.com/TypeStrong/learn-typescript)
 
 This seed repo serves as an Angular 2 testing area for us with Angular 2 and TypeScript. Using a [Webpack](http://webpack.github.io/) for building our files and assisting with boilerplate. We're also using Protractor for our end-to-end story and Karma for our unit tests.
 * Best practices in file and application organization for Angular 2.
@@ -34,11 +35,11 @@ git clone --depth 1 https://github.com/chauey/angular2-webpack-starter.git
 # change directory to our repo
 cd angular2-webpack-starter
 
+# add required global libraries
+npm install typings webpack-dev-server -g
+
 # install the repo with npm
 npm install
-
-# install TypeScript typings
-./node_modules/.bin/typings install
 
 # start the server
 npm start
@@ -53,6 +54,7 @@ go to [http://0.0.0.0:3000](http://0.0.0.0:3000) or [http://localhost:3000](http
     * [Running the app](#running-the-app)
 * [Contributing](#contributing)
 * [TypeScript](#typescript)
+* [Typings](#typings)
 * [Frequently asked questions](#frequently-asked-questions)
 * [Support, Questions, or Feedback](#support-questions-or-feedback)
 * [License](#license)
@@ -67,10 +69,11 @@ angular2-webpack-starter/
  │   │
  |   ├──index.html             * Index.html: where we generate our index page
  │   │
- |   ├──vendor.ts              * our vendor file
+ |   ├──polyfills.ts           * our polyfills file
  │   │
  │   ├──app/                   * WebApp: folder
  │   │   ├──app.spec.ts        * a simple test of components in app.ts
+ │   │   ├──app.e2e.ts        * a simple end-to-end test for /
  │   │   └──app.ts             * App.ts: a simple version of our App component components
  │   │
  │   └──assets/                * static assets are served here
@@ -78,8 +81,6 @@ angular2-webpack-starter/
  │       ├──service-worker.js  * ignore this. Web App service worker that's not complete yet
  │       ├──robots.txt         * for search engines to crawl your website
  │       └──human.txt          * for humans to know who the developers are
- │
- ├──test/                      * this is our global unit tests and end-to-end tests
  │
  ├──spec-bundle.js             * ignore this magic that sets up our angular 2 testing environment
  ├──karma.config.js            * karma config for our unit tests
@@ -147,17 +148,30 @@ npm run watch
 npm run test
 ```
 
+### watch and run our tests
+```bash
+npm run watch:test
+```
+
+### run end-to-end tests
+```bash
+# make sure you have your server running in another terminal
+npm run e2e
+```
+
 ### run webdriver (for end-to-end)
 ```bash
 npm run webdriver:update
 npm run webdriver:start
 ```
 
-### run end-to-end tests
+### run Protractor's elementExplorer (for end-to-end)
 ```bash
-# make sure you have webdriver running and a sever for the client app
-npm run e2e
+npm run webdriver:start
+# in another terminal
+npm run e2e:live
 ```
+
 
 # Contributing
 ???
@@ -179,6 +193,47 @@ We have good experience using these editors:
 * [Webstorm 10](https://www.jetbrains.com/webstorm/download/)
 * [Atom](https://atom.io/) with [TypeScript plugin](https://atom.io/packages/atom-typescript)
 * [Sublime Text](http://www.sublimetext.com/3) with [Typescript-Sublime-Plugin](https://github.com/Microsoft/Typescript-Sublime-plugin#installation)
+
+# Typings
+> When you include a module that doesn't include Type Definitions inside of the module you need to include external Type Definitions with Typings
+
+## Use latest Typings module
+```
+npm install --global typings
+```
+
+## Custom Type Definitions
+When including 3rd party modules you also need to include the type definition for the module
+if they don't provide one within the module. You can try to install it with typings
+
+```
+typings install node --save
+```
+
+If you can't find the type definition in the registry we can make an ambient definition in
+this file for now. For example
+
+```typescript
+declare module "my-module" {
+  export function doesSomething(value: string): string;
+}
+```
+
+
+If you're prototyping and you will fix the types later you can also declare it as type any
+
+```typescript
+declare var assert: any;
+```
+
+If you're importing a module that uses Node.js modules which are CommonJS you need to import as
+
+```typescript
+import * as _ from 'lodash';
+```
+
+You can include your type definitions in this file until you create one for the typings registry
+see [typings/registry](https://github.com/typings/registry)
 
 # Frequently asked questions
 * What's the current browser support for Angular 2 Beta?
@@ -203,7 +258,10 @@ We have good experience using these editors:
  * please see issue [#185](https://github.com/AngularClass/angular2-webpack-starter/issues/185) and PR [196](https://github.com/AngularClass/angular2-webpack-starter/pull/196)
 * How do I include bootstrap or jQuery?
  * please see issue [#215](https://github.com/AngularClass/angular2-webpack-starter/issues/215) and [#214](https://github.com/AngularClass/angular2-webpack-starter/issues/214#event-511768416)
-
+* I'm getting an error about not finding my module that I installed?
+ * please see [How to include or create custom type definitions](https://github.com/AngularClass/angular2-webpack-starter/wiki/How-to-include-or-create-custom-type-definitions) and [custom-typings.d.ts](https://github.com/AngularClass/angular2-webpack-starter/blob/master/src/custom-typings.d.ts)
+* How do I async load a component?
+ * see wiki [How-do-I-async-load-a-component-with-AsyncRoute](https://github.com/AngularClass/angular2-webpack-starter/wiki/How-do-I-async-load-a-component-with-AsyncRoute)
 
 # Support, Questions, or Feedback
 > Contact us anytime for anything about this repo or Angular 2
