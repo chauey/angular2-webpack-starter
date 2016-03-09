@@ -1,15 +1,15 @@
-import {Component, EventEmitter} from "angular2/core";
-import {AceEditorDirective} from "./ace-editor.directive";
+import {Component, EventEmitter} from 'angular2/core';
+import {AceEditorDirective} from './ace-editor.directive';
 
 @Component({
-  selector: "code-editor",
+  selector: 'code-editor',
   directives: [AceEditorDirective],
   template: `<div>
       <ace-editor id="editor" [text]="code" (textChanged)="onCodeChanged()"></ace-editor>
     </div>
     `,
   inputs: [
-    "code"
+    'code'
   ],
   styles: [`#editor {
   display:block;
@@ -24,7 +24,7 @@ export class CodeEditorComponent {
   public code: string;
 
   constructor() {
-    this.code = "";
+    this.code = '';
   }
 
   public onCodeChanged(code: string) {

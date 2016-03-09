@@ -31,7 +31,8 @@ import {App} from './app/app';
  */
 document.addEventListener('DOMContentLoaded', function main() {
 
-  enableProdMode(); // TODO: check if wanted. Enabled this due to "Expression 'xxxx' was changed after it was checked" https://github.com/angular/angular/issues/5950 https://github.com/angular/angular/issues/6189
+  enableProdMode(); // TODO: check if wanted. Enabled this due to "Expression 'xxxx' was changed after it was checked"
+  // https://github.com/angular/angular/issues/5950 https://github.com/angular/angular/issues/6189
 
   bootstrap(App,
   [

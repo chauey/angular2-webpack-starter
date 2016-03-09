@@ -17,7 +17,7 @@ import { ClientListComponent } from './client-list.component';
   { path: '/:id', component: ClientItemComponent, name: 'Item', useAsDefault: false },
 ])
 
-export class ClientComponent implements OnInit{
+export class ClientComponent implements OnInit {
   constructor() {
 
   }

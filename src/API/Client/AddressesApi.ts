@@ -9,13 +9,13 @@ import * as Rx from 'rxjs'; // rxjs/add/operator/map
 
 //http://stackoverflow.com/questions/30712638/typescript-export-imported-interface
 
-import { IAddress } from './AddressInterface'
+import { IAddress } from './AddressInterface';
 
-import { Error } from './Error'
+import { Error } from './Error';
 
 import { Injectable } from 'angular2/core';
 
-import { IAddressesApi } from './IAddressesApi'
+import { IAddressesApi } from './IAddressesApi';
 
 import { HttpHelper } from './HttpHelper';
 
@@ -25,7 +25,7 @@ import { HttpHelper } from './HttpHelper';
 @Injectable()
 export class AddressesApi implements IAddressesApi {
   protected basePath = 'http://localhost:2000/odata';
-  public defaultHeaders: Headers = new Headers({});//any = {};
+  public defaultHeaders: Headers = new Headers({});
 
   static $inject: string[] = ['$http', '$httpParamSerializer'];
   //searchParams :SearchParams;
@@ -76,13 +76,9 @@ export class AddressesApi implements IAddressesApi {
     });
 
     let req = new Request(options);
-    // let that = this;
-    return this.$http.request(req)
-      //return this.$http.get(path)//, httpRequestParams)
-      .map(
-      // about fat arrow function or that = this for lexical context
-      // http://stackoverflow.com/questions/13430956/how-to-access-class-member-from-function-in-method-class-in-typescript
 
+    return this.$http.request(req)
+      .map(
       (res) => {
         let listWithCount = {
           count: res.json()['@odata.count'],
@@ -91,41 +87,8 @@ export class AddressesApi implements IAddressesApi {
         this.changeDateStringToDateObject(listWithCount.list);
         return listWithCount;
       }
-
-      // function(res) {
-      //   let listWithCount = {
-      //     count: res.json()['@odata.count'],
-      //     list: res.json().value
-      //   };
-
-      //   console.log(this);
-
-      //   ////this.changeDateStringToDateObject(listWithCount.list); // this.changeDateStringToDateObject is not a function(…)
-      //   //that.changeDateStringToDateObject(listWithCount.list);
-      //   return listWithCount;
-      // }
-      )//res => function(res) { return {count: res.json(), addressList: <Address[]>res.json().value};})//{count: res.json(), addressList: <Address[]>res.json().value})//<Address[]>res.json().value//.value)//data)
+      )
       .catch(this.handleError);
-
-    // console.log('req.method:', RequestMethod[req.method]); // Post
-    //             if (extraHttpRequestParams) {
-    //                 httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-    //             }
-
-    // let requestArgs: RequestArgs
-    // let request : Request = new Request()
-
-    //             debugger;
-    //             console.log(path);
-    //             return this.$http.request(path, httpRequestParams)
-    //             //return this.$http.get(path)//, httpRequestParams)
-    //             .map(res => <Address[]> res.json().value)//data)
-    //                     .catch(this.handleError);
-    //             .map(res => res.json())
-    //  .subscribe<Address[]>(
-    // res => res.text(), 						// success
-    // err => handleErr(err),				// error
-    // () => console.log('done'));		// done
   }
 
   private changeDateStringToDateObject(list) {
@@ -210,22 +173,12 @@ export class AddressesApi implements IAddressesApi {
     var req = new Request(options);
 
     return this.$http.request(req)
-      //return this.$http.get(path)//, httpRequestParams)
       .map(
-      // about fat arrow function or that = this for lexical context
-      // http://stackoverflow.com/questions/13430956/how-to-access-class-member-from-function-in-method-class-in-typescript
-
       (res) => {
         return res.json();
       }
-
       ).catch(this.handleError);
 
-    // if (extraHttpRequestParams) {
-    //   httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-    // }
-
-    // return this.$http.request(httpRequestParams);
   }
 
   /**
@@ -300,5 +253,4 @@ export class AddressesApi implements IAddressesApi {
   }
 
 }
-//}
 

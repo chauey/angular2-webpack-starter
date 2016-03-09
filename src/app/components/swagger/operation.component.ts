@@ -45,7 +45,7 @@ export class OperationComponent {
     */
   getParameters() {
     // https://www.reindex.io/blog/you-might-not-need-underscore/ used this to help figure out how to convert from underscore/lodash to ES6
-    let hasPathParameter = Array.isArray(this.path.parameters);//_.isArray(this.path.parameters);
+    let hasPathParameter = Array.isArray(this.path.parameters); //_.isArray(this.path.parameters);
     let hasOperationParameter = Array.isArray(this.operation.parameters);
     let operationParameters = this.operation.parameters;
     let pathParameters = this.path.parameters;
@@ -67,7 +67,7 @@ export class OperationComponent {
 
     // if there is both path and operation parameters return all of them
     return operationParameters.concat(pathParameters)
-      .map(OperationComponent.prototype.setParameterSchema);// HACK: // UNDONE: (parameter) => this.setParameterSchema(parameter));
+      .map(OperationComponent.prototype.setParameterSchema); // HACK: // UNDONE: (parameter) => this.setParameterSchema(parameter));
   };
 
   // Naive method: Returning a new object with selected properties
@@ -94,7 +94,7 @@ export class OperationComponent {
       parameter.schema = null; // UNDONE://_.pick(parameter, 'type', 'items');
 
     } else {
-      let schema = { type: parameter.type };
+      let schema : any = { type: parameter.type };
 
       if (parameter.format) {
         schema.format = parameter.format;

@@ -8,8 +8,8 @@ import {ValidationService} from '../../services/validation.service';
   template: `<div *ngIf="errorMessage !== null">{{errorMessage}}</div>`
 })
 export class ValidationMessageComponent {
-   //@Input() public control: string; other way more flexible
-   @Input('control') controlName: string; // https://angular.io/docs/ts/latest/api/core/Input-var.html
+  //@Input() public control: string; other way more flexible
+  @Input('control') controlName: string; // https://angular.io/docs/ts/latest/api/core/Input-var.html
 
   // @host essentially forces this to get from host component, not any further any ancestor
   // https://coryrylan.com/blog/angular-2-form-builder-and-validation-management
@@ -20,8 +20,6 @@ export class ValidationMessageComponent {
 
   get errorMessage() {
     let control = this._formDir.form.find(this.controlName);
-
-//control.
 
     for (let propertyName in control.errors) {
       if (control.errors.hasOwnProperty(propertyName) && control.touched) {

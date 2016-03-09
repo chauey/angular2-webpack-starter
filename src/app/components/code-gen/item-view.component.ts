@@ -34,7 +34,6 @@ export class ItemViewComponent {
   @Input('definitionName') _name: any;
   @Input('isCommentProperties') _isCommentProperties: boolean = true;
 
-
   _definition: any;
 
   constructor() {
@@ -90,7 +89,7 @@ function htmlEscape(str) {
 function htmlUnescape(value) {
   return String(value)
     .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
+    .replace(/&#39;/g, '\'')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&amp;/g, '&');

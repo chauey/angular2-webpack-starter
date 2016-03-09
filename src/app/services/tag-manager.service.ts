@@ -16,7 +16,7 @@ export class TagManagerService {
   //   this.description = description;
   // }
   _$stateParams: any;
-  tags: any = [];//{ name: 'asd', description: 'dfsdf'}];
+  tags: any = []; //{ name: 'asd', description: 'dfsdf'}];
   Ftags: any = {}; // UNDONE: what is it and what to set to
 
   constructor() { //$stateParams: any) {
@@ -83,7 +83,7 @@ export class TagManagerService {
               operation.tags.forEach(this.registerTag);
             }
           }
-        )
+        );
       }
     );
   };

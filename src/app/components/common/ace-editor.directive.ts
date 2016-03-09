@@ -1,6 +1,7 @@
 // / <reference path="scripts/typings/main/ambient/ace/ace.d.ts" />
+
 // UNDONE: how to import ace code and typing
-//import ace = require('ace-builds/src-noconflict/ace');
+//import ace = require('ace-builds/src/ace');
 
 import {Component, Directive, EventEmitter, ElementRef} from 'angular2/core';
 
@@ -17,9 +18,9 @@ declare var ace: any;
   ]
 })
 export class AceEditorDirective {
+  public textChanged: EventEmitter<string>;
   private editor: any;
   private settingText: boolean;
-  public textChanged: EventEmitter<string>;
 
   set text(s: string) {
     let sOld = this.editor.getValue();
@@ -48,7 +49,7 @@ export class AceEditorDirective {
       if (dir.settingText) return;
       // discard the delta (e), and provide whole document
       dir.textChanged.next(dir.editor.getValue());
-    })
+    });
 
     // var beautify = ace.require("ace/ext/beautify"); // get reference to extension
     // var editor = ace.edit("editor"); // get reference to editor
