@@ -73,7 +73,7 @@ function processTaggedTemplate(strings: string[], substitutions: string[]) {
   substitutions.forEach((sub, index) => {
     result.push(htmlEscape(strings[index]), sub);
   });
-  result.push(htmlEscape(strings[strings.length - 1]);
+  result.push(htmlEscape(strings[strings.length - 1]));
   return result.join('');
 }
 
