@@ -132,6 +132,34 @@ export class StateProvinceApiLocal implements IApi<StateProvince> {
     return source;
   }
 
+
+    public post(item?: StateProvince, extraHttpRequestParams?: any): Rx.Observable<StateProvince> {
+    // UNDONE:
+    return null;
+  }
+
+  public delete(id: number, ifMatch?: string, extraHttpRequestParams?: any): Rx.Observable<{}> {
+    // UNDONE:
+    return null;
+  }
+
+  public patch(id: number, item?: StateProvince, extraHttpRequestParams?: any): Rx.Observable<StateProvince> {
+    // UNDONE:
+    return null;
+  }
+
+  public save(item?: StateProvince, extraHttpRequestParams?: any): Rx.Observable<StateProvince> {
+    // if is edit, else if new
+    if (item[this._keyName] !== null) {
+      // TODO: update from cloned WIP
+      return this.patch(item[this._keyName], item);
+    } else {
+      // add new
+      return this.post(item);
+    }
+  }
+
+
   private sort(list, orderBy) {
     return list.sort((a, b) => {
       if (a[orderBy] < b[orderBy])

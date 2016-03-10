@@ -41,7 +41,7 @@ export class AddressesApiLocal implements IApi<IAddress> {
 
 
   public get(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
-    , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: Address[] }> {
+    , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }> {
 
     /* Using a disposable */
     let source = Rx.Observable.create(
@@ -131,8 +131,6 @@ export class AddressesApiLocal implements IApi<IAddress> {
     return source;
   }
 
-
-
   public post(item?: IAddress, extraHttpRequestParams?: any): Rx.Observable<IAddress> {
     // UNDONE:
     return null;
@@ -148,7 +146,16 @@ export class AddressesApiLocal implements IApi<IAddress> {
     return null;
   }
 
-
+  public save(item?: IAddress, extraHttpRequestParams?: any): Rx.Observable<IAddress> {
+    // if is edit, else if new
+    if (item[this._keyName] !== null) {
+      // TODO: update from cloned WIP
+      return this.patch(item[this._keyName], item);
+    } else {
+      // add new
+      return this.post(item);
+    }
+  }
 
   private sort(addresses, orderby) {
     return addresses.sort((a, b) => {
@@ -185,11 +192,6 @@ export class AddressesApiLocal implements IApi<IAddress> {
       address.modifiedDate = new Date(address.modifiedDate);
     });
   }
-
-
-
-
-
 
   private setListData() {
     this._list = AddressesApiLocal.convertTo([{

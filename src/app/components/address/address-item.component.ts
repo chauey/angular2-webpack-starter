@@ -122,37 +122,20 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
 
     // if form valid, add.
     if (this._myForm.isValid) {
-      // if is edit, else if new
-      if (this._id !== null) {
-        // TODO: update from cloned WIP
-        // add new
-        this._isSaving = true;
-        this._AddressesApi.patch(this._item)
-          .subscribe(
-          item => {
-            this._isSaving = false;
-            this.gotoList();
-          },
-          error => {
-            this._isSaving = false;
-            this._errorMessage = <any>error;
-            console.log(this._errorMessage);
-          });
-      } else {
-        // add new
-        this._isSaving = true;
-        this._AddressesApi.post(this._item)
-          .subscribe(
-          item => {
-            this._isSaving = false;
-            this.gotoList();
-          },
-          error => {
-            this._isSaving = false;
-            this._errorMessage = <any>error;
-            console.log(this._errorMessage);
-          });
-      }
+      this._isSaving = true;
+      this._AddressesApi.save(this._item)
+        .subscribe(
+        item => {
+          this._isSaving = false;
+          this.gotoList();
+        },
+        error => {
+          this._isSaving = false;
+          this._errorMessage = <any>error;
+          console.log(this._errorMessage);
+        });
+
+
       //this._submitted = true;
     }
   }

@@ -192,5 +192,17 @@ export class AddressesApi implements IApi<IAddress> {
     return this._http.request(req);
   }
 
+
+  public save(item?: IAddress, extraHttpRequestParams?: any): Rx.Observable<IAddress> {
+    // if is edit, else if new
+    if (item[this._keyName] !== null) {
+      // TODO: update from cloned WIP
+      return this.patch(item[this._keyName], item);
+    } else {
+      // add new
+      return this.post(item);
+    }
+  }
+
 }
 

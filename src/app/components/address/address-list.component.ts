@@ -68,7 +68,7 @@ export class AddressListComponent implements OnInit {
       .get()
       .subscribe(
         (stateListWithCount) => { this.stateProvinceList = stateListWithCount.list; },
-        (error) => { this.errorMessage = <any>error; });
+        (error) => { this._errorMessage = <any>error; });
 
     this._AddressesApiLocal.get(this._expand, this._filter, this._select, this._orderBy, this._top, this._skip, this._count, null)
       .subscribe(

@@ -45,4 +45,6 @@ export interface IApi<T> {
    * @param item The entity to patch
    */
   patch(id: number, item?: T, extraHttpRequestParams?: any): Rx.Observable<T>
+
+  save(item?: T, extraHttpRequestParams?: any): Rx.Observable<T>
 }
