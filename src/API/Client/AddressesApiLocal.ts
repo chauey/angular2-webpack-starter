@@ -1,44 +1,47 @@
-// /* tslint:disable:no-unused-variable member-ordering */
 import {URLSearchParams} from 'angular2/http';
-// //import Rx from 'rxjs/Rx';
-// //import * as Rx from '@reactivex/rxjs';
-// //import {Observable} from 'rxjs/Observable';
-import * as Rx from 'rxjs'; // rxjs/add/operator/map
-
-// //http://stackoverflow.com/questions/30712638/typescript-export-imported-interface
+import * as Rx from 'rxjs';
+import { Injectable } from 'angular2/core';
+import { IApi } from './IApi';
 
 import { Address } from './Address';
-import { IAddress } from './AddressInterface';
-
-// import { Error } from './Error'
-
-import { Injectable } from 'angular2/core';
-
-import { IAddressesApi } from './IAddressesApi';
 
 'use strict';
 
 @Injectable()
-export class AddressesApiLocal implements IAddressesApi {
-  addressList: any[];
+export class AddressesApiLocal implements IApi<Address> {
+  _list: Address[];
+  _keyName: string = 'addressId';
 
-  constructor() { //, protected $httpParamSerializer?: (d: any) => any, basePath?: string) {
-    this.setAddressListData();
+
+  constructor() {
+    this.setListData();
   }
 
-  /**
-   * Get EntitySet Addresses
-   * Returns the EntitySet Addresses
-   * @param $Expand Expand navigation property
-   * @param $Filter filter property
-   * @param $Select select structural property
-   * @param $Orderby order by some property
-   * @param $Top top elements
-   * @param $Skip skip elements
-   * @param $Count include count in response
-   */
-  public addressesGet(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
-    , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }> {
+
+  static convertTo(list: any): Address[] {
+    let listToReturn: Address[] = [];
+
+    list.forEach(
+      (item) => {
+        listToReturn.push({
+          addressId: item.addressId,
+          addressLine1: item.addressLine1,
+          addressLine2: item.addressLine2,
+          city: item.city,
+          stateProvinceId: item.stateProvinceId,
+          postalCode: item.postalCode,
+          spatialLocation: item.spatialLocation,
+          rowguid: item.rowguid,
+          modifiedDate: new Date(item.modifiedDate)
+        }
+        );
+      });
+    return listToReturn;
+  }
+
+
+  public get(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
+    , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: Address[] }> {
 
     /* Using a disposable */
     let source = Rx.Observable.create(
@@ -48,8 +51,8 @@ export class AddressesApiLocal implements IAddressesApi {
         let id = setTimeout(() => {
           try {
             let listWithCount = {
-              count: this.addressList.length,
-              list: this.addressList
+              count: this._list.length,
+              list: this._list
             };
 
             this.changeDateStringToDateObject(listWithCount.list);
@@ -80,7 +83,7 @@ export class AddressesApiLocal implements IAddressesApi {
           } catch (error) {
             observer.onError(error);
           }
-        }, 1000);
+        }, 500);
 
         // console.log('started');
 
@@ -91,7 +94,6 @@ export class AddressesApiLocal implements IAddressesApi {
 
       });
 
-
     // Note that this is optional, you do not have to return this if you require no cleanup
     // return Rx.Disposable.create(function () {
     //     console.log('disposed');
@@ -101,11 +103,35 @@ export class AddressesApiLocal implements IAddressesApi {
     return source;
   }
 
-  public getAddressById(id: number) {
-    return this.addressList.filter((address) => {
-      return address.addressId === id;
-    })[0];
+  public getById(id: number) {
+    /* Using a disposable */
+    let source = Rx.Observable.create(
+      (observer) => {
+
+        let timer = setTimeout(() => {
+          try {
+            let itemToReturn = this._list.filter((item) => {
+
+              return item[this._keyName] === id;
+            })[0];
+
+            observer.next(itemToReturn);
+            observer.complete();
+          } catch (error) {
+            observer.onError(error);
+          }
+        }, 500);
+        return () => {
+          // "disposal called""
+          clearTimeout(timer);
+        };
+
+      });
+
+    return source;
   }
+
+
 
   private sort(addresses, orderby) {
     return addresses.sort((a, b) => {
@@ -143,8 +169,11 @@ export class AddressesApiLocal implements IAddressesApi {
     });
   }
 
-  private setAddressListData() {
-    this.addressList = [{
+
+
+
+  private setListData() {
+    this._list = AddressesApiLocal.convertTo([{
       'addressId': 1,
       'addressLine1': '1970 Napa Ct.',
       'addressLine2': null,
@@ -670,6 +699,6 @@ export class AddressesApiLocal implements IAddressesApi {
         },
         'rowguid': '644dea26-e6fd-4019-85e6-35364ddab0cc',
         'modifiedDate': '2011-05-24T00:00:00+07:00'
-      }];
+      }]);
   }
 }

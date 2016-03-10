@@ -27,20 +27,21 @@ import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 
 export class AddressListComponent implements OnInit {
 
-  searchValue: string = '';
-  errorMessage: string;
-  listWithCount: any;
+  _keyName: string = 'addressId';
+  _searchValue: string = '';
+  _errorMessage: string;
+  _listWithCount: any;
   stateProvinceList: any;
 
-  top: number = 5;
-  skip: number = 0;
-  count: boolean = true;
-  expand: string = null;
-  filter: string = null;
-  select: string = null;
-  orderBy: string = null;
+  _top: number = 5;
+  _skip: number = 0;
+  _count: boolean = true;
+  _expand: string = null;
+  _filter: string = null;
+  _select: string = null;
+  _orderBy: string = null;
 
-  paginationData = {
+  _paginationData = {
     isBoundaryLinks: true,
     maxSize: 10,
     isRotate: false,
@@ -69,10 +70,10 @@ export class AddressListComponent implements OnInit {
         (stateListWithCount) => { this.stateProvinceList = stateListWithCount.list; },
         (error) => { this.errorMessage = <any>error; });
 
-    this._AddressesApiLocal.addressesGet(this.expand, this.filter, this.select, this.orderBy, this.top, this.skip, this.count, null)
+    this._AddressesApiLocal.get(this._expand, this._filter, this._select, this._orderBy, this._top, this._skip, this._count, null)
       .subscribe(
-      addressListWithCount => this.listWithCount = addressListWithCount,
-      error => this.errorMessage = <any>error);
+      addressListWithCount => this._listWithCount = addressListWithCount,
+      error => this._errorMessage = <any>error);
   }
 
   edit(id: number) {
@@ -85,8 +86,8 @@ export class AddressListComponent implements OnInit {
   }
 
   private setPage(pageNo: number): void {
-    this.paginationData.currentPage = pageNo;
-    this.skip = ((this.paginationData.currentPage - 1) * this.top);
+    this._paginationData.currentPage = pageNo;
+    this._skip = ((this._paginationData.currentPage - 1) * this._top);
     this.getList();
   };
 

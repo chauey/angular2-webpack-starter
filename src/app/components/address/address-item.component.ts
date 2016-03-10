@@ -60,7 +60,7 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
   ngOnInit() {
     console.log('ngOnInit address-item component');
 
-    this._id = this._routeParams.get('id') === 'new' ? null : +this._routeParams.get('id');
+    this._id = this._routeParams.get('id') === 'new' ? null : + this._routeParams.get('id');
     console.log('ngOnInit address-item component id is: ' + this._id);
 
     this.populateStateProvinceData();
@@ -137,14 +137,28 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
     //   error => this.errorMessage = <any>error
     //   );
 
-    this._item = this._AddressesApiLocal.getAddressById(this._id);
-    if (this._item.modifiedDate !== '') {
-      let date = new Date(this._item.modifiedDate);
+    this._item = this._AddressesApiLocal.getById(this._id)
+      .subscribe(
+      item => {
+        this._item = item;
 
-      this._item.modifiedDate = this._momentFunction(date).format('YYYY-MM-DD');
+        // TODO: not sure really need to convert if bind to input date type and Date object?
+        if (this._item.modifiedDate !== '') {
+          let date = new Date(this._item.modifiedDate);
+          this._item.modifiedDate = this._momentFunction(date).format('YYYY-MM-DD');
+          this._dataStorage.set(this._item);
+        }
+      },
+      error => {
+        this._errorMessage = <any>error;
+        console.log(this._errorMessage);
+      }
+      );
 
-      this._dataStorage.set(this._item);
-    }
+
+
+
+
   }
 
   private populateStateProvinceData() {

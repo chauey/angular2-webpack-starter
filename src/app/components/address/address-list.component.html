@@ -1,16 +1,16 @@
 <div class="container">
 
-  <input [(ngModel)]="expand" placeholder="expand" />
-  <input [(ngModel)]="filter" placeholder="filter" />
-  <input [(ngModel)]="select" placeholder="select" />
-  <input [(ngModel)]="orderby" placeholder="orderby" />
-  <input [(ngModel)]="top" placeholder="top" type="number" />
-  <input [(ngModel)]="skip" placeholder="skip" type="number" />
-  <input [(ngModel)]="count" placeholder="count" type="checkbox" />
+  <input [(ngModel)]="_expand" placeholder="expand" />
+  <input [(ngModel)]="_filter" placeholder="filter" />
+  <input [(ngModel)]="_select" placeholder="select" />
+  <input [(ngModel)]="_orderBy" placeholder="orderBy" />
+  <input [(ngModel)]="_top" placeholder="top" type="number" />
+  <input [(ngModel)]="_skip" placeholder="skip" type="number" />
+  <input [(ngModel)]="_count" placeholder="count" type="checkbox" />
   <button (click)="getList()">Get</button>
-  <pagination [totalItems]="listWithCount?.count" [(ngModel)]="paginationData.currentPage" [maxSize]="paginationData.maxSize"
-  class="pagination-sm" [boundaryLinks]="paginationData.isBoundaryLinks" [rotate]="paginationData.isRotate" (numPages)="numPages = $event"
-  [itemsPerPage]="top">
+  <pagination [totalItems]="_listWithCount?.count" [(ngModel)]="_paginationData.currentPage" [maxSize]="_paginationData.maxSize"
+  class="pagination-sm" [boundaryLinks]="_paginationData.isBoundaryLinks" [rotate]="_paginationData.isRotate" (numPages)="numPages = $event"
+  [itemsPerPage]="_top">
     <!--(pageChanged)="pageChanged($event)" only set on 1 pagination control or event will fire again-->
   </pagination>
 
@@ -33,22 +33,22 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="#address of listWithCount?.list">
+        <tr *ngFor="#item of _listWithCount?.list">
           <td>
-            <button (click)="edit(address.addressId)" class="btn btn-primary">edit</button>
-            <button (click)="delete(address.addressId)" class="btn btn-primary">delete</button>
+            <button (click)="edit(item[_keyName])" class="btn btn-primary">edit</button>
+            <button (click)="delete(item[_keyName])" class="btn btn-primary">delete</button>
           </td>
-          <td>{{address.addressId}}</td>
-          <td>{{address.addressLine1}}</td>
-          <td>{{address.addressLine2}}</td>
-          <td>{{address.city}}</td>
-          <td>{{address.stateProvinceId | dataTransform:stateProvinceList:"stateProvinceId":"name"}}</td>
-          <td>{{address.postalCode}}</td>
-          <td>{{address.rowguid}}</td>
+          <td>{{item.addressId}}</td>
+          <td>{{item.addressLine1}}</td>
+          <td>{{item.addressLine2}}</td>
+          <td>{{item.city}}</td>
+          <td>{{item.stateProvinceId | dataTransform:stateProvinceList:"stateProvinceId":"name"}}</td>
+          <td>{{item.postalCode}}</td>
+          <td>{{item.rowguid}}</td>
           <!--https://github.com/angular/angular/issues/6336-->
-          <td>{{address.modifiedDate | date:"MM/dd/yy"}}</td>
-          <td>{{address.spatialLocation}}</td>
-          <td>{{address}}</td>
+          <td>{{item.modifiedDate | date:"MM/dd/yy"}}</td>
+          <td>{{item.spatialLocation}}</td>
+          <td>{{item}}</td>
         </tr>
       </tbody>
       <tfoot class="thead-default">
@@ -69,7 +69,7 @@
     </table>
   </div>
   <!--pager-->
-  <pagination [totalItems]="listWithCount?.count" [(ngModel)]="paginationData.currentPage" [maxSize]="paginationData.maxSize"
-  class="pagination-sm" [boundaryLinks]="paginationData.isBoundaryLinks" [rotate]="paginationData.isRotate" (numPages)="numPages = $event"
-  (pageChanged)="pageChanged($event)" [itemsPerPage]="top"></pagination>
+  <pagination [totalItems]="_listWithCount?.count" [(ngModel)]="_paginationData.currentPage" [maxSize]="_paginationData.maxSize"
+  class="pagination-sm" [boundaryLinks]="_paginationData.isBoundaryLinks" [rotate]="_paginationData.isRotate" (numPages)="numPages = $event"
+  (pageChanged)="pageChanged($event)" [itemsPerPage]="_top"></pagination>
 </div>

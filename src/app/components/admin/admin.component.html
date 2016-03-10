@@ -9,6 +9,10 @@
       <!--<a class="navbar-brand" href="#">Responsive navbar</a>-->
       <ul class="nav navbar-nav" router-active="active">
         <li class="nav-item">
+          <a class="nav-link" [routerLink]=" ['Address'] ">Address</a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" [routerLink]=" ['./Client'] ">Client</a>
           <!--EXCEPTION: Link "["Client"]" is ambiguous, use "./" or "../" to disambiguate. in [ ['Client']  in AdminComponent@35:30]-->
         </li>
@@ -20,10 +24,6 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]=" ['Supplier'] ">Supplier</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]=" ['Address'] ">Address</a>
         </li>
 
       </ul>
