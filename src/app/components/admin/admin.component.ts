@@ -19,16 +19,12 @@ import {RouterActive} from '../../directives/router-active';
 })
 
 @RouteConfig([
-  //{ path: '/admin/...', component: AdminComponent, name: 'Admin', useAsDefault: true },
-  { path: '/client/...', component: ClientComponent, name: 'Client', useAsDefault: true },
+  { path: '/address/...', component: AddressComponent, name: 'Address', useAsDefault: true },
+
+  { path: '/client/...', component: ClientComponent, name: 'Client', useAsDefault: false },
   { path: '/order/...', component: OrderComponent, name: 'Order', useAsDefault: false },
   { path: '/product/...', component: ProductComponent, name: 'Product', useAsDefault: false },
   { path: '/supplier/...', component: SupplierComponent, name: 'Supplier', useAsDefault: false },
-
-  { path: '/address/...', component: AddressComponent, name: 'Address', useAsDefault: false },
-
-//   { path: '/orders', component: OrderListComponent, name: 'OrderList', useAsDefault: false },
-//   { path: '/orders/:id', component: OrderItemComponent, name: 'OrderItem', useAsDefault: false },
  ])
 
 export class AdminComponent implements OnInit {
