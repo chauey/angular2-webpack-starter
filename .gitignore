@@ -67,3 +67,4 @@ src/server/AA.Mvp/AA.Mvp/Areas/
 *.user
 *.mdf
 *.ldf
+src/server/AA.Mvp/packages/
