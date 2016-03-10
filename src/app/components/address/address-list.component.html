@@ -21,33 +21,35 @@
         <tr>
           <th style="min-width: 100px;">Actions</th>
           <th>
-            <button class="btn btn-default" (click)="onSortingList('addressId')"> Address ID
-              <i *ngIf="_orderBy === 'addressId'" class="glyphicon" [class.glyphicon-arrow-down]="!_isAscending" [class.glyphicon-arrow-up]="_isAscending"></i>
+            <button class="btn btn-default" (click)="updateSort('addressId')"> Address ID
+              <i class="glyphicon" [class.glyphicon-arrow-down]="_orderBy === 'addressId'" [class.glyphicon-arrow-up]="_orderBy === 'addressId desc'"></i>
             </button>
           </th>
           <th>
-            <button class="btn btn-default" (click)="onSortingList('addressLine1')"> Address Line 1
-              <i *ngIf="_orderBy === 'addressLine1'" class="glyphicon" [class.glyphicon-arrow-down]="!_isAscending" [class.glyphicon-arrow-up]="_isAscending"></i>
+            <button class="btn btn-default" (click)="updateSort('addressLine1')"> Address Line 1
+              <i class="glyphicon" [class.glyphicon-arrow-down]="_orderBy === 'addressLine1'" [class.glyphicon-arrow-up]="_orderBy === 'addressLine1 desc'"></i>
             </button>
           </th>
           <th>
-            <button class="btn btn-default" (click)="onSortingList('addressLine2')"> Address Line 2
-              <i *ngIf="_orderBy === 'addressLine2'" class="glyphicon" [class.glyphicon-arrow-down]="!_isAscending" [class.glyphicon-arrow-up]="_isAscending"></i>
+            Address Line 2
+          </th>
+          <th>
+            <button class="btn btn-default" (click)="updateSort('city')"> City
+              <i class="glyphicon" [class.glyphicon-arrow-down]="_orderBy === 'city'" [class.glyphicon-arrow-up]="_orderBy === 'city desc'"></i>
             </button>
           </th>
           <th>
-            <button class="btn btn-default" (click)="onSortingList('city')"> City
-              <i *ngIf="_orderBy === 'city'" class="glyphicon" [class.glyphicon-arrow-down]="!_isAscending" [class.glyphicon-arrow-up]="_isAscending"></i>
-            </button>
-          </th>
-          <th>
-            <button class="btn btn-default" (click)="onSortingList('stateProvinceId')"> StateProvinceId
+            <button class="btn btn-default" (click)="updateSort('stateProvinceId')"> StateProvinceId
               <i *ngIf="_orderBy === 'stateProvinceId'" class="glyphicon glyphicon-arrow-down"></i>
             </button>
           </th>
           <th>Postal Code</th>
           <th>Row guid</th>
-          <th>Modified Date</th>
+          <th>
+            <button class="btn btn-default" (click)="updateSort('modifiedDate')"> Modified Date
+              <i class="glyphicon" [class.glyphicon-arrow-down]="_orderBy === 'modifiedDate'" [class.glyphicon-arrow-up]="_orderBy === 'modifiedDate desc'"></i>
+            </button>
+          </th>
           <th>Spatial Location</th>
           <th>Debug</th>
         </tr>

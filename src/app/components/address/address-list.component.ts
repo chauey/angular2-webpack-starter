@@ -40,7 +40,6 @@ export class AddressListComponent implements OnInit {
   _filter: string = null;
   _select: string = null;
   _orderBy: string = null;
-  _isAscending: boolean = true;
   _filterModel: string = '';
 
   _paginationData = {
@@ -66,7 +65,7 @@ export class AddressListComponent implements OnInit {
   }
 
   getList() {
-    this._AddressesApiLocal.get(this._expand, this._filter, this._select, this._orderBy, this._isAscending, this._top, this._skip, this._count, null)
+    this._AddressesApiLocal.get(this._expand, this._filter, this._select, this._orderBy, this._top, this._skip, this._count, null)
       .subscribe(
       addressListWithCount => this._listWithCount = addressListWithCount,
       error => this._errorMessage = <any>error);
@@ -89,12 +88,13 @@ export class AddressListComponent implements OnInit {
     console.log('delete with id: ' + id);
   }
 
-  onSortingList(orderBy: string) {
-    if (this._orderBy === orderBy) {
-      this._isAscending = !this._isAscending;
+  updateSort(fieldName: string) {
+    if (this._orderBy === fieldName) {
+      this._orderBy = fieldName + ' desc';
+    } else {
+      this._orderBy = fieldName;
     }
 
-    this._orderBy = orderBy;
     this.getList();
   }
 

@@ -40,9 +40,10 @@ export class AddressesApiLocal implements IApi<IAddress> {
   }
 
 
-  public get(expand?: string, filter?: string, select?: string, orderBy?: string, isAscending?: boolean, top?: number, skip?: number, count?: boolean
+  public get(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
     , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }> {
 
+    console.log('orderBy: ' + orderBy);
     /* Using a disposable */
     let source = Rx.Observable.create(
 
@@ -65,11 +66,7 @@ export class AddressesApiLocal implements IApi<IAddress> {
 
             // sort
             if (orderBy) {
-              if (isAscending) {
-                listWithCount.list = this.sort(listWithCount.list, orderBy);
-              } else {
-                listWithCount.list = this.revert(listWithCount.list, orderBy);
-              }
+              listWithCount.list = this.sort(listWithCount.list, orderBy);
             }
 
             // paging
@@ -161,28 +158,51 @@ export class AddressesApiLocal implements IApi<IAddress> {
     }
   }
 
-  private sort(addresses, orderby) {
-    return addresses.sort((a, b) => {
-      if (a[orderby] < b[orderby])
+  private sort(list, orderBy: string) {
+    let fieldName = orderBy;
+
+    if (orderBy.indexOf(' desc') > -1) {
+      fieldName = orderBy.substring(0, orderBy.indexOf(' desc'));
+
+      return list.sort((a, b) => {
+        if (typeof a[fieldName] === 'number') {
+          console.log('sort1');
+          return a[fieldName] - b[fieldName];
+        }
+        if (a[fieldName] < b[fieldName]) {
+          console.log('sort2');
+          return 1;
+        }
+        if (a[fieldName] > b[fieldName]) {
+          console.log('sort3');
+          return -1;
+        }
+        console.log('sort4');
+        return 0;
+      });
+    }
+
+    return list.sort((a, b) => {
+      if (typeof a[fieldName] === 'number') {
+        console.log('sort5');
+        return b[fieldName] - a[fieldName];
+      }
+      if (a[fieldName] < b[fieldName]) {
+        console.log('sort6');
         return -1;
-      if (a[orderby] > b[orderby])
+      }
+      if (a[fieldName] > b[fieldName]) {
+        console.log('sort7');
         return 1;
+      }
+      console.log('sort8');
       return 0;
     });
   }
 
-  private revert(addresses, orderby) {
-    return addresses.sort((a, b) => {
-      if (a[orderby] > b[orderby])
-        return -1;
-      if (a[orderby] < b[orderby])
-        return 1;
-      return 0;
-    });
-  }
-
-  private filter(addresses, keyword) {
-    return addresses.filter((address) => {
+  private filter(list, keyword) {
+    // TODO: make more generic
+    return list.filter((address) => {
       return ((address.addressLine1 && address.addressLine1.indexOf(keyword) >= 0) ||
         (address.addressLine2 && address.addressLine2.indexOf(keyword) >= 0) ||
         (address.city && address.city.indexOf(keyword) >= 0) ||

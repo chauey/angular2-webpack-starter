@@ -190,8 +190,8 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
       .get()
       .subscribe(
       (stateListWithCount) => {
-        // TODO: this._stateIsLoading = true; 
-        this._stateProvinceList = stateListWithCount.list; 
+        // TODO: this._stateIsLoading = true;
+        this._stateProvinceList = stateListWithCount.list;
       },
       (error) => { this._errorMessage = <any>error; });
   }
