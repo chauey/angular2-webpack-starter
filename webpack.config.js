@@ -20,13 +20,6 @@ var metadata = {
   HMR: HMR
 };
 
-// var bootstrapPath = path.join(
-//     __dirname,
-//     'node_modules/bootstrap/dist/css'
-// );
-
- const autoprefixer = require('autoprefixer');
-
 /*
  * Config
  * with default values at webpack.default.conf
@@ -37,7 +30,6 @@ module.exports = {
   // static data for index.html
   metadata: metadata,
   devtool: 'source-map',
-  // devtool: 'eval',
   debug: true,
   // devtool: 'eval' // for faster builds use 'eval'
 
@@ -60,8 +52,6 @@ module.exports = {
  resolve: {
    // ensure loader extensions match
    extensions: ['','.ts','.js','.json','.css','.scss','.html']//,
-    //modulesDirectories: ['node_modules', bootstrapPath]
-
  },
 
   module: {
@@ -121,8 +111,6 @@ module.exports = {
         "window.Tether": "tether"
     })
   ],
-
-   postcss: [autoprefixer],
 
   // Other module loader config
 
