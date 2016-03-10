@@ -1,6 +1,8 @@
 import {Component, OnInit} from 'angular2/core';
 import {RouteParams, Router} from 'angular2/router';
 import {CanDeactivate, ComponentInstruction} from 'angular2/router';
+import {Location, LocationStrategy, HashLocationStrategy} from 'angular2/router';
+
 import {NgForm}    from 'angular2/common';
 import {FORM_PROVIDERS, FormBuilder, Validators} from 'angular2/common';
 
@@ -38,7 +40,6 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
   _isLoading: boolean;
   _isSaving: boolean;
 
-
   _id: number = null;
   _item: any = null;
   _submitted = false;
@@ -52,6 +53,7 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
     private _routeParams: RouteParams,
     private _AddressesApi: AddressesApiLocal, //IApi<IAddress>,
     private _StateProvinceApi: StateProvinceApiLocal,
+    private _Location: Location,
     private _formBuilder: FormBuilder,
     private _dialog: DialogService,
     private _dataStorage: DataStorageService//,
@@ -99,11 +101,19 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
   }
 
   goBack() {
-    // TODO: find way to navigate back in history
-    this._router.navigate(['List']);
+    // Navigates back in the platform's history.
+    this._Location.back();
   }
 
   onCancel() {
+    // reload data for item model
+    this._dataStorage.get(this._item);
+    this._myForm._pristine = true;
+    // on cancel, reset data changes and navigate back to list
+    this._router.navigate(['List']);
+  }
+
+  onReset() {
     // reload data for item model
     this._dataStorage.get(this._item);
     this._myForm._pristine = true;
@@ -136,7 +146,7 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
         });
 
 
-      //this._submitted = true;
+      // this._submitted = true;
     }
   }
 
@@ -172,13 +182,17 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
         console.log(this._errorMessage);
       }
       );
+
   }
 
   private populateStateProvinceData() {
     this._StateProvinceApi
       .get()
       .subscribe(
-      (stateListWithCount) => { this._stateProvinceList = stateListWithCount.list; },
+      (stateListWithCount) => {
+        // TODO: this._stateIsLoading = true; 
+        this._stateProvinceList = stateListWithCount.list; 
+      },
       (error) => { this._errorMessage = <any>error; });
   }
 

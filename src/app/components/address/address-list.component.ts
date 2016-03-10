@@ -18,7 +18,7 @@ import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
   selector: 'address-list',
-  directives: [...ROUTER_DIRECTIVES, ...PAGINATION_DIRECTIVES ],
+  directives: [...ROUTER_DIRECTIVES, ...PAGINATION_DIRECTIVES],
   pipes: [DataTransformPipe],
   providers: [StateProvinceApiLocal], // AddressesApi],
   styles: [require('./address-list.component.css')],
@@ -31,7 +31,7 @@ export class AddressListComponent implements OnInit {
   _searchValue: string = '';
   _errorMessage: string;
   _listWithCount: any;
-  stateProvinceList: any;
+  _stateProvinceList: any;
 
   _top: number = 5;
   _skip: number = 0;
@@ -40,6 +40,8 @@ export class AddressListComponent implements OnInit {
   _filter: string = null;
   _select: string = null;
   _orderBy: string = null;
+  _isAscending: boolean = true;
+  _filterModel: string = '';
 
   _paginationData = {
     isBoundaryLinks: true,
@@ -58,22 +60,24 @@ export class AddressListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getStateProvinceList();
     this.getList();
     console.log('ngOnInit address-list component');
-
   }
 
   getList() {
-    this._StateProvinceApiLocal
-      .get()
-      .subscribe(
-        (stateListWithCount) => { this.stateProvinceList = stateListWithCount.list; },
-        (error) => { this._errorMessage = <any>error; });
-
-    this._AddressesApiLocal.get(this._expand, this._filter, this._select, this._orderBy, this._top, this._skip, this._count, null)
+    this._AddressesApiLocal.get(this._expand, this._filter, this._select, this._orderBy, this._isAscending, this._top, this._skip, this._count, null)
       .subscribe(
       addressListWithCount => this._listWithCount = addressListWithCount,
       error => this._errorMessage = <any>error);
+  }
+
+  getStateProvinceList() {
+    this._StateProvinceApiLocal
+      .get()
+      .subscribe(
+      (stateListWithCount) => { this._stateProvinceList = stateListWithCount.list; },
+      (error) => { this._errorMessage = <any>error; });
   }
 
   edit(id: number) {
@@ -83,6 +87,15 @@ export class AddressListComponent implements OnInit {
 
   delete(id: number) {
     console.log('delete with id: ' + id);
+  }
+
+  onSortingList(orderBy: string) {
+    if (this._orderBy === orderBy) {
+      this._isAscending = !this._isAscending;
+    }
+
+    this._orderBy = orderBy;
+    this.getList();
   }
 
   private setPage(pageNo: number): void {
