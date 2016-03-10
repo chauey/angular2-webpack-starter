@@ -59,3 +59,4 @@ npm-debug.log
 # IDE #
 .idea/
 *.swp
+src/server/AA.Mvp/packages/
