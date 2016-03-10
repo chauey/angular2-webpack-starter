@@ -42,7 +42,7 @@
           <td>{{item.addressLine1}}</td>
           <td>{{item.addressLine2}}</td>
           <td>{{item.city}}</td>
-          <td>{{item.stateProvinceId}}</td>
+          <td>{{item.stateProvinceId | dataTransform:stateProvinceList:"stateProvinceId":"name"}}</td>
           <td>{{item.postalCode}}</td>
           <td>{{item.rowguid}}</td>
           <!--https://github.com/angular/angular/issues/6336-->
