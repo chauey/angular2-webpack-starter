@@ -150,7 +150,7 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
         }
       },
       error => {
-        this._errorMessage = <any>error
+        this._errorMessage = <any>error;
         console.log(this._errorMessage);
       }
       );

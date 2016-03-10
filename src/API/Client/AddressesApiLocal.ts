@@ -18,6 +18,28 @@ export class AddressesApiLocal implements IApi<Address> {
   }
 
 
+  static convertTo(list: any): Address[] {
+    let listToReturn: Address[] = [];
+
+    list.forEach(
+      (item) => {
+        listToReturn.push({
+          addressId: item.addressId,
+          addressLine1: item.addressLine1,
+          addressLine2: item.addressLine2,
+          city: item.city,
+          stateProvinceId: item.stateProvinceId,
+          postalCode: item.postalCode,
+          spatialLocation: item.spatialLocation,
+          rowguid: item.rowguid,
+          modifiedDate: new Date(item.modifiedDate)
+        }
+        );
+      });
+    return listToReturn;
+  }
+
+
   public get(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
     , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: Address[] }> {
 
@@ -109,6 +131,8 @@ export class AddressesApiLocal implements IApi<Address> {
     return source;
   }
 
+
+
   private sort(addresses, orderby) {
     return addresses.sort((a, b) => {
       if (a[orderby] < b[orderby])
@@ -146,26 +170,6 @@ export class AddressesApiLocal implements IApi<Address> {
   }
 
 
-  static convertTo(list: any): Address[] {
-    let listToReturn: Address[] = [];
-
-    list.forEach(
-      (item) => {
-        listToReturn.push({
-          addressId: item.addressId,
-          addressLine1: item.addressLine1,
-          addressLine2: item.addressLine2,
-          city: item.city,
-          stateProvinceId: item.stateProvinceId,
-          postalCode: item.postalCode,
-          spatialLocation: item.spatialLocation,
-          rowguid: item.rowguid,
-          modifiedDate: new Date(item.modifiedDate)
-        }
-        );
-      });
-    return listToReturn;
-  }
 
 
   private setListData() {
