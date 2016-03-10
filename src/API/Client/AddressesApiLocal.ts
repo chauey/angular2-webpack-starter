@@ -40,7 +40,7 @@ export class AddressesApiLocal implements IApi<Address> {
   }
 
 
-  public get(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
+  public get(expand?: string, filter?: string, select?: string, orderBy?: string, isAscending?: boolean, top?: number, skip?: number, count?: boolean
     , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: Address[] }> {
 
     /* Using a disposable */
@@ -65,7 +65,11 @@ export class AddressesApiLocal implements IApi<Address> {
 
             // sort
             if (orderBy) {
-              listWithCount.list = this.sort(listWithCount.list, orderBy);
+              if (isAscending) {
+                listWithCount.list = this.sort(listWithCount.list, orderBy);
+              } else {
+                listWithCount.list = this.revert(listWithCount.list, orderBy);
+              }
             }
 
             // paging
@@ -138,6 +142,16 @@ export class AddressesApiLocal implements IApi<Address> {
       if (a[orderby] < b[orderby])
         return -1;
       if (a[orderby] > b[orderby])
+        return 1;
+      return 0;
+    });
+  }
+
+  private revert(addresses, orderby) {
+    return addresses.sort((a, b) => {
+      if (a[orderby] > b[orderby])
+        return -1;
+      if (a[orderby] < b[orderby])
         return 1;
       return 0;
     });
