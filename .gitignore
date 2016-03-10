@@ -68,3 +68,5 @@ src/server/AA.Mvp/AA.Mvp/Areas/
 *.mdf
 *.ldf
 src/server/AA.Mvp/packages/
+src/server/AA.Mvp/AA.Mvp/bin/
+src/server/AA.Mvp/AA.Mvp/obj/
