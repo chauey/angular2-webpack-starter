@@ -4,26 +4,29 @@ import { Injectable } from 'angular2/core';
 import { IApi } from './IApi';
 
 import { StateProvince } from './StateProvince';
+import { LocalQueryHelper } from './LocalQueryHelper'
+import { BaseApiLocal } from './BaseApiLocal'
 
 'use strict';
 
 @Injectable()
-export class StateProvinceApiLocal implements IApi<StateProvince> {
+export class StateProvincesApiLocal extends BaseApiLocal<StateProvince> { // IApi<IAddress> {
   _list: StateProvince[];
   _keyName: string = 'stateProvinceId';
 
-  constructor() { //, protected $httpParamSerializer?: (d: any) => any, basePath?: string) {
+  constructor(_LocalQueryHelper: LocalQueryHelper) {
+    super(_LocalQueryHelper);
     this.setListData();
   }
 
-
-  static convertTo(list: any): StateProvince[] {
+  convertTo(list: any): StateProvince[] {
     let listToReturn: StateProvince[] = [];
 
     list.forEach(
       (item) => {
         listToReturn.push({
           stateProvinceId: item.stateProvinceId,
+          stateProvinceCode: item.stateProvinceCode,
           countryRegionCode: item.countryRegionCode,
           isOnlyStateProvinceFlag: item.isOnlyStateProvinceFlag,
           name: item.name,
@@ -33,175 +36,11 @@ export class StateProvinceApiLocal implements IApi<StateProvince> {
         }
         );
       });
-
     return listToReturn;
   }
 
-
-  public get(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
-    , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: StateProvince[] }> {
-
-    /* Using a disposable */
-    let source = Rx.Observable.create(
-
-      (observer) => {
-
-        let timer = setTimeout(() => {
-          try {
-            let listWithCount = {
-              count: this._list.length,
-              list: this._list
-            };
-
-            // this.changeDateStringToDateObject(listWithCount.list);
-
-            // filter
-            if (filter) {
-              listWithCount.list = this.filter(listWithCount.list, filter);
-              listWithCount.count = listWithCount.list.length;
-            }
-
-            // sort
-            if (orderBy) {
-              listWithCount.list = this.sort(listWithCount.list, orderBy);
-            }
-
-            // paging
-            if (top || skip) {
-              listWithCount.list = this.paging(listWithCount.list, top, skip);
-            }
-
-            // select
-            if (select) {
-              // TODO:
-            }
-
-            observer.next(listWithCount);
-            observer.complete();
-          } catch (error) {
-            observer.onError(error);
-          }
-        }, 500);
-
-        // console.log('started');
-
-        return () => {
-          // console.log('disposal called');
-          clearTimeout(timer);
-        };
-
-      });
-
-    // Note that this is optional, you do not have to return this if you require no cleanup
-    // return Rx.Disposable.create(function () {
-    //     console.log('disposed');
-    // });
-    //});
-
-    return source;
-  }
-
-  public getById(id: number) {
-    /* Using a disposable */
-    let source = Rx.Observable.create(
-      (observer) => {
-
-        let timer = setTimeout(() => {
-          try {
-
-            let itemToReturn = this._list.filter((item) => {
-              return item[this._keyName] === id;
-            })[0];
-
-            observer.next(itemToReturn);
-            observer.complete();
-          } catch (error) {
-            observer.onError(error);
-          }
-        }, 1000);
-
-        // console.log('started');
-
-        return () => {
-          // console.log('disposal called');
-          clearTimeout(timer);
-        };
-
-      });
-
-    return source;
-  }
-
-
-    public post(item?: StateProvince, extraHttpRequestParams?: any): Rx.Observable<StateProvince> {
-    // UNDONE:
-    return null;
-  }
-
-  public delete(id: number, ifMatch?: string, extraHttpRequestParams?: any): Rx.Observable<{}> {
-    // UNDONE:
-    return null;
-  }
-
-  public patch(id: number, item?: StateProvince, extraHttpRequestParams?: any): Rx.Observable<StateProvince> {
-    // UNDONE:
-    return null;
-  }
-
-  public save(item?: StateProvince, extraHttpRequestParams?: any): Rx.Observable<StateProvince> {
-    // if is edit, else if new
-    if (item[this._keyName] !== null) {
-      // TODO: update from cloned WIP
-      return this.patch(item[this._keyName], item);
-    } else {
-      // add new
-      return this.post(item);
-    }
-  }
-
-
-  private sort(list, orderBy) {
-    return list.sort((a, b) => {
-      if (a[orderBy] < b[orderBy])
-        return -1;
-      if (a[orderBy] > b[orderBy])
-        return 1;
-      return 0;
-    });
-  }
-
-  private filter(list, keyword) {
-    // TODO: make this and sort filter paging more generic
-    return list.filter((item) => {
-      return ((item.addressLine1 && item.addressLine1.indexOf(keyword) >= 0) ||
-        (item.addressLine2 && item.addressLine2.indexOf(keyword) >= 0) ||
-        (item.city && item.city.indexOf(keyword) >= 0) ||
-        (item.postalCode && item.postalCode.indexOf(keyword) >= 0));
-    });
-  }
-
-  private paging(list, top: number = 10, skip: number = 0) {
-    // TODO: remove let top = oDataTop ? Number(oDataTop) : 0;
-    // let skip = oDataSkip ? Number(oDataSkip) : 0;
-
-    if (top >= 0 && skip >= 0) {
-      list = list.slice(skip, skip + top);
-    }
-
-    return list;
-  }
-
-  // private changeDateStringToDateObject(list) {
-  //   list.forEach(item => {
-  //     item.modifiedDate = new Date(item.modifiedDate);
-  //   });
-  // }
-
-
-
-  private setListData() {
-    this._list = StateProvinceApiLocal.convertTo(
-      [
+  protected setListData() {
+    this._list = this.convertTo(  [
         {
           'stateProvinceId': 1,
           'stateProvinceCode': 'AB ',
@@ -2014,6 +1853,5 @@ export class StateProvinceApiLocal implements IApi<StateProvince> {
         }
       ]);
   }
-
-
 }
+

@@ -4,18 +4,15 @@ import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import { AddressItemComponent } from './address-item.component';
 import { AddressListComponent } from './address-list.component';
 
-import { AddressesApi } from '../../../API/Client/AddressesApi';
-import { AddressesApiLocal } from '../../../API/Client/AddressesApiLocal';
-import { IAddressesApi } from '../../../API/Client/IAddressesApi';
+//import { AddressesApi } from '../../../API/Client/AddressesApi';
+//import { AddressesApiLocal } from '../../../API/Client/AddressesApiLocal';
+//import { IAddressesApi } from '../../../API/Client/IAddressesApi';
 
 @Component({
   selector: 'dashboard',
   directives: [...ROUTER_DIRECTIVES],
   pipes: [],
-  providers: [
-    provide(AddressesApi, { useClass: AddressesApi }),
-    provide(AddressesApiLocal, { useClass: AddressesApiLocal })
-  ],
+  providers: [],
   styles: [require('./address.component.scss')],
   template: require('./address.component.html')
 })

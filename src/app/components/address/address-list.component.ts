@@ -8,8 +8,10 @@ import { DataTransformPipe } from '../../pipes/dataTransform.pipe';
 import { Address } from '../../../API/Client/Address';
 
 import { AddressesApiLocal } from '../../../API/Client/AddressesApiLocal';
-import { IAddressesApi } from '../../../API/Client/IAddressesApi';
-import { StateProvinceApiLocal } from '../../../API/Client/StateProvinceApiLocal';
+import { AddressesApi } from '../../../API/Client/AddressesApi';
+import { StateProvincesApi } from '../../../API/Client/StateProvincesApi';
+
+//import { StateProvinceApiLocal } from '../../../API/Client/StateProvinceApiLocal';
 
 //import {Pagination} from 'ng2-bootstrap/ng2-bootstrap';
 //import ng2Bootstrap = require('ng2-bootstrap/');
@@ -20,7 +22,7 @@ import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
   selector: 'address-list',
   directives: [...ROUTER_DIRECTIVES, ...PAGINATION_DIRECTIVES],
   pipes: [DataTransformPipe],
-  providers: [StateProvinceApiLocal], // AddressesApi],
+  providers: [], // AddressesApi],
   styles: [require('./address-list.component.css')],
   template: require('./address-list.component.html')
 })
@@ -53,8 +55,8 @@ export class AddressListComponent implements OnInit {
   constructor(
     private _router: Router,
     private _dataService: DataService,
-    private _AddressesApiLocal: AddressesApiLocal,
-    private _StateProvinceApiLocal: StateProvinceApiLocal // AddressesApi
+    private _AddressesApi: AddressesApi,
+    private _StateProvinceApi: StateProvincesApi
   ) {
   }
 
@@ -65,14 +67,14 @@ export class AddressListComponent implements OnInit {
   }
 
   getList() {
-    this._AddressesApiLocal.get(this._expand, this._filter, this._select, this._orderBy, this._top, this._skip, this._count, null)
+    this._AddressesApi.get(this._expand, this._filter, this._select, this._orderBy, this._top, this._skip, this._count, null)
       .subscribe(
       addressListWithCount => this._listWithCount = addressListWithCount,
       error => this._errorMessage = <any>error);
   }
 
   getStateProvinceList() {
-    this._StateProvinceApiLocal
+    this._StateProvinceApi
       .get()
       .subscribe(
       (stateListWithCount) => { this._stateProvinceList = stateListWithCount.list; },

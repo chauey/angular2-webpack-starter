@@ -4,21 +4,22 @@ import { Injectable } from 'angular2/core';
 import { IApi } from './IApi';
 
 import { IAddress } from './AddressInterface';
+import { LocalQueryHelper } from './LocalQueryHelper'
+import { BaseApiLocal } from './BaseApiLocal'
 
 'use strict';
 
 @Injectable()
-export class AddressesApiLocal implements IApi<IAddress> {
+export class AddressesApiLocal extends BaseApiLocal<IAddress> { // IApi<IAddress> {
   _list: IAddress[];
   _keyName: string = 'addressId';
 
-
-  constructor() {
+  constructor(_LocalQueryHelper: LocalQueryHelper) {
+    super(_LocalQueryHelper);
     this.setListData();
   }
 
-
-  static convertTo(list: any): IAddress[] {
+  convertTo(list: any): IAddress[] {
     let listToReturn: IAddress[] = [];
 
     list.forEach(
@@ -39,196 +40,8 @@ export class AddressesApiLocal implements IApi<IAddress> {
     return listToReturn;
   }
 
-
-  public get(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
-    , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }> {
-
-    console.log('orderBy: ' + orderBy);
-    /* Using a disposable */
-    let source = Rx.Observable.create(
-
-      (observer) => {
-
-        let timer = setTimeout(() => {
-          try {
-            let listWithCount = {
-              count: this._list.length,
-              list: this._list
-            };
-
-            this.changeDateStringToDateObject(listWithCount.list);
-
-            // filter
-            if (filter) {
-              listWithCount.list = this.filter(listWithCount.list, filter);
-              listWithCount.count = listWithCount.list.length;
-            }
-
-            // sort
-            if (orderBy) {
-              listWithCount.list = this.sort(listWithCount.list, orderBy);
-            }
-
-            // paging
-            if (top || skip) {
-              listWithCount.list = this.paging(listWithCount.list, top, skip);
-            }
-
-            // select
-            if (select) {
-              // TODO:
-            }
-
-            observer.next(listWithCount);
-            observer.complete();
-          } catch (error) {
-            observer.onError(error);
-          }
-        }, 500);
-
-        // console.log('started');
-
-        return () => {
-          // console.log('disposal called');
-          clearTimeout(timer);
-        };
-
-      });
-
-    // Note that this is optional, you do not have to return this if you require no cleanup
-    // return Rx.Disposable.create(function () {
-    //     console.log('disposed');
-    // });
-    //});
-
-    return source;
-  }
-
-  public getById(id: number): Rx.Observable<IAddress> {
-    /* Using a disposable */
-    let source = Rx.Observable.create(
-      (observer) => {
-
-        let timer = setTimeout(() => {
-          try {
-            let itemToReturn = this._list.filter((item) => {
-
-              return item[this._keyName] === id;
-            })[0];
-
-            observer.next(itemToReturn);
-            observer.complete();
-          } catch (error) {
-            observer.onError(error);
-          }
-        }, 500);
-        return () => {
-          // "disposal called""
-          clearTimeout(timer);
-        };
-
-      });
-
-    return source;
-  }
-
-  public post(item?: IAddress, extraHttpRequestParams?: any): Rx.Observable<IAddress> {
-    // UNDONE:
-    return null;
-  }
-
-  public delete(id: number, ifMatch?: string, extraHttpRequestParams?: any): Rx.Observable<{}> {
-    // UNDONE:
-    return null;
-  }
-
-  public patch(id: number, item?: IAddress, extraHttpRequestParams?: any): Rx.Observable<IAddress> {
-    // UNDONE:
-    return null;
-  }
-
-  public save(item?: IAddress, extraHttpRequestParams?: any): Rx.Observable<IAddress> {
-    // if is edit, else if new
-    if (item[this._keyName] !== null) {
-      // TODO: update from cloned WIP
-      return this.patch(item[this._keyName], item);
-    } else {
-      // add new
-      return this.post(item);
-    }
-  }
-
-  private sort(list, orderBy: string) {
-    let fieldName = orderBy;
-
-    if (orderBy.indexOf(' desc') > -1) {
-      fieldName = orderBy.substring(0, orderBy.indexOf(' desc'));
-
-      return list.sort((a, b) => {
-        if (typeof a[fieldName] === 'number') {
-          console.log('sort1');
-          return a[fieldName] - b[fieldName];
-        }
-        if (a[fieldName] < b[fieldName]) {
-          console.log('sort2');
-          return 1;
-        }
-        if (a[fieldName] > b[fieldName]) {
-          console.log('sort3');
-          return -1;
-        }
-        console.log('sort4');
-        return 0;
-      });
-    }
-
-    return list.sort((a, b) => {
-      if (typeof a[fieldName] === 'number') {
-        console.log('sort5');
-        return b[fieldName] - a[fieldName];
-      }
-      if (a[fieldName] < b[fieldName]) {
-        console.log('sort6');
-        return -1;
-      }
-      if (a[fieldName] > b[fieldName]) {
-        console.log('sort7');
-        return 1;
-      }
-      console.log('sort8');
-      return 0;
-    });
-  }
-
-  private filter(list, keyword) {
-    // TODO: make more generic
-    return list.filter((address) => {
-      return ((address.addressLine1 && address.addressLine1.indexOf(keyword) >= 0) ||
-        (address.addressLine2 && address.addressLine2.indexOf(keyword) >= 0) ||
-        (address.city && address.city.indexOf(keyword) >= 0) ||
-        (address.postalCode && address.postalCode.indexOf(keyword) >= 0));
-    });
-  }
-
-  private paging(addresses, odataTop, odataSkip) {
-    let top = odataTop ? Number(odataTop) : 0;
-    let skip = odataSkip ? Number(odataSkip) : 0;
-
-    if (top >= 0 && skip >= 0) {
-      addresses = addresses.slice(skip, skip + top);
-    }
-
-    return addresses;
-  }
-
-  private changeDateStringToDateObject(list) {
-    list.forEach(address => {
-      address.modifiedDate = new Date(address.modifiedDate);
-    });
-  }
-
-  private setListData() {
-    this._list = AddressesApiLocal.convertTo([{
+  protected setListData() {
+    this._list = this.convertTo([{
       'addressId': 1,
       'addressLine1': '1970 Napa Ct.',
       'addressLine2': null,

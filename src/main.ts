@@ -14,10 +14,6 @@ import {enableProdMode} from 'angular2/core';
 import {AuthHttp, AuthConfig} from 'angular2-jwt';
 import {AuthManager} from './app/services/auth-manager.service';
 
-import { AddressesApi } from './API/Client/AddressesApi';
-import { AddressesApiLocal } from './API/Client/AddressesApiLocal';
-import { IAddressesApi } from './API/Client/IAddressesApi';
-
 import {FORM_PROVIDERS, FormBuilder, Validators} from 'angular2/common';
 
 /*

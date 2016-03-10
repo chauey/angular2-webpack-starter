@@ -1,7 +1,7 @@
 /*
  * Angular 2 decorators and services
  */
-import {Component} from 'angular2/core';
+import {Component, provide} from 'angular2/core';
 import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {Http} from 'angular2/http';
 
@@ -26,7 +26,12 @@ import {SwaggerComponent} from './components/swagger/swagger.component';
 import {CodeGenComponent} from './components/code-gen/code-gen.component';
 
 import {DataService} from './services/DataService';
-import {AddressesApi} from '../API/Client/AddressesApi';
+
+import { LocalQueryHelper } from './../API/Client/LocalQueryHelper';
+import { AddressesApi } from './../API/Client/AddressesApi';
+import { AddressesApiLocal } from './../API/Client/AddressesApiLocal';
+import { StateProvincesApi } from './../API/Client/StateProvincesApi';
+import { StateProvincesApiLocal } from './../API/Client/StateProvincesApiLocal';
 
 //import {Auth0Lock} from 'auth0-lock';
 //import * as Auth0Lock from 'auth0-lock';
@@ -40,7 +45,11 @@ import {AddressesApi} from '../API/Client/AddressesApi';
  */
 @Component({
   selector: 'app',
-  providers: [...FORM_PROVIDERS, DataService, AddressesApi],
+  providers: [...FORM_PROVIDERS, DataService,
+    LocalQueryHelper,
+    provide(AddressesApi, { useClass: AddressesApiLocal }),
+    provide(StateProvincesApi, { useClass: StateProvincesApiLocal }),
+  ],
   directives: [...ROUTER_DIRECTIVES, RouterActive],
   pipes: [],
   styles: [require('./app.scss'), `

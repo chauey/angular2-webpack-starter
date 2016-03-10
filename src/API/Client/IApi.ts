@@ -6,6 +6,8 @@ import { Error } from './Error'
 export interface IApi<T> {
   // TODO: put in local interface? no need for real api _list: T[];
   _keyName: string;
+  //_resourceName: string;
+
   /**
    * Get EntitySet
    * Returns the EntitySet

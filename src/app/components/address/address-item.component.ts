@@ -1,35 +1,28 @@
 import {Component, OnInit} from 'angular2/core';
+import {NgForm} from 'angular2/common';
+import {FORM_PROVIDERS, FormBuilder, Validators} from 'angular2/common';
 import {RouteParams, Router} from 'angular2/router';
 import {CanDeactivate, ComponentInstruction} from 'angular2/router';
 import {Location, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 
-import {NgForm}    from 'angular2/common';
-import {FORM_PROVIDERS, FormBuilder, Validators} from 'angular2/common';
-
-//import { DataService } from '../../services/DataService';
-import { IApi } from '../../../API/Client/IApi';
-import { IAddress } from '../../../API/Client/AddressInterface';
-
-import { AddressesApiLocal } from '../../../API/Client/AddressesApiLocal';
-import { StateProvinceApiLocal } from '../../../API/Client/StateProvinceApiLocal';
-
-import { ValidationService } from '../../services/validation.service';
-import { ValidationMessageComponent } from '../../components/common/validation-message.component';
 import { DialogService } from '../../services/dialog.service';
 import { DataStorageService } from '../../services/dataStorage.service';
+import { ValidationService } from '../../services/validation.service';
+
+import { AddressesApi } from '../../../API/Client/AddressesApi';
+import { StateProvincesApi } from '../../../API/Client/StateProvincesApi';
 
 import { DROPDOWN_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 
-//import * as moment from 'moment/moment';
+import { ValidationMessageComponent } from '../../components/common/validation-message.component';
+
 import moment = require('moment');
-//import * as moment from 'moment/moment';
-//import * as moment from 'moment';
 
 @Component({
   selector: 'address-item',
   directives: [ValidationMessageComponent, ...DROPDOWN_DIRECTIVES],
   pipes: [],
-  providers: [DialogService, DataStorageService, StateProvinceApiLocal],
+  providers: [DialogService, DataStorageService],
   styles: [require('./address-item.component.css')],
   template: require('./address-item.component.html')
 })
@@ -51,8 +44,8 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
   // TypeScript public modifiers
   constructor(private _router: Router,
     private _routeParams: RouteParams,
-    private _AddressesApi: AddressesApiLocal, //IApi<IAddress>,
-    private _StateProvinceApi: StateProvinceApiLocal,
+    private _AddressesApi: AddressesApi,
+    private _StateProvinceApi: StateProvincesApi,
     private _Location: Location,
     private _formBuilder: FormBuilder,
     private _dialog: DialogService,
@@ -90,10 +83,6 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
     // promise which resolves to true or false when the user decides
     // TODO: reload item model changes if true.
     return this._dialog.confirm('Discard changes?');
-  }
-
-  debugItemJson() {
-    window.alert(JSON.stringify(this._item));
   }
 
   customValidate() {
@@ -145,7 +134,6 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
           console.log(this._errorMessage);
         });
 
-
       // this._submitted = true;
     }
   }
@@ -155,11 +143,6 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
   }
 
   private getItem() {
-    // this._AddressesApi.addressesAddressIdGet(this.id)
-    //   .subscribe(
-    //   item => this.item = item,
-    //   error => this.errorMessage = <any>error
-    //   );
 
     this._isLoading = true;
     this._AddressesApi.getById(this._id)
@@ -182,7 +165,6 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
         console.log(this._errorMessage);
       }
       );
-
   }
 
   private populateStateProvinceData() {
