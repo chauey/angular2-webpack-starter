@@ -1,34 +1,27 @@
 /* tslint:disable:no-unused-variable member-ordering */
-import {Http, HTTP_PROVIDERS, RequestOptions, Headers, Response, Request, RequestOptionsArgs, RequestMethod, URLSearchParams} from 'angular2/http';
-//import Rx from 'rxjs/Rx';
-//import * as Rx from '@reactivex/rxjs';
-//import {Observable} from 'rxjs/Observable';
-import * as Rx from 'rxjs'; // rxjs/add/operator/map
-
-//http://stackoverflow.com/questions/30712638/typescript-export-imported-interface
-
-import { IAddress } from './AddressInterface';
-
-import { Error } from './Error';
-
 import { Injectable } from 'angular2/core';
+import {Http, HTTP_PROVIDERS, RequestOptions, Headers, Response, Request, RequestOptionsArgs, RequestMethod, URLSearchParams} from 'angular2/http';
 
-import { IAddressesApi } from './IAddressesApi';
+import * as Rx from 'rxjs';
 
+import { IApi } from './IApi';
+import { Error } from './Error';
 import { HttpHelper } from './HttpHelper';
+import { IAddress } from './AddressInterface';
 
 //namespace API.Client {
 'use strict';
 
 @Injectable()
-export class AddressesApi implements IAddressesApi {
-  protected basePath = 'http://localhost:2000/odata';
-  public defaultHeaders: Headers = new Headers({});
+export class AddressesApi implements IApi<IAddress> {
+  _keyName = 'addressId';
+  _resourceName = 'addresses';
+  protected _basePath = 'http://localhost:2000/odata';
+  public _defaultHeaders: Headers = new Headers({});
 
   static $inject: string[] = ['$http', '$httpParamSerializer'];
-  //searchParams :SearchParams;
 
-  constructor(protected $http: Http) { //, protected $httpParamSerializer?: (d: any) => any, basePath?: string) {
+  constructor(protected _http: Http) { //, protected $httpParamSerializer?: (d: any) => any, basePath?: string) {
     // if (basePath) {
     //     this.basePath = basePath;
     // }
@@ -59,23 +52,26 @@ export class AddressesApi implements IAddressesApi {
    * @param $Skip skip elements
    * @param $Count include count in response
    */
-  public addressesGet(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
+  public get(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
     , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: IAddress[] }> {
 
     let oData = HttpHelper.createOData(select, orderBy, expand, filter, top, skip, count);
     let urlSearchParams = HttpHelper.createUrlSearchParamsFromOData(oData);
 
-    const path = this.basePath + '/Addresses';
+    const path = `${this._basePath}/${this._resourceName}`;
+
+    let headerParams: any = this.extendObj({}, this._defaultHeaders);
 
     let options = new RequestOptions({
       method: RequestMethod.Get,
       url: path,
+      headers: headerParams,
       search: urlSearchParams
     });
 
     let req = new Request(options);
 
-    return this.$http.request(req)
+    return this._http.request(req)
       .map(
       (res) => {
         let listWithCount = {
@@ -86,14 +82,12 @@ export class AddressesApi implements IAddressesApi {
         return listWithCount;
       }
       )
-      //res => function(res) { return {count: res.json(), addressList: <Address[]>res.json().value};})
-      //{count: res.json(), addressList: <Address[]>res.json().value})//<Address[]>res.json().value//.value)//data)
       .catch(this.handleError);
   }
 
   private changeDateStringToDateObject(list) {
-    list.forEach(address => {
-      address.ModifiedDate = new Date(address.ModifiedDate);
+    list.forEach(item => {
+      item.ModifiedDate = new Date(item.ModifiedDate);
     });
   }
 
@@ -104,152 +98,98 @@ export class AddressesApi implements IAddressesApi {
     return Rx.Observable.throw(error.json().error || 'Server error');
   }
 
-  /**
-   * Post a new entity to EntitySet Addresses
-   * Post a new entity to EntitySet Addresses
-   * @param address The entity to post
-   */
-  public addressesPost(address?: IAddress, extraHttpRequestParams?: any): Rx.Observable<IAddress> {
-    const path = this.basePath + '/Addresses';
+  public post(item?: IAddress): Rx.Observable<IAddress> {
+    const path = `${this._basePath}/${this._resourceName}`;
 
-    let queryParameters: any = {};
-    let headerParams: any = this.extendObj({}, this.defaultHeaders);
+    let headerParams: any = this.extendObj({}, this._defaultHeaders);
 
-    let httpRequestParams: any = {
-      method: 'POST',
+    let options = new RequestOptions({
+      method: RequestMethod.Post,
       url: path,
-      json: true,
-      data: address,
+      headers: headerParams,
+      body: JSON.stringify(item)
+    });
 
-      params: queryParameters,
-      headers: headerParams
-    };
+    var req = new Request(options);
 
-    if (extraHttpRequestParams) {
-      httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-    }
-
-    return this.$http.request(httpRequestParams);
+    return this._http.request(req);
   }
 
-  /**
-   * Get entity from Addresses by key.
-   * Returns the entity with the key from Addresses
-   * @param addressId key: AddressId
-   * @param $Select description
-   */
-  public addressesAddressIdGet(addressId: number, select?: string, extraHttpRequestParams?: any):
-    Rx.Observable<any> {
-    const path = this.basePath + '/Addresses({AddressId})'
-      .replace('{' + 'AddressId' + '}', String(addressId));
 
-    //let queryParameters: any = {};
-    //let headerParams: any = this.extendObj({}, this.defaultHeaders);
+  public getById(id: number, select?: string):
+    Rx.Observable<IAddress> {
+    const path = `${this._basePath}/${this._resourceName}(${id})`;
+
+    let headerParams: any = this.extendObj({}, this._defaultHeaders);
 
     // verify required parameter 'addressId' is set
-    if (!addressId) {
-      throw new Error('Missing required parameter addressId when calling addressesAddressIdGet');
+    if (!id) {
+      throw new Error(`Missing required parameter "id" when calling getById.`);
     }
 
     let oData = HttpHelper.createOData(select, null, null, null, null, null, null);
     let urlSearchParams = HttpHelper.createUrlSearchParamsFromOData(oData);
 
-
-    // let httpRequestParams: any = {
-    //   method: 'GET',
-    //   url: path,
-    //   json: true,
-
-    //   params: queryParameters,
-    //   headers: headerParams
-    // };
-
-    var options = new RequestOptions({
-      method: RequestMethod.Get,
+    let options = new RequestOptions({
+      method: 'GET',
       url: path,
-      search: urlSearchParams
+      search: urlSearchParams,
+      headers: headerParams
     });
 
     var req = new Request(options);
 
-    return this.$http.request(req)
-      .map(
-      (res) => {
-        return res.json();
-      }
-      ).catch(this.handleError);
-
+    return this._http.request(req);
+    // .map(
+    // (res) => {
+    //   return res.json();
+    // }
+    // ).catch(this.handleError);
   }
 
-  /**
-   * Delete entity in EntitySet Addresses
-   * Delete entity in EntitySet Addresses
-   * @param addressId key: AddressId
-   * @param ifMatch If-Match header
-   */
-  public addressesAddressIdDelete(addressId: number, ifMatch?: string, extraHttpRequestParams?: any): Rx.Observable<{}> {
-    const path = this.basePath + '/Addresses({AddressId})'
-      .replace('{' + 'AddressId' + '}', String(addressId));
+  public delete(id: number, ifMatch?: string): Rx.Observable<{}> {
+    const path = `${this._basePath}/${this._resourceName}(${id})`;
 
-    let queryParameters: any = {};
-    let headerParams: any = this.extendObj({}, this.defaultHeaders);
+    let headerParams: any = this.extendObj({}, this._defaultHeaders);
 
     // verify required parameter 'addressId' is set
-    if (!addressId) {
-      throw new Error('Missing required parameter addressId when calling addressesAddressIdDelete');
+    if (!id) {
+      throw new Error('Missing required parameter "id" when calling delete.');
     }
 
     headerParams['If-Match'] = ifMatch;
 
-    let httpRequestParams: any = {
-      method: 'DELETE',
+    var options = new RequestOptions({
+      method: RequestMethod.Delete,
       url: path,
-      json: true,
-
-      params: queryParameters,
       headers: headerParams
-    };
+    });
 
-    if (extraHttpRequestParams) {
-      httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-    }
+    var req = new Request(options);
 
-    return this.$http.request(httpRequestParams);
+    return this._http.request(req);
   }
 
-  /**
-   * Update entity in EntitySet Addresses
-   * Update entity in EntitySet Addresses
-   * @param addressId key: AddressId
-   * @param address The entity to patch
-   */
-  public addressesAddressIdPatch(addressId: number, address?: IAddress, extraHttpRequestParams?: any): Rx.Observable<{}> {
-    const path = this.basePath + '/Addresses({AddressId})'
-      .replace('{' + 'AddressId' + '}', String(addressId));
+  public patch(id: number, item?: IAddress, extraHttpRequestParams?: any): Rx.Observable<{}> {
+    const path = `${this._basePath}/${this._resourceName}(${id})`;
 
-    let queryParameters: any = {};
-    let headerParams: any = this.extendObj({}, this.defaultHeaders);
+    let headerParams: any = this.extendObj({}, this._defaultHeaders);
 
     // verify required parameter 'addressId' is set
-    if (!addressId) {
+    if (!id) {
       throw new Error('Missing required parameter addressId when calling addressesAddressIdPatch');
     }
 
-    let httpRequestParams: any = {
-      method: 'PATCH',
+    var options = new RequestOptions({
+      method: RequestMethod.Patch,
       url: path,
-      json: true,
-      data: address,
+      headers: headerParams,
+      body: JSON.stringify(item)
+    });
 
-      params: queryParameters,
-      headers: headerParams
-    };
+    var req = new Request(options);
 
-    if (extraHttpRequestParams) {
-      httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-    }
-
-    return this.$http.request(httpRequestParams);
+    return this._http.request(req);
   }
 
 }

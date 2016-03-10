@@ -46,7 +46,7 @@ export class StateProvinceApiLocal implements IApi<StateProvince> {
 
       (observer) => {
 
-        let id = setTimeout(() => {
+        let timer = setTimeout(() => {
           try {
             let listWithCount = {
               count: this._list.length,
@@ -87,7 +87,7 @@ export class StateProvinceApiLocal implements IApi<StateProvince> {
 
         return () => {
           // console.log('disposal called');
-          clearTimeout(id);
+          clearTimeout(timer);
         };
 
       });
@@ -106,7 +106,7 @@ export class StateProvinceApiLocal implements IApi<StateProvince> {
     let source = Rx.Observable.create(
       (observer) => {
 
-        let id = setTimeout(() => {
+        let timer = setTimeout(() => {
           try {
 
             let itemToReturn = this._list.filter((item) => {
@@ -124,7 +124,7 @@ export class StateProvinceApiLocal implements IApi<StateProvince> {
 
         return () => {
           // console.log('disposal called');
-          clearTimeout(id);
+          clearTimeout(timer);
         };
 
       });

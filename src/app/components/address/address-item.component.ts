@@ -5,6 +5,9 @@ import {NgForm}    from 'angular2/common';
 import {FORM_PROVIDERS, FormBuilder, Validators} from 'angular2/common';
 
 //import { DataService } from '../../services/DataService';
+import { IApi } from '../../../API/Client/IApi';
+import { IAddress } from '../../../API/Client/AddressInterface';
+
 import { AddressesApiLocal } from '../../../API/Client/AddressesApiLocal';
 import { StateProvinceApiLocal } from '../../../API/Client/StateProvinceApiLocal';
 
@@ -32,6 +35,9 @@ import moment = require('moment');
 export class AddressItemComponent implements OnInit, CanDeactivate {
 
   _myForm: any;
+  _isLoading: boolean;
+  _isSaving: boolean;
+
 
   _id: number = null;
   _item: any = null;
@@ -44,8 +50,8 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
   // TypeScript public modifiers
   constructor(private _router: Router,
     private _routeParams: RouteParams,
-    private _AddressesApiLocal: AddressesApiLocal,
-    private _StateProvinceApiLocal: StateProvinceApiLocal,
+    private _AddressesApi: AddressesApiLocal, //IApi<IAddress>,
+    private _StateProvinceApi: StateProvinceApiLocal,
     private _formBuilder: FormBuilder,
     private _dialog: DialogService,
     private _dataStorage: DataStorageService//,
@@ -54,7 +60,7 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
     this._momentFunction = moment; // TODO: inject the moment function in, not get from global?
     // template vs model driven forms http://blog.jhades.org/introduction-to-angular-2-forms-template-driven-vs-model-driven/
     // https://angular.io/docs/ts/latest/api/common/FormBuilder-class.html
-    this.formValidate();
+    this.addFormValidation();
   }
 
   ngOnInit() {
@@ -93,6 +99,7 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
   }
 
   goBack() {
+    // TODO: find way to navigate back in history
     this._router.navigate(['List']);
   }
 
@@ -103,27 +110,51 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
   }
 
   onSubmit() {
+    console.log('onSubmit called');
     // checkValidations
     this.customValidate();
 
+    console.log(
+      'this._myForm'
+    );
+
+    console.log(this._myForm);
+
     // if form valid, add.
-    if (true) { // this.inventoryItemForm.form.isValid) {
+    if (this._myForm.isValid) {
       // if is edit, else if new
       if (this._id !== null) {
         // TODO: update from cloned WIP
+        // add new
+        this._isSaving = true;
+        this._AddressesApi.patch(this._item)
+          .subscribe(
+          item => {
+            this._isSaving = false;
+            this.gotoList();
+          },
+          error => {
+            this._isSaving = false;
+            this._errorMessage = <any>error;
+            console.log(this._errorMessage);
+          });
       } else {
-        // add to data repo
-        ///this._dataService.addressList.push(this.model);
+        // add new
+        this._isSaving = true;
+        this._AddressesApi.post(this._item)
+          .subscribe(
+          item => {
+            this._isSaving = false;
+            this.gotoList();
+          },
+          error => {
+            this._isSaving = false;
+            this._errorMessage = <any>error;
+            console.log(this._errorMessage);
+          });
       }
-    } else {
-      // show not valid message
+      //this._submitted = true;
     }
-
-    this._submitted = true;
-
-    this.gotoList();
-
-    console.log('onSubmit called');
   }
 
   gotoList() {
@@ -137,9 +168,12 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
     //   error => this.errorMessage = <any>error
     //   );
 
-    this._item = this._AddressesApiLocal.getById(this._id)
+    this._isLoading = true;
+    this._AddressesApi.getById(this._id)
       .subscribe(
       item => {
+        this._isLoading = false;
+
         this._item = item;
 
         // TODO: not sure really need to convert if bind to input date type and Date object?
@@ -150,26 +184,22 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
         }
       },
       error => {
+        this._isLoading = false;
         this._errorMessage = <any>error;
         console.log(this._errorMessage);
       }
       );
-
-
-
-
-
   }
 
   private populateStateProvinceData() {
-    this._StateProvinceApiLocal
+    this._StateProvinceApi
       .get()
       .subscribe(
-        (stateListWithCount) => { this._stateProvinceList = stateListWithCount.list; },
-        (error) => { this._errorMessage = <any>error; });
+      (stateListWithCount) => { this._stateProvinceList = stateListWithCount.list; },
+      (error) => { this._errorMessage = <any>error; });
   }
 
-  private formValidate() {
+  private addFormValidation() {
     this._myForm = this._formBuilder.group({
       'id': ['', Validators.required],
       // http://www.carlrippon.com/?p=456

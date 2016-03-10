@@ -3,13 +3,13 @@ import * as Rx from 'rxjs';
 import { Injectable } from 'angular2/core';
 import { IApi } from './IApi';
 
-import { Address } from './Address';
+import { IAddress } from './AddressInterface';
 
 'use strict';
 
 @Injectable()
-export class AddressesApiLocal implements IApi<Address> {
-  _list: Address[];
+export class AddressesApiLocal implements IApi<IAddress> {
+  _list: IAddress[];
   _keyName: string = 'addressId';
 
 
@@ -18,8 +18,8 @@ export class AddressesApiLocal implements IApi<Address> {
   }
 
 
-  static convertTo(list: any): Address[] {
-    let listToReturn: Address[] = [];
+  static convertTo(list: any): IAddress[] {
+    let listToReturn: IAddress[] = [];
 
     list.forEach(
       (item) => {
@@ -48,7 +48,7 @@ export class AddressesApiLocal implements IApi<Address> {
 
       (observer) => {
 
-        let id = setTimeout(() => {
+        let timer = setTimeout(() => {
           try {
             let listWithCount = {
               count: this._list.length,
@@ -89,7 +89,7 @@ export class AddressesApiLocal implements IApi<Address> {
 
         return () => {
           // console.log('disposal called');
-          clearTimeout(id);
+          clearTimeout(timer);
         };
 
       });
@@ -103,7 +103,7 @@ export class AddressesApiLocal implements IApi<Address> {
     return source;
   }
 
-  public getById(id: number) {
+  public getById(id: number): Rx.Observable<IAddress> {
     /* Using a disposable */
     let source = Rx.Observable.create(
       (observer) => {
@@ -129,6 +129,23 @@ export class AddressesApiLocal implements IApi<Address> {
       });
 
     return source;
+  }
+
+
+
+  public post(item?: IAddress, extraHttpRequestParams?: any): Rx.Observable<IAddress> {
+    // UNDONE:
+    return null;
+  }
+
+  public delete(id: number, ifMatch?: string, extraHttpRequestParams?: any): Rx.Observable<{}> {
+    // UNDONE:
+    return null;
+  }
+
+  public patch(id: number, item?: IAddress, extraHttpRequestParams?: any): Rx.Observable<IAddress> {
+    // UNDONE:
+    return null;
   }
 
 
@@ -168,6 +185,8 @@ export class AddressesApiLocal implements IApi<Address> {
       address.modifiedDate = new Date(address.modifiedDate);
     });
   }
+
+
 
 
 
