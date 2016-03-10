@@ -37,7 +37,7 @@
 
     <div class="form-group">
       <label for="modifiedDate">Modified Date</label>
-      <input id="modifiedDate" ngControl="modifiedDate" type="date" class="form-control" [(ngModel)]="_item.modifiedDate"/>
+      <input id="modifiedDate" ngControl="modifiedDate" type="date" class="form-control" [(ngModel)]="_item.modifiedDate" />
       <validation-message control="modifiedDate"></validation-message>
     </div>
 
@@ -55,7 +55,11 @@
 
     <div class="form-group">
       <label for="stateProvinceId">State</label>
-      <input id="stateProvinceId" ngControl="stateProvinceId" type="text" class="form-control" [(ngModel)]="_item.stateProvinceId">
+      <input id="stateProvinceId" type="text" class="form-control" [(ngModel)]="_item.stateProvinceId">
+      <select class="form-control" ngControl="stateProvinceId" [(ngModel)]="_item.stateProvinceId">
+        <option *ngFor="#opt of _stateProvinceList" [value]="opt.stateProvinceId">{{opt.name}}</option>
+      </select>
+
       <validation-message control="stateProvinceId"></validation-message>
     </div>
 

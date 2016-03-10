@@ -6,11 +6,14 @@ import {FORM_PROVIDERS, FormBuilder, Validators} from 'angular2/common';
 
 //import { DataService } from '../../services/DataService';
 import { AddressesApiLocal } from '../../../API/Client/AddressesApiLocal';
+import { StateProvinceApiLocal } from '../../../API/Client/StateProvinceApiLocal';
 
 import { ValidationService } from '../../services/validation.service';
 import { ValidationMessageComponent } from '../../components/common/validation-message.component';
 import { DialogService } from '../../services/dialog.service';
 import { DataStorageService } from '../../services/dataStorage.service';
+
+import { DROPDOWN_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 
 //import * as moment from 'moment/moment';
 import moment = require('moment');
@@ -19,9 +22,9 @@ import moment = require('moment');
 
 @Component({
   selector: 'address-item',
-  directives: [ValidationMessageComponent],
+  directives: [ValidationMessageComponent, ...DROPDOWN_DIRECTIVES],
   pipes: [],
-  providers: [DialogService, DataStorageService],
+  providers: [DialogService, DataStorageService, StateProvinceApiLocal],
   styles: [require('./address-item.component.css')],
   template: require('./address-item.component.html')
 })
@@ -36,11 +39,13 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
   _changed = false;
   _errorMessage: string;
   _momentFunction: any;
+  _stateProvinceList: any = null;
 
   // TypeScript public modifiers
   constructor(private _router: Router,
     private _routeParams: RouteParams,
     private _AddressesApiLocal: AddressesApiLocal,
+    private _StateProvinceApiLocal: StateProvinceApiLocal,
     private _formBuilder: FormBuilder,
     private _dialog: DialogService,
     private _dataStorage: DataStorageService//,
@@ -58,12 +63,13 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
     this._id = this._routeParams.get('id') === 'new' ? null : +this._routeParams.get('id');
     console.log('ngOnInit address-item component id is: ' + this._id);
 
+    this.populateStateProvinceData();
+
     if (this._id === null || this._id === undefined) {
       this._item = {};
     } else {
       this.getItem();
     }
-
   }
 
   routerCanDeactivate(next: ComponentInstruction, prev: ComponentInstruction): any {
@@ -141,6 +147,14 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
     }
   }
 
+  private populateStateProvinceData() {
+    this._StateProvinceApiLocal
+      .get()
+      .subscribe(
+        (stateListWithCount) => { this._stateProvinceList = stateListWithCount.list; },
+        (error) => { this._errorMessage = <any>error; });
+  }
+
   private formValidate() {
     this._myForm = this._formBuilder.group({
       'id': ['', Validators.required],
@@ -177,6 +191,5 @@ export class AddressItemComponent implements OnInit, CanDeactivate {
           Validators.required
         ])]
     });
-
   }
 }
