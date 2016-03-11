@@ -268,13 +268,14 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AllDataType.cs" />
     <Compile Include="Models\BaseEntity.cs" />
-    <Compile Include="Models\DnaMvpContext.cs" />
+    <Compile Include="Models\AAMvpContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\TypeOfType.cs" />
     <Compile Include="Models\Validation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Seeding\Seed.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -364,7 +365,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53335</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53335/</IISUrl>
+          <IISUrl>http://localhost:2000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

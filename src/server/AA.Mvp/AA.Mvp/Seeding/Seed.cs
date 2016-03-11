@@ -1,45 +1,42 @@
-﻿using Dna.Mvp.Models;
+﻿using AA.Mvp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Dna.Mvp.Seeding
+namespace AA.Mvp.Seeding
 {
     internal static class Seed
     {
-        public static void DeleteAllData(DnaMvpContext context)
+        public static void DeleteAllData(AAMvpContext context)
         {
             // Base Entities
-            List<AllDataType> allDataTypes = context.AllDataTypeList.ToList();
-            allDataTypes.ForEach(x => x.ObjectState = ObjectState.Deleted);
-            List<TypeOfType> typeOfType = context.TypeOfTypeList.ToList();
-            typeOfType.ForEach(x => x.ObjectState = ObjectState.Deleted);
-            List<Validation> validations = context.ValidationList.ToList();
-            validations.ForEach(x => x.ObjectState = ObjectState.Deleted);
+            context.AllDataTypes.RemoveRange(context.AllDataTypes.ToList());
+            context.TypeOfTypes.RemoveRange(context.TypeOfTypes.ToList());
+            context.Validations.RemoveRange(context.Validations.ToList());
 
             context.SaveChanges();
         }
 
-        public static void AddData(DnaMvpContext context)
+        public static void AddData(AAMvpContext context)
         {
             #region Add Data for Base Entities
 
-            context.AllDataTypeList.AddRange(AllDataTypeList(context));
+            context.AllDataTypes.AddRange(AllDataTypeList(context));
 
-            context.ValidationList.AddRange(ValidationList(context));
+            context.Validations.AddRange(ValidationList(context));
 
             #endregion
         }
 
-        public static List<AllDataType> AllDataTypeList(DnaMvpContext context)
+        public static List<AllDataType> AllDataTypeList(AAMvpContext context)
         {
             List<AllDataType> list = new List<AllDataType>();
 
             list.Add(new AllDataType
             {
-                ObjectState = ObjectState.Added,
-                Id = Guid.NewGuid(),
+                //ObjectState = ObjectState.Added,
+                Id = 1,
                 BigInt = 1,
                 Bit = true,
                 Char = "Test Char",
@@ -50,20 +47,21 @@ namespace Dna.Mvp.Seeding
             return list;
         }
 
-        public static List<Validation> ValidationList(DnaMvpContext context)
+        public static List<Validation> ValidationList(AAMvpContext context)
         {
             List<Validation> list = new List<Validation>();
             //User user = context.Users.FirstOrDefault();
             list.Add(new Validation
             {
-                ObjectState = ObjectState.Added,
+                //ObjectState = ObjectState.Added,
+                Id = Guid.NewGuid(),
                 Integer = 5,
                 String = "Name String",
                 Date = DateTime.UtcNow,
                 BeforeDate = DateTime.UtcNow.AddDays(-1),
                 AfterDate = DateTime.UtcNow.AddDays(1),
                 Age = 15,
-                CreditCard = 123456789,
+                CreditCard = string.Empty,
                 Email = "a123@a1234.com",
                 Phone = "123456789",
                 URL = "http://abc.cm",
@@ -76,7 +74,8 @@ namespace Dna.Mvp.Seeding
             {
                 list.Add(new Validation
                 {
-                    ObjectState = ObjectState.Added,
+                    //ObjectState = ObjectState.Added,
+                    Id = Guid.NewGuid(),
                     Integer = i,
                     String = "String " + i.ToString()
                 });

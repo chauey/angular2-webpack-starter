@@ -32,6 +32,7 @@ namespace AA.Mvp
 
             // OData
             var builder = new ODataConventionModelBuilder();
+            builder.EnableLowerCamelCase();
             builder.EntitySet<AllDataType>("AllDataTypes").EntityType.HasKey(x => x.Id);
             builder.EntitySet<TypeOfType>("TypeOfTypes").EntityType.HasKey(x => x.Id);
             builder.EntitySet<Validation>("Validations").EntityType.HasKey(x => x.Id);

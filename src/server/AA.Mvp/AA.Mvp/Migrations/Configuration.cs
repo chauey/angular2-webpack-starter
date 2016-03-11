@@ -17,6 +17,10 @@ namespace AA.Mvp.Migrations
 
         protected override void Seed(AAMvpContext context)
         {
+
+            Seeding.Seed.DeleteAllData(context);
+            Seeding.Seed.AddData(context);
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
