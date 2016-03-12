@@ -3,7 +3,7 @@ import * as Rx from 'rxjs';
 import { Injectable } from 'angular2/core';
 import { IApi } from './IApi';
 
-import { LocalQueryHelper } from './LocalQueryHelper'
+import { LocalQueryHelper } from './LocalQueryHelper';
 
 'use strict';
 

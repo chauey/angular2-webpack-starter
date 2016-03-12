@@ -4,8 +4,8 @@ import { Injectable } from 'angular2/core';
 import { IApi } from './IApi';
 
 import { StateProvince } from './StateProvince';
-import { LocalQueryHelper } from './LocalQueryHelper'
-import { BaseApiLocal } from './BaseApiLocal'
+import { LocalQueryHelper } from './LocalQueryHelper';
+import { BaseApiLocal } from './BaseApiLocal';
 
 'use strict';
 

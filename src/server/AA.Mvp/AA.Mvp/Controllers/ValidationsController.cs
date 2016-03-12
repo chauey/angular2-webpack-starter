@@ -13,6 +13,7 @@ using AA.Mvp.Models;
 using Microsoft.Data.OData;
 using System.Threading.Tasks;
 using System.Data.Entity.Infrastructure;
+using System.Web.Http.Cors;
 
 namespace AA.Mvp.Controllers
 {

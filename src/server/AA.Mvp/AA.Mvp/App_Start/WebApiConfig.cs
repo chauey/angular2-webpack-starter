@@ -8,6 +8,7 @@ using Newtonsoft.Json.Serialization;
 using System.Web.OData.Extensions;
 using AA.Mvp.Models;
 using System.Web.OData.Builder;
+using System.Web.Http.Cors;
 
 namespace AA.Mvp
 {
@@ -29,9 +30,12 @@ namespace AA.Mvp
             //    defaults: new { id = RouteParameter.Optional }
             //);
 
+            // Enable CORS
+            var corsAttr = new EnableCorsAttribute("http://localhost:3000/", "*", "*");
+            config.EnableCors();
 
             // OData
-            var builder = new ODataConventionModelBuilder();
+            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EnableLowerCamelCase();
             builder.EntitySet<AllDataType>("AllDataTypes").EntityType.HasKey(x => x.Id);
             builder.EntitySet<TypeOfType>("TypeOfTypes").EntityType.HasKey(x => x.Id);

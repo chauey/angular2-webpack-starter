@@ -7,7 +7,7 @@ export class DataTransformPipe implements PipeTransform {
 
     if (arrayList && arrayList.length > 0) {
       let filter =  arrayList.filter(item => {
-        return item[args[0]] == value;
+        return item[args[0]] === value;
       });
 
       return filter[0][args[1]];

@@ -21,6 +21,8 @@ export abstract class BaseApi<T> implements IApi<T> {
   public _defaultHeaders: Headers = new Headers({});
 
   constructor(protected _http: Http) {
+    //this._defaultHeaders.append('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    this._defaultHeaders.append('Access-Control-Allow-Origin', '*');
   }
 
   protected extendObj<T1, T2>(objA: T1, objB: T2) {
@@ -50,7 +52,6 @@ export abstract class BaseApi<T> implements IApi<T> {
    */
   public get(expand?: string, filter?: string, select?: string, orderBy?: string, top?: number, skip?: number, count?: boolean
     , extraHttpRequestParams?: any): Rx.Observable<{ count: number, list: T[] }> {
-
     let oData = HttpHelper.createOData(select, orderBy, expand, filter, top, skip, count);
     let urlSearchParams = HttpHelper.createUrlSearchParamsFromOData(oData);
 
